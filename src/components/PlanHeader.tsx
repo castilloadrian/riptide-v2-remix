@@ -77,12 +77,7 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
               </div>
             </div>
           </div>
-          <div className="text-xs text-purple-600">
-            <div>Drop Calculation</div>
-            <div>10 Delivery</div>
-            <div>Planned Boxes: 0</div>
-          </div>
-          <button className="px-4 py-1 rounded bg-primary text-white text-sm ml-auto block">
+          <button className="px-4 py-1 rounded bg-primary text-white text-sm ml-auto block mt-4">
             Approve
           </button>
         </div>

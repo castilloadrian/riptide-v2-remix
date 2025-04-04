@@ -1,6 +1,6 @@
 
 import { FC } from 'react';
-import { BarChart3, Box, FileText, Grid, Bug, Users } from 'lucide-react';
+import { BarChart3, Box, Package, Clock, Bug, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface NavigationTabProps {
@@ -11,14 +11,14 @@ interface NavigationTabProps {
 const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => {
   const tabs = [
     { id: 'planning', label: 'Planning', icon: <Box className="w-5 h-5" />, path: '/' },
-    { id: 'graphical', label: 'Graphical', icon: <BarChart3 className="w-5 h-5" />, path: '/graphical' },
-    { id: 'forms', label: 'Forms', icon: <FileText className="w-5 h-5" />, path: '/' },
-    { id: 'configurations', label: 'Configurations', icon: <Grid className="w-5 h-5" />, path: '/' },
+    { id: 'dashboard', label: 'Dashboard', icon: <BarChart3 className="w-5 h-5" />, path: '/graphical' },
+    { id: 'kitting', label: 'Kitting', icon: <Package className="w-5 h-5" />, path: '/' },
+    { id: 'simulation', label: 'Shift Simulation', icon: <Clock className="w-5 h-5" />, path: '/' },
   ];
 
   const rightTabs = [
-    { id: 'bug', label: 'Bug Reports', icon: <Bug className="w-5 h-5" />, path: '/' },
-    { id: 'admin', label: 'Admin', icon: <Users className="w-5 h-5" />, path: '/' },
+    { id: 'bug', icon: <Bug className="w-5 h-5" />, path: '/' },
+    { id: 'admin', icon: <Users className="w-5 h-5" />, path: '/' },
   ];
 
   return (
@@ -41,11 +41,10 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
           <Link 
             to={tab.path}
             key={tab.id}
-            className={`header-tab ${activeTab === tab.id ? 'active' : ''}`}
+            className={`header-tab-icon ${activeTab === tab.id ? 'active' : ''}`}
             onClick={() => setActiveTab(tab.id)}
           >
             {tab.icon}
-            <span className="ml-2 text-sm">{tab.label}</span>
           </Link>
         ))}
       </div>
