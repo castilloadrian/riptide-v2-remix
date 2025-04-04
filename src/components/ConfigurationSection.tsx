@@ -1,23 +1,48 @@
 
 import { FC } from 'react';
 import CollapsibleSection from './CollapsibleSection';
+import DataTable from './DataTable';
 
-interface ConfigurationSectionProps {}
+const ConfigurationSection: FC = () => {
+  // Define column definitions for Box Configuration
+  const boxColumnDefs = [
+    { headerName: 'ID', field: 'id', width: 70 },
+    { headerName: 'Box Type', field: 'boxType', width: 150 },
+    { headerName: 'Config', field: 'config', width: 150 },
+    { headerName: 'Version', field: 'version', width: 100 },
+    { headerName: 'Active', field: 'active', width: 100 },
+    { headerName: 'Details', field: 'details', width: 150 },
+  ];
 
-const generateTableData = (rows: number, cols: number) => {
-  return Array.from({ length: rows }, (_, i) => ({
+  // Define column definitions for Kit Configuration
+  const kitColumnDefs = [
+    { headerName: 'ID', field: 'id', width: 70 },
+    { headerName: 'Kit Type', field: 'kitType', width: 150 },
+    { headerName: 'Config', field: 'config', width: 150 },
+    { headerName: 'Version', field: 'version', width: 100 },
+    { headerName: 'Active', field: 'active', width: 100 },
+    { headerName: 'Details', field: 'details', width: 150 },
+  ];
+
+  // Generate box configuration data
+  const boxRowData = Array.from({ length: 12 }, (_, i) => ({
     id: i + 1,
-    name: `Config ${i + 1}`,
-    cells: Array(cols).fill('')
+    boxType: `Box Type ${i + 1}`,
+    config: `Config ${String.fromCharCode(65 + i % 6)}`,
+    version: `v${Math.floor(i/4) + 1}.${i % 4}`,
+    active: i < 8 ? 'Yes' : 'No',
+    details: `Details for box ${i + 1}`,
   }));
-};
 
-const ConfigurationSection: FC<ConfigurationSectionProps> = () => {
-  const boxHeaders = ['ID', 'Box Type', 'Config', 'Version', 'Active', 'Details'];
-  const kitHeaders = ['ID', 'Kit Type', 'Config', 'Version', 'Active', 'Details'];
-  
-  const boxRows = generateTableData(12, 5);
-  const kitRows = generateTableData(12, 5);
+  // Generate kit configuration data
+  const kitRowData = Array.from({ length: 12 }, (_, i) => ({
+    id: i + 1,
+    kitType: `Kit Type ${i + 1}`,
+    config: `Config ${String.fromCharCode(75 + i % 6)}`,
+    version: `v${Math.floor(i/4) + 1}.${i % 4}`,
+    active: i < 9 ? 'Yes' : 'No',
+    details: `Details for kit ${i + 1}`,
+  }));
 
   return (
     <CollapsibleSection title="Configuration">
@@ -25,52 +50,22 @@ const ConfigurationSection: FC<ConfigurationSectionProps> = () => {
         <div>
           <h3 className="font-medium mb-2">Box Configuration</h3>
           <div className="overflow-x-auto">
-            <table className="data-table">
-              <thead>
-                <tr>
-                  {boxHeaders.map((header, index) => (
-                    <th key={index}>{header}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {boxRows.map((row) => (
-                  <tr key={row.id}>
-                    <td>{row.id}</td>
-                    <td>{row.name}</td>
-                    {row.cells.map((_, idx) => (
-                      <td key={idx}></td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <DataTable
+              columnDefs={boxColumnDefs}
+              rowData={boxRowData}
+              height="400px"
+            />
           </div>
         </div>
         
         <div>
           <h3 className="font-medium mb-2">Kit Configuration</h3>
           <div className="overflow-x-auto">
-            <table className="data-table">
-              <thead>
-                <tr>
-                  {kitHeaders.map((header, index) => (
-                    <th key={index}>{header}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {kitRows.map((row) => (
-                  <tr key={row.id}>
-                    <td>{row.id}</td>
-                    <td>{row.name}</td>
-                    {row.cells.map((_, idx) => (
-                      <td key={idx}></td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <DataTable
+              columnDefs={kitColumnDefs}
+              rowData={kitRowData}
+              height="400px"
+            />
           </div>
         </div>
       </div>

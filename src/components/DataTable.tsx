@@ -24,6 +24,11 @@ const DataTable: FC<DataTableProps> = ({
     resizable: true,
   };
 
+  useEffect(() => {
+    // This is just to debug and ensure rowData and columnDefs are populated
+    console.log("DataTable rendering with:", { rowData, columnDefs });
+  }, [rowData, columnDefs]);
+
   return (
     <div className={`ag-theme-alpine w-full ${className}`} style={{ height }}>
       <AgGridReact

@@ -12,8 +12,8 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
   const tabs = [
     { id: 'planning', label: 'Planning', icon: <Box className="w-5 h-5" />, path: '/' },
     { id: 'dashboard', label: 'Dashboard', icon: <BarChart3 className="w-5 h-5" />, path: '/graphical' },
-    { id: 'kitting', label: 'Kitting', icon: <Package className="w-5 h-5" />, path: '/' },
-    { id: 'simulation', label: 'Shift Simulation', icon: <Clock className="w-5 h-5" />, path: '/' },
+    { id: 'kitting', label: 'Kitting', icon: <Package className="w-5 h-5" />, path: '/kitting' },
+    { id: 'simulation', label: 'Shift Simulation', icon: <Clock className="w-5 h-5" />, path: '/simulation' },
   ];
 
   const rightTabs = [
@@ -36,12 +36,12 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
           </Link>
         ))}
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center space-x-2">
         {rightTabs.map((tab) => (
           <Link 
             to={tab.path}
             key={tab.id}
-            className={`header-tab-icon ${activeTab === tab.id ? 'active' : ''} text-white hover:bg-white/10 p-2 mx-1 rounded-full`}
+            className="header-tab-icon text-white hover:bg-white/10 p-2 rounded-full"
             onClick={() => setActiveTab(tab.id)}
           >
             {tab.icon}

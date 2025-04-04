@@ -84,7 +84,7 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
 
       <div className="mt-6 flex justify-between items-end">
         <div className="relative w-1/2">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4"> {/* Increased gap from 2 to 4 for more padding */}
             <div className="p-1 border bg-blue-100 rounded">
               <Edit className="w-4 h-4 text-blue-600" />
             </div>

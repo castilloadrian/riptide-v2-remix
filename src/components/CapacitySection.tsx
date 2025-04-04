@@ -1,23 +1,56 @@
 
 import { FC } from 'react';
 import CollapsibleSection from './CollapsibleSection';
+import DataTable from './DataTable';
 
-interface CapacitySectionProps {}
+const CapacitySection: FC = () => {
+  // Define column definitions for Box Capacity
+  const boxColumnDefs = [
+    { headerName: 'ID', field: 'id', width: 70 },
+    { headerName: 'Box Type', field: 'boxType', width: 150 },
+    { headerName: 'Recipe Type', field: 'recipeType', width: 150 },
+    { headerName: 'WK-1', field: 'wkMinus1', width: 100 },
+    { headerName: 'WK', field: 'wk', width: 100 },
+    { headerName: 'WK+1', field: 'wkPlus1', width: 100 },
+    { headerName: 'WK+2', field: 'wkPlus2', width: 100 },
+    { headerName: 'WK+3', field: 'wkPlus3', width: 100 },
+  ];
 
-const generateTableData = (rows: number, cols: number) => {
-  return Array.from({ length: rows }, (_, i) => ({
+  // Define column definitions for Kit Capacity
+  const kitColumnDefs = [
+    { headerName: 'ID', field: 'id', width: 70 },
+    { headerName: 'Kit Type', field: 'kitType', width: 150 },
+    { headerName: 'Recipe Type', field: 'recipeType', width: 150 },
+    { headerName: 'WK-1', field: 'wkMinus1', width: 100 },
+    { headerName: 'WK', field: 'wk', width: 100 },
+    { headerName: 'WK+1', field: 'wkPlus1', width: 100 },
+    { headerName: 'WK+2', field: 'wkPlus2', width: 100 },
+    { headerName: 'WK+3', field: 'wkPlus3', width: 100 },
+  ];
+
+  // Generate box capacity data
+  const boxRowData = Array.from({ length: 15 }, (_, i) => ({
     id: i + 1,
-    name: `Item ${i + 1}`,
-    cells: Array(cols).fill('')
+    boxType: `Box Type ${i + 1}`,
+    recipeType: `Recipe ${i % 5 + 1}`,
+    wkMinus1: Math.floor(Math.random() * 100),
+    wk: Math.floor(Math.random() * 100),
+    wkPlus1: Math.floor(Math.random() * 100),
+    wkPlus2: Math.floor(Math.random() * 100),
+    wkPlus3: Math.floor(Math.random() * 100),
   }));
-};
 
-const CapacitySection: FC<CapacitySectionProps> = () => {
-  const boxHeaders = ['ID', 'Box Type', 'Recipe Type', 'WK-1', 'WK', 'WK+1', 'WK+2', 'WK+3'];
-  const kitHeaders = ['ID', 'Kit Type', 'Recipe Type', 'WK-1', 'WK', 'WK+1', 'WK+2', 'WK+3'];
-  
-  const boxRows = generateTableData(15, 7);
-  const kitRows = generateTableData(15, 7);
+  // Generate kit capacity data
+  const kitRowData = Array.from({ length: 15 }, (_, i) => ({
+    id: i + 1,
+    kitType: `Kit Type ${i + 1}`,
+    recipeType: `Recipe ${i % 5 + 1}`,
+    wkMinus1: Math.floor(Math.random() * 100),
+    wk: Math.floor(Math.random() * 100),
+    wkPlus1: Math.floor(Math.random() * 100),
+    wkPlus2: Math.floor(Math.random() * 100),
+    wkPlus3: Math.floor(Math.random() * 100),
+  }));
 
   return (
     <CollapsibleSection title="Capacity">
@@ -25,52 +58,22 @@ const CapacitySection: FC<CapacitySectionProps> = () => {
         <div>
           <h3 className="font-medium mb-2">Box Capacity</h3>
           <div className="overflow-x-auto">
-            <table className="data-table">
-              <thead>
-                <tr>
-                  {boxHeaders.map((header, index) => (
-                    <th key={index}>{header}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {boxRows.map((row) => (
-                  <tr key={row.id}>
-                    <td>{row.id}</td>
-                    <td>{row.name}</td>
-                    {row.cells.map((_, idx) => (
-                      <td key={idx}></td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <DataTable
+              columnDefs={boxColumnDefs}
+              rowData={boxRowData}
+              height="400px"
+            />
           </div>
         </div>
         
         <div>
           <h3 className="font-medium mb-2">Kit Capacity</h3>
           <div className="overflow-x-auto">
-            <table className="data-table">
-              <thead>
-                <tr>
-                  {kitHeaders.map((header, index) => (
-                    <th key={index}>{header}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {kitRows.map((row) => (
-                  <tr key={row.id}>
-                    <td>{row.id}</td>
-                    <td>{row.name}</td>
-                    {row.cells.map((_, idx) => (
-                      <td key={idx}></td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <DataTable
+              columnDefs={kitColumnDefs}
+              rowData={kitRowData}
+              height="400px"
+            />
           </div>
         </div>
       </div>
