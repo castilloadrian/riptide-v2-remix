@@ -1,11 +1,33 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useState } from 'react';
+import NavigationTabs from '@/components/NavigationTabs';
+import PlanHeader from '@/components/PlanHeader';
+import RiskAssessment from '@/components/RiskAssessment';
+import CapacitySection from '@/components/CapacitySection';
+import HeadcountSection from '@/components/HeadcountSection';
+import ConfigurationSection from '@/components/ConfigurationSection';
 
 const Index = () => {
+  const [activeTab, setActiveTab] = useState('planning');
+  const [planName, setPlanName] = useState('Weekly Production Plan');
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
+    <div className="min-h-screen bg-gray-50">
+      {/* Navigation Tabs */}
+      <NavigationTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+      
+      {/* Content Container */}
+      <div className="container mx-auto py-2 px-2 md:px-4 max-w-7xl">
+        {/* Plan Header Section */}
+        <PlanHeader planName={planName} setPlanName={setPlanName} />
+        
+        {/* Main Content Sections */}
+        <div className="space-y-4 mt-4">
+          <RiskAssessment />
+          <CapacitySection />
+          <HeadcountSection />
+          <ConfigurationSection />
+        </div>
       </div>
     </div>
   );
