@@ -1,6 +1,15 @@
 
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { ChevronDown, Edit } from 'lucide-react';
+import { 
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
 
 interface PlanHeaderProps {
   planName: string;
@@ -8,6 +17,10 @@ interface PlanHeaderProps {
 }
 
 const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
+  const [selectedDC, setSelectedDC] = useState('NYC');
+  const [selectedWeek, setSelectedWeek] = useState('Week 23');
+  const [selectedVersion, setSelectedVersion] = useState('Version 1.0');
+
   return (
     <div className="bg-white p-4 border-b">
       <div className="flex justify-between items-center">
@@ -21,22 +34,51 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
         <div className="relative">
-          <div className="border rounded flex items-center p-2 bg-white">
-            <span className="text-sm">DC</span>
-            <ChevronDown className="ml-auto w-4 h-4" />
-          </div>
+          <Select value={selectedDC} onValueChange={setSelectedDC}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select DC" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Distribution Centers</SelectLabel>
+                <SelectItem value="NYC">NYC</SelectItem>
+                <SelectItem value="LAX">LAX</SelectItem>
+                <SelectItem value="CHI">CHI</SelectItem>
+                <SelectItem value="DFW">DFW</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
         <div className="relative">
-          <div className="border rounded flex items-center p-2 bg-white">
-            <span className="text-sm">Week</span>
-            <ChevronDown className="ml-auto w-4 h-4" />
-          </div>
+          <Select value={selectedWeek} onValueChange={setSelectedWeek}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select Week" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Week</SelectLabel>
+                <SelectItem value="Week 23">Week 23</SelectItem>
+                <SelectItem value="Week 24">Week 24</SelectItem>
+                <SelectItem value="Week 25">Week 25</SelectItem>
+                <SelectItem value="Week 26">Week 26</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
         <div className="relative">
-          <div className="border rounded flex items-center p-2 bg-white">
-            <span className="text-sm">Version</span>
-            <ChevronDown className="ml-auto w-4 h-4" />
-          </div>
+          <Select value={selectedVersion} onValueChange={setSelectedVersion}>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select Version" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Version</SelectLabel>
+                <SelectItem value="Version 1.0">Version 1.0</SelectItem>
+                <SelectItem value="Version 1.1">Version 1.1</SelectItem>
+                <SelectItem value="Version 2.0">Version 2.0</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
       </div>
 

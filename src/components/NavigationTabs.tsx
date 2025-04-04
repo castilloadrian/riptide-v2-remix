@@ -36,12 +36,12 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
           </Link>
         ))}
       </div>
-      <div className="flex">
+      <div className="flex items-center">
         {rightTabs.map((tab) => (
           <Link 
             to={tab.path}
             key={tab.id}
-            className={`header-tab-icon ${activeTab === tab.id ? 'active' : ''}`}
+            className={`header-tab-icon ${activeTab === tab.id ? 'active' : ''} text-white hover:bg-white/10 p-2 mx-1 rounded-full`}
             onClick={() => setActiveTab(tab.id)}
           >
             {tab.icon}

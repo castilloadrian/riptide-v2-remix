@@ -71,6 +71,14 @@
   @apply bg-white/20 font-medium;
 }
 
+.header-tab-icon {
+  @apply flex items-center justify-center transition-colors;
+}
+
+.header-tab-icon.active {
+  @apply bg-white/20;
+}
+
 .section-header {
   @apply flex items-center justify-between py-2 px-4 bg-primary/10 text-primary font-medium border-l-4 border-primary cursor-pointer transition-colors hover:bg-primary/15;
 }
@@ -91,20 +99,24 @@
   @apply bg-red-500;
 }
 
-.data-table {
-  @apply w-full border-collapse text-sm;
+/* AG Grid theme customizations */
+.ag-theme-alpine {
+  --ag-foreground-color: #333;
+  --ag-border-color: #ddd;
+  --ag-header-background-color: #f0f7f2;
+  --ag-odd-row-background-color: #f9f9f9;
+  --ag-header-foreground-color: #397533;
+  --ag-row-hover-color: #e8f5e9;
 }
 
-.data-table th {
-  @apply bg-gray-100 p-1 text-xs font-normal text-gray-600 border border-gray-200;
+.ag-theme-alpine .ag-header {
+  font-weight: 600;
+  font-size: 0.875rem;
 }
 
-.data-table td {
-  @apply p-1 text-xs border border-gray-200;
-}
-
-.data-table tr:hover {
-  @apply bg-accent;
+.ag-theme-alpine .ag-cell {
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
 }
 
 /* Dashboard styles */
@@ -128,4 +140,3 @@
 .section-content.expanded {
   @apply max-h-[2000px] p-4;
 }
-
