@@ -1,6 +1,6 @@
 
 import { FC } from 'react';
-import { ChevronDown } from 'lucide-react';
+import CollapsibleSection from './CollapsibleSection';
 
 interface RiskItem {
   id: number;
@@ -17,44 +17,37 @@ const RiskAssessment: FC = () => {
   }));
 
   return (
-    <div>
-      <div className="section-header">
-        <ChevronDown className="w-4 h-4" />
-        <span>Risk Assessment</span>
-      </div>
-      
-      <div className="p-4 bg-white">
-        <div className="overflow-x-auto">
-          <table className="data-table">
-            <thead>
-              <tr>
-                {headers.map((header, index) => (
-                  <th key={index}>{header}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {riskItems.map((item) => (
-                <tr key={item.id}>
-                  {item.values.map((_, idx) => (
-                    <td key={idx}></td>
-                  ))}
-                  <td>
-                    {item.id % 3 === 0 ? (
-                      <div className="risk-bar risk-green w-full"></div>
-                    ) : item.id % 3 === 1 ? (
-                      <div className="risk-bar risk-yellow w-3/4"></div>
-                    ) : (
-                      <div className="risk-bar risk-red w-1/2"></div>
-                    )}
-                  </td>
-                </tr>
+    <CollapsibleSection title="Risk Assessment">
+      <div className="overflow-x-auto">
+        <table className="data-table">
+          <thead>
+            <tr>
+              {headers.map((header, index) => (
+                <th key={index}>{header}</th>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </tr>
+          </thead>
+          <tbody>
+            {riskItems.map((item) => (
+              <tr key={item.id}>
+                {item.values.map((_, idx) => (
+                  <td key={idx}></td>
+                ))}
+                <td>
+                  {item.id % 3 === 0 ? (
+                    <div className="risk-bar risk-green w-full"></div>
+                  ) : item.id % 3 === 1 ? (
+                    <div className="risk-bar risk-yellow w-3/4"></div>
+                  ) : (
+                    <div className="risk-bar risk-red w-1/2"></div>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </div>
+    </CollapsibleSection>
   );
 };
 

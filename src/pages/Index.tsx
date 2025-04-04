@@ -17,12 +17,12 @@ const Index = () => {
       <NavigationTabs activeTab={activeTab} setActiveTab={setActiveTab} />
       
       {/* Content Container */}
-      <div className="container mx-auto py-2 px-2 md:px-4 max-w-7xl">
+      <div className="container mx-auto py-4 px-2 md:px-4 max-w-7xl">
         {/* Plan Header Section */}
         <PlanHeader planName={planName} setPlanName={setPlanName} />
         
         {/* Main Content Sections */}
-        <div className="space-y-4 mt-4">
+        <div className="space-y-4 mt-6">
           <RiskAssessment />
           <CapacitySection />
           <HeadcountSection />

@@ -1,6 +1,6 @@
 
 import { FC } from 'react';
-import { ChevronDown } from 'lucide-react';
+import CollapsibleSection from './CollapsibleSection';
 
 interface HeadcountSectionProps {}
 
@@ -18,13 +18,8 @@ const HeadcountSection: FC<HeadcountSectionProps> = () => {
   const rows = generateTableData(12, 8);
 
   return (
-    <div>
-      <div className="section-header">
-        <ChevronDown className="w-4 h-4" />
-        <span>Headcount</span>
-      </div>
-      
-      <div className="p-4 bg-white">
+    <CollapsibleSection title="Headcount">
+      <div>
         <h3 className="font-medium mb-2">Needed Headcount</h3>
         <div className="overflow-x-auto">
           <table className="data-table">
@@ -49,7 +44,7 @@ const HeadcountSection: FC<HeadcountSectionProps> = () => {
           </table>
         </div>
       </div>
-    </div>
+    </CollapsibleSection>
   );
 };
 

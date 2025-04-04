@@ -59,20 +59,20 @@
 
 /* Custom HelloFresh styles */
 .hellofresh-header {
-  @apply bg-gradient-to-r from-primary/90 to-primary;
+  @apply bg-gradient-to-r from-primary/90 to-primary shadow-md;
 }
 
 .header-tab {
-  @apply flex items-center justify-center p-2 text-primary-foreground hover:bg-white/10 transition-colors;
-  min-width: 70px;
+  @apply flex items-center justify-center px-4 py-2 text-primary-foreground hover:bg-white/10 transition-colors rounded-md mx-1;
+  min-width: 100px;
 }
 
 .header-tab.active {
-  @apply bg-white/20;
+  @apply bg-white/20 font-medium;
 }
 
 .section-header {
-  @apply flex items-center gap-2 py-1 pl-2 bg-primary/10 text-primary font-medium border-l-4 border-primary;
+  @apply flex items-center justify-between py-2 px-4 bg-primary/10 text-primary font-medium border-l-4 border-primary cursor-pointer transition-colors hover:bg-primary/15;
 }
 
 .risk-bar {
@@ -106,3 +106,26 @@
 .data-table tr:hover {
   @apply bg-accent;
 }
+
+/* Dashboard styles */
+.dashboard-card {
+  @apply bg-white p-4 rounded-md shadow border border-gray-200;
+}
+
+.dashboard-card-header {
+  @apply text-sm font-medium text-gray-700 mb-2;
+}
+
+/* CollapsibleSection styles */
+.section-content {
+  @apply bg-white overflow-hidden transition-all duration-200 ease-in-out;
+}
+
+.section-content.collapsed {
+  @apply max-h-0 py-0;
+}
+
+.section-content.expanded {
+  @apply max-h-[2000px] p-4;
+}
+
