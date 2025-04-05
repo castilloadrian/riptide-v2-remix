@@ -45,6 +45,45 @@
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 138 64% 49%;
+    --primary-foreground: 240 5.9% 10%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 138 64% 49%;
+
+    --sidebar-background: 240 10% 3.9%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 0 0% 98%;
+    --sidebar-primary-foreground: 240 5.9% 10%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 138 64% 49%;
+  }
 }
 
 @layer base {
@@ -109,6 +148,18 @@
   --ag-row-hover-color: #e8f5e9;
 }
 
+.dark .ag-theme-alpine {
+  --ag-foreground-color: #ddd;
+  --ag-border-color: #444;
+  --ag-header-background-color: #222;
+  --ag-odd-row-background-color: #333;
+  --ag-header-foreground-color: #61B045;
+  --ag-row-hover-color: #444;
+  --ag-background-color: #1a1a1a;
+  --ag-header-column-separator-color: #444;
+  --ag-row-border-color: #444;
+}
+
 .ag-theme-alpine .ag-header {
   font-weight: 600;
   font-size: 0.875rem;
@@ -121,16 +172,16 @@
 
 /* Dashboard styles */
 .dashboard-card {
-  @apply bg-white p-4 rounded-md shadow border border-gray-200;
+  @apply bg-white dark:bg-gray-800 p-4 rounded-md shadow border border-gray-200 dark:border-gray-700;
 }
 
 .dashboard-card-header {
-  @apply text-sm font-medium text-gray-700 mb-2;
+  @apply text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
 }
 
 /* CollapsibleSection styles */
 .section-content {
-  @apply bg-white overflow-hidden transition-all duration-200 ease-in-out;
+  @apply bg-white dark:bg-gray-800 overflow-hidden transition-all duration-200 ease-in-out;
 }
 
 .section-content.collapsed {

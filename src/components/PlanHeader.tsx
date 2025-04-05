@@ -1,6 +1,6 @@
 
 import { FC, useState } from 'react';
-import { ChevronDown, Edit } from 'lucide-react';
+import { ChevronDown, Edit, Copy, FileText, Save, Filter } from 'lucide-react';
 import { 
   Select,
   SelectContent,
@@ -10,6 +10,14 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 
 interface PlanHeaderProps {
   planName: string;
@@ -21,14 +29,22 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
   const [selectedWeek, setSelectedWeek] = useState('Week 23');
   const [selectedVersion, setSelectedVersion] = useState('Version 1.0');
 
+  const handleButtonClick = (action: string) => {
+    toast({
+      title: `${action} action triggered`,
+      description: `The ${action} action has been initiated.`,
+      duration: 2000,
+    });
+  };
+
   return (
-    <div className="bg-white p-4 border-b">
+    <div className="bg-white dark:bg-gray-800 p-4 border-b dark:border-gray-700">
       <div className="flex justify-between items-center">
         <div className="flex items-center">
           <span className="text-primary font-medium">🔍 Plan</span>
         </div>
         <div className="text-right">
-          <div className="text-lg font-medium text-gray-700">Plan Status</div>
+          <div className="text-lg font-medium text-gray-700 dark:text-gray-300">Plan Status</div>
         </div>
       </div>
 
@@ -84,7 +100,7 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
 
       <div className="mt-6 flex justify-between items-end">
         <div className="relative w-1/2">
-          <div className="flex items-center gap-4"> {/* Increased gap from 2 to 4 for more padding */}
+          <div className="flex items-center gap-6"> {/* Increased gap for more padding */}
             <div className="p-1 border bg-blue-100 rounded">
               <Edit className="w-4 h-4 text-blue-600" />
             </div>
@@ -92,32 +108,96 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
               <div className="text-sm font-medium mb-1">Plan Name</div>
               <input
                 type="text"
-                className="border-b w-full py-1 focus:outline-none focus:border-primary"
+                className="border-b w-full py-1 focus:outline-none focus:border-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
                 value={planName}
                 onChange={(e) => setPlanName(e.target.value)}
               />
             </div>
           </div>
-          <button className="mt-2 px-4 py-1 border rounded bg-blue-50 text-blue-600 text-sm">
+          <button className="mt-2 px-4 py-1 border rounded bg-blue-50 text-blue-600 text-sm dark:bg-blue-900 dark:text-blue-300 dark:border-blue-800">
             Update
           </button>
         </div>
         
         <div className="space-y-2">
-          <div className="flex gap-2 justify-end">
-            <div className="p-2 border rounded bg-gray-100">
-              <div className="w-5 h-5 bg-primary/20 rounded" />
-            </div>
-            <div className="p-2 border rounded bg-gray-100">
-              <div className="w-5 h-5 border-2 border-primary rounded" />
-            </div>
-            <div className="p-2 border rounded bg-gray-100">
-              <div className="w-5 h-5 grid grid-cols-3 gap-0.5">
-                {[...Array(9)].map((_, i) => (
-                  <div key={i} className="bg-primary/20 rounded-sm" />
-                ))}
-              </div>
-            </div>
+          <div className="flex gap-2 justify-end items-center">
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button variant="outline" size="icon" className="h-10 w-10">
+                  <Filter className="h-4 w-4" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-56 p-3">
+                <div className="space-y-2">
+                  <h4 className="font-medium mb-2">Filter Options</h4>
+                  <div className="space-y-1">
+                    <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
+                      Enter constraints
+                    </button>
+                    <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
+                      TI Autostore
+                    </button>
+                    <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
+                      Print to PDL
+                    </button>
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
+            
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    size="icon" 
+                    className="h-10 w-10" 
+                    onClick={() => handleButtonClick('Copy')}
+                  >
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Copy</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    size="icon" 
+                    className="h-10 w-10"
+                    onClick={() => handleButtonClick('File')}
+                  >
+                    <FileText className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>File</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button 
+                    variant="outline" 
+                    size="icon" 
+                    className="h-10 w-10"
+                    onClick={() => handleButtonClick('Save')}
+                  >
+                    <Save className="h-4 w-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Save</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </div>
           <button className="px-4 py-1 rounded bg-primary text-white text-sm ml-auto block mt-4">
             Approve
