@@ -1,7 +1,8 @@
 
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { BarChart3, Box, Package, Clock, Bug, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import BugReportModal from './BugReportModal';
 
 interface NavigationTabProps {
   activeTab: string;
@@ -9,6 +10,8 @@ interface NavigationTabProps {
 }
 
 const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => {
+  const [bugModalOpen, setBugModalOpen] = useState(false);
+  
   const tabs = [
     { id: 'planning', label: 'Planning', icon: <Box className="w-5 h-5" />, path: '/' },
     { id: 'dashboard', label: 'Dashboard', icon: <BarChart3 className="w-5 h-5" />, path: '/graphical' },
@@ -17,38 +20,57 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
   ];
 
   const rightTabs = [
-    { id: 'bug', icon: <Bug className="w-5 h-5" />, path: '/' },
+    { 
+      id: 'bug', 
+      icon: <Bug className="w-5 h-5" />, 
+      action: () => setBugModalOpen(true),
+      path: null
+    },
     { id: 'admin', icon: <Users className="w-5 h-5" />, path: '/' },
   ];
 
   return (
-    <div className="hellofresh-header flex justify-between py-1 px-4">
-      <div className="flex">
-        {tabs.map((tab) => (
-          <Link 
-            to={tab.path}
-            key={tab.id}
-            className={`header-tab ${activeTab === tab.id ? 'active' : ''}`}
-            onClick={() => setActiveTab(tab.id)}
-          >
-            {tab.icon}
-            <span className="ml-2 text-sm">{tab.label}</span>
-          </Link>
-        ))}
+    <>
+      <div className="hellofresh-header flex justify-between py-1 px-4">
+        <div className="flex">
+          {tabs.map((tab) => (
+            <Link 
+              to={tab.path}
+              key={tab.id}
+              className={`header-tab ${activeTab === tab.id ? 'active' : ''}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.icon}
+              <span className="ml-2 text-sm">{tab.label}</span>
+            </Link>
+          ))}
+        </div>
+        <div className="flex items-center space-x-2">
+          {rightTabs.map((tab) => (
+            tab.path ? (
+              <Link 
+                to={tab.path}
+                key={tab.id}
+                className="header-tab-icon text-white hover:bg-white/10 p-2 rounded-full"
+                onClick={() => setActiveTab(tab.id)}
+              >
+                {tab.icon}
+              </Link>
+            ) : (
+              <button 
+                key={tab.id}
+                className="header-tab-icon text-white hover:bg-white/10 p-2 rounded-full"
+                onClick={tab.action}
+              >
+                {tab.icon}
+              </button>
+            )
+          ))}
+        </div>
       </div>
-      <div className="flex items-center space-x-2">
-        {rightTabs.map((tab) => (
-          <Link 
-            to={tab.path}
-            key={tab.id}
-            className="header-tab-icon text-white hover:bg-white/10 p-2 rounded-full"
-            onClick={() => setActiveTab(tab.id)}
-          >
-            {tab.icon}
-          </Link>
-        ))}
-      </div>
-    </div>
+      
+      <BugReportModal open={bugModalOpen} onOpenChange={setBugModalOpen} />
+    </>
   );
 };
 

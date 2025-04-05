@@ -6,6 +6,7 @@ import RiskAssessment from '@/components/RiskAssessment';
 import CapacitySection from '@/components/CapacitySection';
 import HeadcountSection from '@/components/HeadcountSection';
 import ConfigurationSection from '@/components/ConfigurationSection';
+import PlanDeepDiveSection from '@/components/PlanDeepDiveSection';
 import Footer from '@/components/Footer';
 import { useTheme } from '@/components/ThemeProvider';
 
@@ -30,6 +31,7 @@ const Index = () => {
           <CapacitySection />
           <HeadcountSection />
           <ConfigurationSection />
+          <PlanDeepDiveSection />
         </div>
       </div>
 
