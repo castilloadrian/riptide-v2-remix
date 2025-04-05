@@ -13,12 +13,15 @@ const Footer: React.FC<FooterProps> = ({ toggleDarkMode, isDarkMode }) => {
   return (
     <footer className="mt-auto py-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <div>
+        <div className="w-1/3">
+          {/* Empty div for spacing */}
+        </div>
+        <div className="w-1/3 flex justify-center">
           <Link to="/learn-more" className="text-primary hover:underline text-sm">
             Learn More
           </Link>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="w-1/3 flex justify-end">
           <Toggle 
             pressed={isDarkMode} 
             onPressedChange={toggleDarkMode}
@@ -27,9 +30,6 @@ const Footer: React.FC<FooterProps> = ({ toggleDarkMode, isDarkMode }) => {
           >
             {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
           </Toggle>
-          <span className="text-sm text-gray-600 dark:text-gray-400">
-            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
-          </span>
         </div>
       </div>
     </footer>
