@@ -1,37 +1,30 @@
 
-import { useState } from 'react';
-import NavigationTabs from '@/components/NavigationTabs';
-import PlanHeader from '@/components/PlanHeader';
-import Footer from '@/components/Footer';
-import { useTheme } from '@/components/ThemeProvider';
+import PageLayout from '@/components/PageLayout';
 
 const Graphical = () => {
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [planName, setPlanName] = useState('Weekly Production Plan');
-  const { theme, toggleTheme } = useTheme();
-
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
-      {/* Navigation Tabs */}
-      <NavigationTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+    <PageLayout activeTab="dashboard" title="Dashboard">
+      <p className="text-gray-600 dark:text-gray-400 mb-4">
+        Welcome to the dashboard view. This page displays key metrics and visualizations.
+      </p>
       
-      {/* Content Container */}
-      <div className="container mx-auto py-4 px-2 md:px-4 max-w-7xl flex-grow">
-        {/* Plan Header Section */}
-        <PlanHeader planName={planName} setPlanName={setPlanName} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
+        <div className="dashboard-card">
+          <h3 className="dashboard-card-header">Production Overview</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400">View production metrics and KPIs</p>
+        </div>
         
-        {/* Main Content */}
-        <div className="mt-8 bg-white dark:bg-gray-800 p-6 rounded-md shadow">
-          <h2 className="text-2xl font-medium text-gray-800 dark:text-gray-200 mb-4">Dashboard</h2>
-          <p className="text-gray-600 dark:text-gray-400 mb-4">
-            Welcome to the dashboard view. This page displays key metrics and visualizations.
-          </p>
+        <div className="dashboard-card">
+          <h3 className="dashboard-card-header">Resource Allocation</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400">Staff and equipment distribution</p>
+        </div>
+        
+        <div className="dashboard-card">
+          <h3 className="dashboard-card-header">Weekly Trends</h3>
+          <p className="text-sm text-gray-600 dark:text-gray-400">Performance trends over time</p>
         </div>
       </div>
-      
-      {/* Footer */}
-      <Footer toggleDarkMode={toggleTheme} isDarkMode={theme === 'dark'} />
-    </div>
+    </PageLayout>
   );
 };
 

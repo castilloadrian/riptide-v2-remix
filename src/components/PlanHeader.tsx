@@ -129,11 +129,8 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
               </PopoverTrigger>
               <PopoverContent className="w-56 p-3">
                 <div className="space-y-2">
-                  <h4 className="font-medium mb-2">Filter Options</h4>
+                  <h4 className="font-medium mb-2">Enter Constraints</h4>
                   <div className="space-y-1">
-                    <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
-                      Enter constraints
-                    </button>
                     <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
                       TI Autostore
                     </button>

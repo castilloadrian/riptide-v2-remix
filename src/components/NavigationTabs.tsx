@@ -26,7 +26,7 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
       action: () => setBugModalOpen(true),
       path: null
     },
-    { id: 'admin', icon: <Users className="w-5 h-5" />, path: '/' },
+    { id: 'admin', icon: <Users className="w-5 h-5" />, path: '/admin' },
   ];
 
   return (
