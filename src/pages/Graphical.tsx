@@ -8,21 +8,14 @@ const Graphical = () => {
         Welcome to the dashboard view. This page displays key metrics and visualizations.
       </p>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-        <div className="dashboard-card">
-          <h3 className="dashboard-card-header">Production Overview</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400">View production metrics and KPIs</p>
-        </div>
-        
-        <div className="dashboard-card">
-          <h3 className="dashboard-card-header">Resource Allocation</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400">Staff and equipment distribution</p>
-        </div>
-        
-        <div className="dashboard-card">
-          <h3 className="dashboard-card-header">Weekly Trends</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-400">Performance trends over time</p>
-        </div>
+      <div className="p-4 border rounded-md bg-primary/5 dark:bg-primary/10 text-primary dark:text-primary-foreground">
+        <p className="font-medium">Dashboard features:</p>
+        <ul className="list-disc list-inside mt-2 space-y-1 text-gray-700 dark:text-gray-300">
+          <li>Production Overview</li>
+          <li>Resource Allocation</li>
+          <li>Weekly Trends</li>
+          <li>Performance Analytics</li>
+        </ul>
       </div>
     </PageLayout>
   );
