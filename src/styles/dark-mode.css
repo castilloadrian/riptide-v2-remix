@@ -1,0 +1,49 @@
+
+.dark {
+  /* Pure gray background (8% lightness) - darker than before */
+  --background: 0 0% 8%;
+  --foreground: 0 0% 98%;
+
+  /* Card background pure gray (12% lightness) */
+  --card: 0 0% 12%;
+  --card-foreground: 0 0% 98%;
+
+  /* Popover matching the main background */
+  --popover: 0 0% 8%;
+  --popover-foreground: 0 0% 98%;
+
+  /* Keep the green primary color */
+  --primary: 138 64% 49%;
+  --primary-foreground: 0 0% 10%;
+
+  /* Secondary as pure gray (16% lightness) */
+  --secondary: 0 0% 16%;
+  --secondary-foreground: 0 0% 98%;
+
+  /* Muted as pure gray */
+  --muted: 0 0% 16%;
+  --muted-foreground: 0 0% 65%;
+
+  /* Accent as pure gray */
+  --accent: 0 0% 16%;
+  --accent-foreground: 0 0% 98%;
+
+  /* Destructive remains red-based */
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+
+  /* Border and input as pure gray */
+  --border: 0 0% 18%;
+  --input: 0 0% 18%;
+  --ring: 138 64% 49%;
+
+  /* Sidebar with pure gray */
+  --sidebar-background: 0 0% 8%;
+  --sidebar-foreground: 0 0% 98%;
+  --sidebar-primary: 0 0% 98%;
+  --sidebar-primary-foreground: 0 0% 10%;
+  --sidebar-accent: 0 0% 16%;
+  --sidebar-accent-foreground: 0 0% 98%;
+  --sidebar-border: 0 0% 18%;
+  --sidebar-ring: 138 64% 49%;
+}
