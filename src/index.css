@@ -47,51 +47,51 @@
   }
 
   .dark {
-    /* Updated background to pure gray (10% lightness) instead of blue-tinted */
-    --background: 0 0% 10%;
+    /* Pure gray background (8% lightness) - darker than before */
+    --background: 0 0% 8%;
     --foreground: 0 0% 98%;
 
-    /* Card background slightly lighter gray (12%) */
+    /* Card background pure gray (12% lightness) */
     --card: 0 0% 12%;
     --card-foreground: 0 0% 98%;
 
     /* Popover matching the main background */
-    --popover: 0 0% 10%;
+    --popover: 0 0% 8%;
     --popover-foreground: 0 0% 98%;
 
     /* Keep the green primary color */
     --primary: 138 64% 49%;
     --primary-foreground: 0 0% 10%;
 
-    /* Secondary as gray (18%) instead of blue-tinted */
-    --secondary: 0 0% 18%;
+    /* Secondary as pure gray (16% lightness) */
+    --secondary: 0 0% 16%;
     --secondary-foreground: 0 0% 98%;
 
-    /* Muted as gray */
-    --muted: 0 0% 18%;
+    /* Muted as pure gray */
+    --muted: 0 0% 16%;
     --muted-foreground: 0 0% 65%;
 
-    /* Accent as gray */
-    --accent: 0 0% 18%;
+    /* Accent as pure gray */
+    --accent: 0 0% 16%;
     --accent-foreground: 0 0% 98%;
 
     /* Destructive remains red-based */
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    /* Border and input as gray */
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
+    /* Border and input as pure gray */
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
     --ring: 138 64% 49%;
 
-    /* Sidebar with gray instead of blue */
-    --sidebar-background: 0 0% 10%;
+    /* Sidebar with pure gray */
+    --sidebar-background: 0 0% 8%;
     --sidebar-foreground: 0 0% 98%;
     --sidebar-primary: 0 0% 98%;
     --sidebar-primary-foreground: 0 0% 10%;
-    --sidebar-accent: 0 0% 18%;
+    --sidebar-accent: 0 0% 16%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 20%;
+    --sidebar-border: 0 0% 18%;
     --sidebar-ring: 138 64% 49%;
   }
 }
