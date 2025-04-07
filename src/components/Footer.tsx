@@ -25,7 +25,7 @@ const Footer: React.FC<FooterProps> = () => {
           {/* Empty div for spacing */}
         </div>
         <div className="w-1/3 flex justify-center">
-          <Link to="/learn-more" className="text-primary hover:underline text-sm">
+          <Link to="https://drive.google.com/drive/u/0/folders/1uAfus4Q5WESY0ywpB-hhePmEvM7-41H3" className="text-primary hover:underline text-sm">
             Learn More
           </Link>
         </div>
