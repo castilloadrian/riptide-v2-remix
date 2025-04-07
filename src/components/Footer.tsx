@@ -33,7 +33,9 @@ const Footer: React.FC<FooterProps> = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="icon" className="h-9 w-9">
-                {resolvedTheme === 'dark' ? (
+                {theme === 'system' ? (
+                  <Monitor className="h-4 w-4" />
+                ) : resolvedTheme === 'dark' ? (
                   <Moon className="h-4 w-4" />
                 ) : (
                   <Sun className="h-4 w-4" />
