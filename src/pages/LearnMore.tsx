@@ -6,7 +6,7 @@ import { useTheme } from '@/components/ThemeProvider';
 
 const LearnMore = () => {
   const [activeTab, setActiveTab] = useState('');
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
@@ -35,7 +35,7 @@ const LearnMore = () => {
       </div>
       
       {/* Footer */}
-      <Footer toggleDarkMode={toggleTheme} isDarkMode={theme === 'dark'} />
+      <Footer />
     </div>
   );
 };

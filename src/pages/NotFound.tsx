@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import { useTheme } from '@/components/ThemeProvider';
 
 const NotFound = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme } = useTheme();
   
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
@@ -27,7 +27,7 @@ const NotFound = () => {
       </div>
       
       {/* Footer */}
-      <Footer toggleDarkMode={toggleTheme} isDarkMode={theme === 'dark'} />
+      <Footer />
     </div>
   );
 };
