@@ -6,39 +6,38 @@ import DataTable from './DataTable';
 const HeadcountSection: FC = () => {
   // Define column definitions for AG Grid
   const columnDefs = [
-    { headerName: 'ID', field: 'id', width: 70 },
-    { headerName: 'Position', field: 'position', width: 150 },
-    { headerName: 'M', field: 'monday', width: 80 },
-    { headerName: 'T', field: 'tuesday', width: 80 },
-    { headerName: 'W', field: 'wednesday', width: 80 },
-    { headerName: 'TH', field: 'thursday', width: 80 },
-    { headerName: 'F', field: 'friday', width: 80 },
-    { headerName: 'SA', field: 'saturday', width: 80 },
-    { headerName: 'SU', field: 'sunday', width: 80 },
+    { headerName: 'Shift', field: 'shift', width: 150 },
+    { headerName: 'AB', field: 'ab', width: 80 },
+    { headerName: 'AUTO', field: 'auto', width: 80 },
+    { headerName: 'CORE', field: 'core', width: 80 },
+    { headerName: 'CP', field: 'cp', width: 80 },
+    { headerName: 'EP', field: 'ep', width: 80 },
+    { headerName: 'EXTRA', field: 'extra', width: 80 },
+    { headerName: 'GL', field: 'gl', width: 80 },
+    { headerName: 'KT', field: 'kt', width: 80 },
+    { headerName: 'TH', field: 'th', width: 80 },
     { headerName: 'Total', field: 'total', width: 100 },
   ];
 
-  // Generate headcount data with realistic values
-  const rowData = Array.from({ length: 12 }, (_, i) => {
-    const dailyValues = {
-      monday: Math.floor(Math.random() * 10) + 5,
-      tuesday: Math.floor(Math.random() * 10) + 5,
-      wednesday: Math.floor(Math.random() * 10) + 5,
-      thursday: Math.floor(Math.random() * 10) + 5,
-      friday: Math.floor(Math.random() * 10) + 5,
-      saturday: Math.floor(Math.random() * 10) + 3,
-      sunday: Math.floor(Math.random() * 8) + 2,
-    };
-    
-    const total = Object.values(dailyValues).reduce((sum, val) => sum + val, 0);
-    
-    return {
-      id: i + 1,
-      position: `Position ${i + 1}`,
-      ...dailyValues,
-      total
-    };
-  });
+  // Sample data based on the provided image
+  const rowData = [
+    { shift: 'Weds-1-Day', ab: 4, auto: 0, core: 0, cp: 0, ep: 0, extra: 0, gl: 0, kt: 51, th: 0, total: 55 },
+    { shift: 'Weds-1-Night', ab: 0, auto: 0, core: 0, cp: 0, ep: 0, extra: 0, gl: 0, kt: 38, th: 0, total: 38 },
+    { shift: 'Thurs-1-Day', ab: 4, auto: 44, core: 0, cp: 0, ep: 17, extra: 0, gl: 0, kt: 32, th: 0, total: 97 },
+    { shift: 'Thurs-1-Night', ab: 0, auto: 33, core: 0, cp: 0, ep: 17, extra: 0, gl: 0, kt: 7, th: 0, total: 57 },
+    { shift: 'Fri-Day', ab: 4, auto: 33, core: 0, cp: 0, ep: 0, extra: 0, gl: 0, kt: 38, th: 0, total: 75 },
+    { shift: 'Fri-Night', ab: 0, auto: 33, core: 0, cp: 0, ep: 0, extra: 0, gl: 0, kt: 7, th: 0, total: 40 },
+    { shift: 'Sat-Day', ab: 4, auto: 33, core: 0, cp: 0, ep: 17, extra: 0, gl: 0, kt: 32, th: 0, total: 86 },
+    { shift: 'Sat-Night', ab: 0, auto: 33, core: 0, cp: 0, ep: 17, extra: 0, gl: 0, kt: 7, th: 0, total: 57 },
+    { shift: 'Sun-Day', ab: 4, auto: 44, core: 0, cp: 0, ep: 17, extra: 0, gl: 0, kt: 45, th: 0, total: 110 },
+    { shift: 'Sun-Night', ab: 0, auto: 33, core: 0, cp: 0, ep: 17, extra: 0, gl: 0, kt: 19, th: 0, total: 69 },
+    { shift: 'Mon-Day', ab: 4, auto: 44, core: 0, cp: 0, ep: 17, extra: 0, gl: 0, kt: 38, th: 0, total: 103 },
+    { shift: 'Mon-Night', ab: 0, auto: 33, core: 0, cp: 0, ep: 0, extra: 0, gl: 0, kt: 13, th: 0, total: 46 },
+    { shift: 'Tues-Day', ab: 8, auto: 44, core: 0, cp: 0, ep: 17, extra: 0, gl: 0, kt: 32, th: 0, total: 101 },
+    { shift: 'Tues-Night', ab: 0, auto: 33, core: 0, cp: 0, ep: 17, extra: 0, gl: 0, kt: 7, th: 0, total: 57 },
+    { shift: 'Weds-2-Day', ab: 0, auto: 0, core: 0, cp: 0, ep: 17, extra: 0, gl: 0, kt: 0, th: 0, total: 17 },
+    { shift: 'Weds-2-Night', ab: 0, auto: 0, core: 0, cp: 0, ep: 0, extra: 0, gl: 0, kt: 0, th: 0, total: 0 }
+  ];
 
   return (
     <CollapsibleSection title="Headcount">
@@ -48,7 +47,7 @@ const HeadcountSection: FC = () => {
           <DataTable
             columnDefs={columnDefs}
             rowData={rowData}
-            height="400px"
+            height="600px"
           />
         </div>
       </div>
