@@ -3,7 +3,6 @@ import { FC, ReactNode, useState } from 'react';
 import NavigationTabs from '@/components/NavigationTabs';
 import PlanHeader from '@/components/PlanHeader';
 import Footer from '@/components/Footer';
-import { useTheme } from '@/components/ThemeProvider';
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -19,7 +18,6 @@ const PageLayout: FC<PageLayoutProps> = ({
   title
 }) => {
   const [planName, setPlanName] = useState('Weekly Production Plan');
-  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
@@ -39,7 +37,7 @@ const PageLayout: FC<PageLayoutProps> = ({
       </div>
 
       {/* Footer */}
-      <Footer toggleDarkMode={toggleTheme} isDarkMode={theme === 'dark'} />
+      <Footer />
     </div>
   );
 };

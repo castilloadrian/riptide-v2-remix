@@ -8,12 +8,10 @@ import HeadcountSection from '@/components/HeadcountSection';
 import ConfigurationSection from '@/components/ConfigurationSection';
 import PlanDeepDiveSection from '@/components/PlanDeepDiveSection';
 import Footer from '@/components/Footer';
-import { useTheme } from '@/components/ThemeProvider';
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState('planning');
   const [planName, setPlanName] = useState('Weekly Production Plan');
-  const { theme, toggleTheme } = useTheme();
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
@@ -36,7 +34,7 @@ const Index = () => {
       </div>
 
       {/* Footer */}
-      <Footer toggleDarkMode={toggleTheme} isDarkMode={theme === 'dark'} />
+      <Footer />
     </div>
   );
 };

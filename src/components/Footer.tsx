@@ -1,15 +1,23 @@
 
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Moon, Sun } from 'lucide-react';
-import { Toggle } from '@/components/ui/toggle';
+import { Moon, Sun, Monitor } from 'lucide-react';
+import { useTheme } from '@/components/ThemeProvider';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
 
 interface FooterProps {
-  toggleDarkMode: () => void;
-  isDarkMode: boolean;
+  toggleDarkMode?: () => void; // Keep for backward compatibility
+  isDarkMode?: boolean; // Keep for backward compatibility
 }
 
-const Footer: React.FC<FooterProps> = ({ toggleDarkMode, isDarkMode }) => {
+const Footer: React.FC<FooterProps> = () => {
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  
   return (
     <footer className="mt-auto py-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
       <div className="container mx-auto px-4 flex justify-between items-center">
@@ -22,14 +30,32 @@ const Footer: React.FC<FooterProps> = ({ toggleDarkMode, isDarkMode }) => {
           </Link>
         </div>
         <div className="w-1/3 flex justify-end">
-          <Toggle 
-            pressed={isDarkMode} 
-            onPressedChange={toggleDarkMode}
-            aria-label="Toggle dark mode"
-            className="data-[state=on]:bg-gray-800 data-[state=on]:text-white"
-          >
-            {isDarkMode ? <Sun size={16} /> : <Moon size={16} />}
-          </Toggle>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon" className="h-9 w-9">
+                {resolvedTheme === 'dark' ? (
+                  <Moon className="h-4 w-4" />
+                ) : (
+                  <Sun className="h-4 w-4" />
+                )}
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => setTheme('light')}>
+                <Sun className="mr-2 h-4 w-4" />
+                <span>Light</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme('dark')}>
+                <Moon className="mr-2 h-4 w-4" />
+                <span>Dark</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme('system')}>
+                <Monitor className="mr-2 h-4 w-4" />
+                <span>System</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </footer>
