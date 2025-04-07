@@ -1,8 +1,5 @@
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+/* Custom base styles beyond Tailwind directives */
 @layer base {
   :root {
     --background: 0 0% 100%;
