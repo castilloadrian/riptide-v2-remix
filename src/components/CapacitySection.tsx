@@ -6,50 +6,38 @@ import DataTable from './DataTable';
 const CapacitySection: FC = () => {
   // Define column definitions for Box Capacity
   const boxColumnDefs = [
-    { headerName: 'ID', field: 'id', width: 70 },
-    { headerName: 'Box Type', field: 'boxType', width: 150 },
-    { headerName: 'Recipe Type', field: 'recipeType', width: 150 },
-    { headerName: 'WK-1', field: 'wkMinus1', width: 100 },
-    { headerName: 'WK', field: 'wk', width: 100 },
-    { headerName: 'WK+1', field: 'wkPlus1', width: 100 },
-    { headerName: 'WK+2', field: 'wkPlus2', width: 100 },
-    { headerName: 'WK+3', field: 'wkPlus3', width: 100 },
+    { headerName: 'Shift', field: 'shift', width: 120 },
+    { headerName: 'Available', field: 'available', width: 120 },
+    { headerName: 'Planned', field: 'planned', width: 120 },
+    { headerName: 'Excess', field: 'excess', width: 120 },
   ];
 
-  // Define column definitions for Kit Capacity
+  // Define column definitions for Kit Overview
   const kitColumnDefs = [
-    { headerName: 'ID', field: 'id', width: 70 },
-    { headerName: 'Kit Type', field: 'kitType', width: 150 },
-    { headerName: 'Recipe Type', field: 'recipeType', width: 150 },
-    { headerName: 'WK-1', field: 'wkMinus1', width: 100 },
-    { headerName: 'WK', field: 'wk', width: 100 },
-    { headerName: 'WK+1', field: 'wkPlus1', width: 100 },
-    { headerName: 'WK+2', field: 'wkPlus2', width: 100 },
-    { headerName: 'WK+3', field: 'wkPlus3', width: 100 },
+    { headerName: 'Shift', field: 'shift', width: 120 },
+    { headerName: 'Need', field: 'need', width: 100 },
+    { headerName: 'SoS On-Hand', field: 'sosOnHand', width: 140 },
+    { headerName: 'Live Needs', field: 'liveNeeds', width: 120 },
+    { headerName: 'Buffer', field: 'buffer', width: 100 },
+    { headerName: 'Plan Create', field: 'planCreate', width: 120 },
   ];
 
   // Generate box capacity data
   const boxRowData = Array.from({ length: 15 }, (_, i) => ({
-    id: i + 1,
-    boxType: `Box Type ${i + 1}`,
-    recipeType: `Recipe ${i % 5 + 1}`,
-    wkMinus1: Math.floor(Math.random() * 100),
-    wk: Math.floor(Math.random() * 100),
-    wkPlus1: Math.floor(Math.random() * 100),
-    wkPlus2: Math.floor(Math.random() * 100),
-    wkPlus3: Math.floor(Math.random() * 100),
+    shift: `Shift ${i % 3 + 1}`,
+    available: Math.floor(Math.random() * 1000),
+    planned: Math.floor(Math.random() * 800),
+    excess: Math.floor(Math.random() * 200),
   }));
 
-  // Generate kit capacity data
+  // Generate kit overview data
   const kitRowData = Array.from({ length: 15 }, (_, i) => ({
-    id: i + 1,
-    kitType: `Kit Type ${i + 1}`,
-    recipeType: `Recipe ${i % 5 + 1}`,
-    wkMinus1: Math.floor(Math.random() * 100),
-    wk: Math.floor(Math.random() * 100),
-    wkPlus1: Math.floor(Math.random() * 100),
-    wkPlus2: Math.floor(Math.random() * 100),
-    wkPlus3: Math.floor(Math.random() * 100),
+    shift: `Shift ${i % 3 + 1}`,
+    need: Math.floor(Math.random() * 500),
+    sosOnHand: Math.floor(Math.random() * 400),
+    liveNeeds: Math.floor(Math.random() * 300),
+    buffer: Math.floor(Math.random() * 100),
+    planCreate: Math.floor(Math.random() * 200),
   }));
 
   return (
@@ -67,7 +55,7 @@ const CapacitySection: FC = () => {
         </div>
         
         <div>
-          <h3 className="font-medium mb-2">Kit Capacity</h3>
+          <h3 className="font-medium mb-2">Kit Overview</h3>
           <div className="overflow-x-auto">
             <DataTable
               columnDefs={kitColumnDefs}
