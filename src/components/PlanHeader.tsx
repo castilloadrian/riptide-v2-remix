@@ -121,26 +121,38 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
         
         <div className="space-y-2">
           <div className="flex gap-2 justify-end items-center">
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button variant="outline" size="icon" className="h-10 w-10">
-                  <Filter className="h-4 w-4" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-56 p-3">
-                <div className="space-y-2">
-                  <h4 className="font-medium mb-2">Enter Constraints</h4>
-                  <div className="space-y-1">
-                    <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
-                      TI Autostore
-                    </button>
-                    <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
-                      Print to PDL
-                    </button>
-                  </div>
-                </div>
-              </PopoverContent>
-            </Popover>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button variant="outline" size="icon" className="h-10 w-10">
+                        <Filter className="h-4 w-4" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-56 p-3">
+                      <div className="space-y-2">
+                        <h4 className="font-medium mb-2">Planning Levers</h4>
+                        <div className="space-y-1">
+                          <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
+                            Enter Constraints
+                          </button>
+                          <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
+                            TI Autostore
+                          </button>
+                          <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
+                            Print to PDL
+                          </button>
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Planning Levers</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
             
             <TooltipProvider>
               <Tooltip>
@@ -155,7 +167,7 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Copy</p>
+                  <p>Copy Plan</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -173,7 +185,7 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>File</p>
+                  <p>Create New Plan</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -191,7 +203,7 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Save</p>
+                  <p>Save Plan</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
