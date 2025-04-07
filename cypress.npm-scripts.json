@@ -1,8 +1,8 @@
 
 {
   "scripts": {
-    "cypress:open": "cypress open",
-    "cypress:run": "cypress run",
-    "test": "cypress run"
+    "cypress:open": "cypress open --browser chrome",
+    "cypress:run": "cypress run --browser chrome --headless",
+    "test": "cypress run --browser chrome --headless"
   }
 }
