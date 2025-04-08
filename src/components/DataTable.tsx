@@ -22,7 +22,7 @@ const DataTable: FC<DataTableProps> = ({
     sortable: true,
     filter: true,
     resizable: true,
-    flex: 1, // Make columns flex to fill available space
+    // Remove flex: 1 to prevent auto-adjusting column widths
   };
 
   useEffect(() => {

@@ -32,15 +32,34 @@
   padding: 0.25rem 0.5rem;
 }
 
-/* Ensure the grid's root element takes full width */
+/* Remove these styles to allow horizontal scrolling */
+/* 
 .ag-root-wrapper {
   width: 100% !important;
 }
 
-/* Ensure the horizontal scroll is only shown when needed */
 .ag-center-cols-container,
 .ag-center-cols-viewport,
 .ag-header-container,
 .ag-header-viewport {
   width: 100% !important;
+} 
+*/
+
+/* Add risk-bar colors for the risk assessment visualization */
+.risk-bar {
+  height: 10px;
+  border-radius: 2px;
+}
+
+.risk-red {
+  background-color: #ef4444;
+}
+
+.risk-yellow {
+  background-color: #f59e0b;
+}
+
+.risk-green {
+  background-color: #10b981;
 }
