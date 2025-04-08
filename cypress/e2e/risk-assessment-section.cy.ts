@@ -83,4 +83,20 @@ describe('Risk Assessment Section', () => {
     cy.contains('Plan Visualization').click();
     cy.get('[data-state="active"]').contains('Plan Visualization').should('exist');
   });
+
+  it('should handle responsive design for tab navigation', () => {
+    // Test on mobile viewport
+    cy.viewport('iphone-6');
+    cy.contains('Risk Assessment').should('be.visible');
+    
+    // Check that tabs are still accessible (may have different styling on mobile)
+    cy.contains('Total P2PDL').click();
+    cy.get('[data-state="active"]').contains('Total P2PDL').should('exist');
+    
+    cy.contains('RoW Volume').click();
+    cy.get('[data-state="active"]').contains('RoW Volume').should('exist');
+    
+    // Reset viewport
+    cy.viewport('macbook-15');
+  });
 });
