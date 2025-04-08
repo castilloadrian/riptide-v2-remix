@@ -46,14 +46,36 @@ const cptRiskColumns = [
   { headerName: 'Effective TNT', field: 'effectiveTnt', flex: 1 },
 ];
 
-// Mock data for plan details
-const planDetailsData = [
-  { name: 'Prep Time', value: 110, fill: '#3b82f6' },
-  { name: 'Cook Time', value: 90, fill: '#3b82f6' },
-  { name: 'Package Time', value: 70, fill: '#6366f1' },
-  { name: 'Assembly Time', value: 60, fill: '#6366f1' },
-  { name: 'QA Time', value: 40, fill: '#8b5cf6' },
-  { name: 'Cleanup Time', value: 30, fill: '#8b5cf6' },
+// Mock data for plan details table
+const planDetailsData = Array.from({ length: 12 }, (_, i) => ({
+  shift: i % 3 === 0 ? 'Morning' : i % 3 === 1 ? 'Evening' : 'Night',
+  boxAggregation: `Box-${i + 1}`,
+  lane: `Lane ${i % 5 + 1}`,
+  allocatedLine: `Line ${i % 4 + 1}`,
+  scheduledVolume: Math.floor(Math.random() * 500) + 100,
+  status: i % 4 === 0 ? 'Completed' : i % 4 === 1 ? 'In Progress' : i % 4 === 2 ? 'Scheduled' : 'Delayed',
+  cpt: `${(Math.floor(Math.random() * 12) + 8)}:00 ${Math.floor(Math.random() * 12) + 8 > 12 ? 'PM' : 'AM'}`,
+  cptDelta: Math.floor(Math.random() * 180) - 60,
+  cptDeltaGroup: i % 3 === 0 ? 'On Time' : i % 3 === 1 ? 'At Risk' : 'Late',
+  volumeLabelFlag: i % 3 === 0 ? 'High' : i % 3 === 1 ? 'Medium' : 'Low',
+  effectiveTnt: Math.floor(Math.random() * 40) + 10,
+  scanCount: Math.floor(Math.random() * 200) + 50,
+}));
+
+// Column definitions for Plan Details table
+const planDetailsColumns = [
+  { headerName: 'Shift', field: 'shift', flex: 1 },
+  { headerName: 'Box Aggregation', field: 'boxAggregation', flex: 1 },
+  { headerName: 'Lane', field: 'lane', flex: 1 },
+  { headerName: 'Allocated Line', field: 'allocatedLine', flex: 1 },
+  { headerName: 'Scheduled Volume', field: 'scheduledVolume', flex: 1 },
+  { headerName: 'Status', field: 'status', flex: 1 },
+  { headerName: 'CPT', field: 'cpt', flex: 1 },
+  { headerName: 'CPT Delta', field: 'cptDelta', flex: 1 },
+  { headerName: 'CPT Delta Group', field: 'cptDeltaGroup', flex: 1 },
+  { headerName: 'Volume Label Flag', field: 'volumeLabelFlag', flex: 1 },
+  { headerName: 'Effective TNT', field: 'effectiveTnt', flex: 1 },
+  { headerName: 'Scan Count', field: 'scanCount', flex: 1 },
 ];
 
 const PlanDeepDiveSection: FC = () => {
@@ -122,37 +144,12 @@ const PlanDeepDiveSection: FC = () => {
           
           <TabsContent value="details" className="w-full">
             <div className="h-[400px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={planDetailsData}
-                  layout="vertical"
-                  margin={{ top: 10, right: 30, left: 100, bottom: 10 }}
-                  className="bg-white dark:bg-gray-800 rounded-md p-2"
-                >
-                  <XAxis type="number" />
-                  <YAxis 
-                    dataKey="name" 
-                    type="category" 
-                    width={100}
-                    tick={{ fill: '#666', fontSize: 12 }}
-                  />
-                  <Tooltip
-                    contentStyle={{ 
-                      backgroundColor: 'rgba(255, 255, 255, 0.9)', 
-                      border: '1px solid #ccc',
-                      borderRadius: '4px',
-                      color: '#333'
-                    }}
-                    formatter={(value) => [`${value} minutes`, 'Duration']}
-                  />
-                  <Bar 
-                    dataKey="value" 
-                    radius={[0, 4, 4, 0]}
-                    barSize={20}
-                    background={{ fill: '#eee' }}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
+              <DataTable
+                columnDefs={planDetailsColumns}
+                rowData={planDetailsData}
+                height="400px"
+                className="w-full"
+              />
             </div>
           </TabsContent>
         </Tabs>
