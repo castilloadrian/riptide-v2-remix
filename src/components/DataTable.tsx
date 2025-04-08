@@ -22,7 +22,8 @@ const DataTable: FC<DataTableProps> = ({
     sortable: true,
     filter: true,
     resizable: true,
-    // We want horizontal scrolling rather than truncated column names
+    // Enable horizontal scrolling for all tables
+    suppressSizeToFit: true
   };
 
   useEffect(() => {

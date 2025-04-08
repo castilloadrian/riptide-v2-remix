@@ -17,7 +17,7 @@ describe('Risk Assessment Section', () => {
     cy.contains('Risk Assessment').should('be.visible');
     cy.contains('Plan Visualization').should('be.visible');
     cy.contains('Total P2PDL').should('be.visible');
-    cy.contains('Row Volume').should('be.visible');
+    cy.contains('RoW Volume').should('be.visible');
     cy.contains('Grocery (Complexity)').should('be.visible');
     cy.contains('Time to CPT Range').should('be.visible');
     cy.contains('Same Day Ship').should('be.visible');
@@ -33,15 +33,15 @@ describe('Risk Assessment Section', () => {
   it('should navigate to Total P2PDL tab and show correctly', () => {
     cy.contains('Total P2PDL').click();
     cy.get('[data-state="active"]').contains('Total P2PDL').should('exist');
-    cy.get('.ag-header-cell').contains('Plan Date').should('be.visible');
-    cy.get('.ag-header-cell').contains('Carrier').should('be.visible');
+    cy.get('.ag-header-cell').contains('Shift').should('be.visible');
+    cy.get('.ag-header-cell').contains('Volume').should('be.visible');
   });
 
-  it('should navigate to Row Volume tab and show correctly', () => {
-    cy.contains('Row Volume').click();
-    cy.get('[data-state="active"]').contains('Row Volume').should('exist');
-    cy.get('.ag-header-cell').contains('Row Type').should('be.visible');
-    cy.get('.ag-header-cell').contains('Scheduled Volume').should('be.visible');
+  it('should navigate to RoW Volume tab and show correctly', () => {
+    cy.contains('RoW Volume').click();
+    cy.get('[data-state="active"]').contains('RoW Volume').should('exist');
+    cy.get('.ag-header-cell').contains('Shift').should('be.visible');
+    cy.get('.ag-header-cell').contains('Volume').should('be.visible');
   });
 
   it('should navigate to Grocery (Complexity) tab and show correct columns', () => {

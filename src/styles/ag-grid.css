@@ -32,6 +32,12 @@
   padding: 0.25rem 0.5rem;
 }
 
+/* Ensure no text truncation in headers */
+.ag-theme-alpine .ag-header-cell-text {
+  overflow: visible;
+  white-space: nowrap;
+}
+
 /* Risk-bar colors for the risk assessment visualization */
 .risk-bar {
   height: 10px;

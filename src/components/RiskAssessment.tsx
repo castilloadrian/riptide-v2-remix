@@ -3,9 +3,11 @@ import { FC, useState } from 'react';
 import CollapsibleSection from './CollapsibleSection';
 import DataTable from './DataTable';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const RiskAssessment: FC = () => {
   const [activeTab, setActiveTab] = useState('plan-visualization');
+  const isMobile = useIsMobile();
 
   // Define column definitions for Plan Visualization table (original risk assessment table)
   const planVisualizationColumns = [
@@ -42,61 +44,45 @@ const RiskAssessment: FC = () => {
     risk: i % 3 === 0 ? 'low' : i % 3 === 1 ? 'medium' : 'high'
   }));
 
-  // Define column definitions for Total P2PDL table
+  // Updated column definitions for Total P2PDL table
   const p2pdlColumns = [
-    { headerName: 'Plan Date', field: 'planDate', width: 120 },
-    { headerName: 'Carrier', field: 'carrier', width: 120 },
-    { headerName: 'Lane', field: 'lane', width: 120 },
-    { headerName: 'Volume', field: 'volume', width: 100 },
-    { headerName: 'P2PDL', field: 'p2pdl', width: 100 },
-    { headerName: 'Risk Level', field: 'riskLevel', width: 120 },
+    { headerName: 'Shift', field: 'shift', width: 120 },
+    { headerName: 'Volume', field: 'volume', width: 120 },
   ];
 
   // Generate sample data for the P2PDL table
   const p2pdlData = Array.from({ length: 10 }, (_, i) => ({
-    planDate: `2023-04-${i + 10}`,
-    carrier: `Carrier ${i % 3 + 1}`,
-    lane: `Lane ${i % 5 + 1}`,
-    volume: Math.floor(Math.random() * 1000),
-    p2pdl: `${Math.floor(Math.random() * 24)}h ${Math.floor(Math.random() * 60)}m`,
-    riskLevel: i % 3 === 0 ? 'High' : i % 3 === 1 ? 'Medium' : 'Low'
+    shift: i % 2 === 0 ? 'Morning' : 'Evening',
+    volume: Math.floor(Math.random() * 1000) + 100,
   }));
 
-  // Define column definitions for Row Volume table
+  // Updated column definitions for RoW Volume table
   const rowVolumeColumns = [
-    { headerName: 'Date', field: 'date', width: 120 },
-    { headerName: 'Row Type', field: 'rowType', width: 140 },
-    { headerName: 'Scheduled Volume', field: 'scheduledVolume', width: 160 },
-    { headerName: 'Actual Volume', field: 'actualVolume', width: 140 },
-    { headerName: 'Delta', field: 'delta', width: 100 },
-    { headerName: 'Status', field: 'status', width: 120 },
+    { headerName: 'Shift', field: 'shift', width: 140 },
+    { headerName: 'Volume', field: 'volume', width: 160 },
   ];
 
-  // Generate sample data for the Row Volume table
+  // Generate sample data for the RoW Volume table
   const rowVolumeData = Array.from({ length: 12 }, (_, i) => ({
-    date: `2023-04-${i + 10}`,
-    rowType: `Type ${i % 4 + 1}`,
-    scheduledVolume: Math.floor(Math.random() * 1000) + 200,
-    actualVolume: Math.floor(Math.random() * 1000) + 100,
-    delta: Math.floor(Math.random() * 200) - 100,
-    status: i % 3 === 0 ? 'On Track' : i % 3 === 1 ? 'At Risk' : 'Delayed'
+    shift: i % 2 === 0 ? 'Morning' : 'Evening',
+    volume: Math.floor(Math.random() * 1000) + 200,
   }));
 
-  // Updated column definitions for Grocery (Complexity) table
+  // Grocery (Complexity) table columns definition
   const groceryColumns = [
     { headerName: 'Shift', field: 'shift', width: 120 },
     { headerName: '% (Grocery / Total Volume)', field: 'groceryTotalPercent', width: 200 },
     { headerName: '% (Grocery / Auto Volume)', field: 'groceryAutoPercent', width: 200 },
   ];
 
-  // Generate sample data for the Grocery table with updated fields
+  // Generate sample data for the Grocery table
   const groceryData = Array.from({ length: 10 }, (_, i) => ({
     shift: i % 2 === 0 ? 'Morning' : 'Evening',
     groceryTotalPercent: `${Math.floor(Math.random() * 40) + 10}%`,
     groceryAutoPercent: `${Math.floor(Math.random() * 60) + 20}%`,
   }));
 
-  // Updated column definitions for Time to CPT Range table
+  // Time to CPT Range table columns definition
   const cptRangeColumns = [
     { headerName: 'Shift', field: 'shift', width: 120 },
     { headerName: '3-6', field: 'range3to6', width: 100 },
@@ -106,7 +92,7 @@ const RiskAssessment: FC = () => {
     { headerName: '>30', field: 'rangeOver30', width: 100 },
   ];
 
-  // Generate sample data for the Time to CPT Range table with updated fields
+  // Generate sample data for the Time to CPT Range table
   const cptRangeData = Array.from({ length: 8 }, (_, i) => ({
     shift: i % 2 === 0 ? 'Morning' : 'Evening',
     range3to6: Math.floor(Math.random() * 20) + 5,
@@ -116,7 +102,7 @@ const RiskAssessment: FC = () => {
     rangeOver30: Math.floor(Math.random() * 10) + 2,
   }));
 
-  // Updated column definitions for Same Day Ship table
+  // Same Day Ship table columns definition
   const sameDayShipColumns = [
     { headerName: 'Shift', field: 'shift', width: 120 },
     { headerName: 'Total', field: 'total', width: 100 },
@@ -125,7 +111,7 @@ const RiskAssessment: FC = () => {
     { headerName: 'Third CPT', field: 'thirdCPT', width: 120 },
   ];
 
-  // Generate sample data for the Same Day Ship table with updated fields
+  // Generate sample data for the Same Day Ship table
   const sameDayShipData = Array.from({ length: 10 }, (_, i) => ({
     shift: i % 2 === 0 ? 'Morning' : 'Evening',
     total: Math.floor(Math.random() * 100) + 20,
@@ -142,10 +128,10 @@ const RiskAssessment: FC = () => {
           onValueChange={setActiveTab} 
           className="w-full"
         >
-          <TabsList className="grid w-full grid-cols-6 mb-6">
+          <TabsList className={`${isMobile ? 'flex flex-wrap gap-1' : 'grid grid-cols-6'} w-full mb-6`}>
             <TabsTrigger value="plan-visualization">Plan Visualization</TabsTrigger>
             <TabsTrigger value="p2pdl">Total P2PDL</TabsTrigger>
-            <TabsTrigger value="row-volume">Row Volume</TabsTrigger>
+            <TabsTrigger value="row-volume">RoW Volume</TabsTrigger>
             <TabsTrigger value="grocery">Grocery (Complexity)</TabsTrigger>
             <TabsTrigger value="cpt-range">Time to CPT Range</TabsTrigger>
             <TabsTrigger value="same-day-ship">Same Day Ship</TabsTrigger>
