@@ -82,64 +82,56 @@ const RiskAssessment: FC = () => {
     status: i % 3 === 0 ? 'On Track' : i % 3 === 1 ? 'At Risk' : 'Delayed'
   }));
 
-  // Define column definitions for Grocery (Complexity) table
+  // Updated column definitions for Grocery (Complexity) table
   const groceryColumns = [
-    { headerName: 'Category', field: 'category', width: 140 },
-    { headerName: 'Sub-Category', field: 'subCategory', width: 140 },
-    { headerName: 'Complexity Score', field: 'complexityScore', width: 160 },
-    { headerName: 'Volume', field: 'volume', width: 100 },
-    { headerName: 'Time Required', field: 'timeRequired', width: 140 },
-    { headerName: 'Status', field: 'status', width: 120 },
+    { headerName: 'Shift', field: 'shift', width: 120 },
+    { headerName: '% (Grocery / Total Volume)', field: 'groceryTotalPercent', width: 200 },
+    { headerName: '% (Grocery / Auto Volume)', field: 'groceryAutoPercent', width: 200 },
   ];
 
-  // Generate sample data for the Grocery table
+  // Generate sample data for the Grocery table with updated fields
   const groceryData = Array.from({ length: 10 }, (_, i) => ({
-    category: `Category ${i % 5 + 1}`,
-    subCategory: `Sub-Cat ${i % 3 + 1}`,
-    complexityScore: Math.floor(Math.random() * 100),
-    volume: Math.floor(Math.random() * 500) + 50,
-    timeRequired: `${Math.floor(Math.random() * 5) + 1}h ${Math.floor(Math.random() * 60)}m`,
-    status: i % 3 === 0 ? 'Simple' : i % 3 === 1 ? 'Moderate' : 'Complex'
+    shift: i % 2 === 0 ? 'Morning' : 'Evening',
+    groceryTotalPercent: `${Math.floor(Math.random() * 40) + 10}%`,
+    groceryAutoPercent: `${Math.floor(Math.random() * 60) + 20}%`,
   }));
 
-  // Define column definitions for Time to CPT Range table
+  // Updated column definitions for Time to CPT Range table
   const cptRangeColumns = [
     { headerName: 'Shift', field: 'shift', width: 120 },
-    { headerName: 'CPT Time', field: 'cptTime', width: 120 },
-    { headerName: 'Min Time', field: 'minTime', width: 120 },
-    { headerName: 'Max Time', field: 'maxTime', width: 120 },
-    { headerName: 'Avg Time', field: 'avgTime', width: 120 },
-    { headerName: 'Risk Level', field: 'riskLevel', width: 120 },
+    { headerName: '3-6', field: 'range3to6', width: 100 },
+    { headerName: '6-12', field: 'range6to12', width: 100 },
+    { headerName: '12-24', field: 'range12to24', width: 100 },
+    { headerName: '24-30', field: 'range24to30', width: 100 },
+    { headerName: '>30', field: 'rangeOver30', width: 100 },
   ];
 
-  // Generate sample data for the Time to CPT Range table
+  // Generate sample data for the Time to CPT Range table with updated fields
   const cptRangeData = Array.from({ length: 8 }, (_, i) => ({
     shift: i % 2 === 0 ? 'Morning' : 'Evening',
-    cptTime: `${(Math.floor(Math.random() * 12) + 8)}:00 ${Math.floor(Math.random() * 12) + 8 > 12 ? 'PM' : 'AM'}`,
-    minTime: `${Math.floor(Math.random() * 3)}h ${Math.floor(Math.random() * 60)}m`,
-    maxTime: `${Math.floor(Math.random() * 5) + 3}h ${Math.floor(Math.random() * 60)}m`,
-    avgTime: `${Math.floor(Math.random() * 4) + 2}h ${Math.floor(Math.random() * 60)}m`,
-    riskLevel: i % 3 === 0 ? 'Low' : i % 3 === 1 ? 'Medium' : 'High'
+    range3to6: Math.floor(Math.random() * 20) + 5,
+    range6to12: Math.floor(Math.random() * 30) + 10,
+    range12to24: Math.floor(Math.random() * 40) + 15,
+    range24to30: Math.floor(Math.random() * 15) + 5,
+    rangeOver30: Math.floor(Math.random() * 10) + 2,
   }));
 
-  // Define column definitions for Same Day Ship table
+  // Updated column definitions for Same Day Ship table
   const sameDayShipColumns = [
-    { headerName: 'Date', field: 'date', width: 120 },
-    { headerName: 'Order Cutoff', field: 'orderCutoff', width: 140 },
-    { headerName: 'Ship Cutoff', field: 'shipCutoff', width: 140 },
-    { headerName: 'Orders', field: 'orders', width: 100 },
-    { headerName: 'On-Time %', field: 'onTimePercent', width: 120 },
-    { headerName: 'Status', field: 'status', width: 120 },
+    { headerName: 'Shift', field: 'shift', width: 120 },
+    { headerName: 'Total', field: 'total', width: 100 },
+    { headerName: 'First CPT', field: 'firstCPT', width: 120 },
+    { headerName: 'Second CPT', field: 'secondCPT', width: 120 },
+    { headerName: 'Third CPT', field: 'thirdCPT', width: 120 },
   ];
 
-  // Generate sample data for the Same Day Ship table
+  // Generate sample data for the Same Day Ship table with updated fields
   const sameDayShipData = Array.from({ length: 10 }, (_, i) => ({
-    date: `2023-04-${i + 10}`,
-    orderCutoff: `${10 + (i % 3)}:00 AM`,
-    shipCutoff: `${4 + (i % 3)}:00 PM`,
-    orders: Math.floor(Math.random() * 100) + 20,
-    onTimePercent: `${Math.floor(Math.random() * 30) + 70}%`,
-    status: i % 3 === 0 ? 'Good' : i % 3 === 1 ? 'Warning' : 'Critical'
+    shift: i % 2 === 0 ? 'Morning' : 'Evening',
+    total: Math.floor(Math.random() * 100) + 20,
+    firstCPT: `${Math.floor(Math.random() * 30) + 70}%`,
+    secondCPT: `${Math.floor(Math.random() * 30) + 60}%`,
+    thirdCPT: `${Math.floor(Math.random() * 30) + 50}%`,
   }));
 
   return (

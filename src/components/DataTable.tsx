@@ -22,7 +22,7 @@ const DataTable: FC<DataTableProps> = ({
     sortable: true,
     filter: true,
     resizable: true,
-    // Remove flex: 1 to prevent auto-adjusting column widths
+    // We want horizontal scrolling rather than truncated column names
   };
 
   useEffect(() => {
