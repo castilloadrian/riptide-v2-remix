@@ -1,6 +1,6 @@
 
 import { FC, useState } from 'react';
-import { BarChart3, Box, Package, Clock, Bug, Users } from 'lucide-react';
+import { BarChart3, Box, Package, Clock, Bug, Users, Waves } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BugReportModal from './BugReportModal';
 
@@ -32,7 +32,11 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
   return (
     <>
       <div className="hellofresh-header flex justify-between py-1 px-4">
-        <div className="flex">
+        <div className="flex items-center">
+          <div className="flex items-center mr-6">
+            <Waves className="w-5 h-5 text-white mr-2" />
+            <span className="font-medium text-white">Riptide</span>
+          </div>
           {tabs.map((tab) => (
             <Link 
               to={tab.path}
