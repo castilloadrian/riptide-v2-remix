@@ -7,6 +7,7 @@
   --ag-odd-row-background-color: #f9f9f9;
   --ag-header-foreground-color: #397533;
   --ag-row-hover-color: #e8f5e9;
+  width: 100%; /* Ensure grid always takes full width */
 }
 
 .dark .ag-theme-alpine {
@@ -29,4 +30,17 @@
 .ag-theme-alpine .ag-cell {
   font-size: 0.875rem;
   padding: 0.25rem 0.5rem;
+}
+
+/* Ensure the grid's root element takes full width */
+.ag-root-wrapper {
+  width: 100% !important;
+}
+
+/* Ensure the horizontal scroll is only shown when needed */
+.ag-center-cols-container,
+.ag-center-cols-viewport,
+.ag-header-container,
+.ag-header-viewport {
+  width: 100% !important;
 }

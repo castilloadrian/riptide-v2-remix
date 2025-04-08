@@ -33,10 +33,14 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
     <>
       <div className="hellofresh-header flex justify-between py-1 px-4">
         <div className="flex items-center">
-          <div className="flex items-center mr-6">
+          <Link 
+            to="/"
+            className="flex items-center mr-6"
+            onClick={() => setActiveTab('planning')}
+          >
             <Waves className="w-5 h-5 text-white mr-2" />
             <span className="font-medium text-white">Riptide</span>
-          </div>
+          </Link>
           {tabs.map((tab) => (
             <Link 
               to={tab.path}
