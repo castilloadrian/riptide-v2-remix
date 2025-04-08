@@ -1,6 +1,5 @@
-
 import { FC, useState } from 'react';
-import { ChevronDown, Edit, Copy, FileText, Save, Filter } from 'lucide-react';
+import { ChevronDown, Edit, Copy, FileText, Save, Filter, CheckCircle } from 'lucide-react';
 import { 
   Select,
   SelectContent,
@@ -10,7 +9,8 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, TooltipInfoContent } from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge";
 import {
   Popover,
   PopoverContent,
@@ -44,7 +44,37 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
           <span className="text-primary font-medium">🔍 Plan</span>
         </div>
         <div className="text-right">
-          <div className="text-lg font-medium text-gray-700 dark:text-gray-300">Plan Status</div>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Badge variant="secondary" className="hover:bg-secondary/80 cursor-help px-3 py-1">
+                  <span className="flex items-center gap-1">
+                    <CheckCircle className="h-3.5 w-3.5 text-green-600" />
+                    <span>Approved</span>
+                  </span>
+                </Badge>
+              </TooltipTrigger>
+              <TooltipInfoContent side="bottom" align="end" className="bg-white dark:bg-gray-800 p-3 max-w-sm">
+                <div className="space-y-2 font-medium">
+                  <h4 className="font-semibold text-gray-900 dark:text-gray-100">Approved at 4/1/25 12:00 PM EST By Frodo Baggins</h4>
+                  <div className="space-y-1 text-sm">
+                    <p className="text-gray-700 dark:text-gray-300">
+                      <span className="font-semibold">Updated at 4/1/25 1:00 EST</span> By Samwise Gamgee
+                    </p>
+                    <p className="text-gray-700 dark:text-gray-300">
+                      <span className="font-semibold">Scan Data</span> Last received 4/1/25 1:15 PM EST
+                    </p>
+                    <p className="text-gray-700 dark:text-gray-300">
+                      <span className="font-semibold">ODL/PDL Data</span> Last received 4/1/25 1:30 PM EST
+                    </p>
+                    <p className="text-gray-700 dark:text-gray-300">
+                      <span className="font-semibold">SHN Data</span> Last received 4/1/25 1:45 PM EST
+                    </p>
+                  </div>
+                </div>
+              </TooltipInfoContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
 
@@ -100,7 +130,7 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
 
       <div className="mt-6 flex justify-between items-end">
         <div className="relative w-1/2">
-          <div className="flex items-center gap-6"> {/* Increased gap for more padding */}
+          <div className="flex items-center gap-6"> 
             <div className="p-1 border bg-blue-100 rounded">
               <Edit className="w-4 h-4 text-blue-600" />
             </div>
