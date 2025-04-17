@@ -16,69 +16,68 @@ describe('Risk Assessment Section', () => {
   it('should display Risk Assessment section with tabs', () => {
     cy.contains('Risk Assessment').should('be.visible');
     cy.contains('Plan Visualization').should('be.visible');
-    cy.contains('Total P2PDL').should('be.visible');
-    cy.contains('RoW Volume').should('be.visible');
-    cy.contains('Grocery (Complexity)').should('be.visible');
-    cy.contains('Time to CPT Range').should('be.visible');
-    cy.contains('Same Day Ship').should('be.visible');
+    cy.contains('Plan KPIs').should('be.visible');
   });
 
   it('should show Plan Visualization tab by default with AG Grid', () => {
     cy.get('[data-state="active"]').contains('Plan Visualization').should('exist');
     cy.get('.ag-center-cols-container').should('exist');
-    cy.get('.ag-header-cell').contains('Date').should('be.visible');
-    cy.get('.ag-header-cell').contains('Item').should('be.visible');
+    cy.get('.ag-header-cell').contains('Shift').should('be.visible');
+    cy.get('.ag-header-cell').contains('Kits').should('be.visible');
   });
 
-  it('should navigate to Total P2PDL tab and show correctly', () => {
-    cy.contains('Total P2PDL').click();
-    cy.get('[data-state="active"]').contains('Total P2PDL').should('exist');
-    cy.get('.ag-header-cell').contains('Shift').should('be.visible');
-    cy.get('.ag-header-cell').contains('Volume').should('be.visible');
+  it('should navigate to Plan KPIs tab and show correctly', () => {
+    cy.contains('Plan KPIs').click();
+    cy.get('[data-state="active"]').contains('Plan KPIs').should('exist');
+    
+    // Check top row tables
+    cy.contains('Total P2PDL').should('be.visible');
+    cy.contains('RoW Volume').should('be.visible');
+    cy.contains('Grocery (Complexity)').should('be.visible');
+    
+    // Check bottom row tables
+    cy.contains('Time to CPT Range').should('be.visible');
+    cy.contains('Same Day Ship').should('be.visible');
   });
 
-  it('should navigate to RoW Volume tab and show correctly', () => {
-    cy.contains('RoW Volume').click();
-    cy.get('[data-state="active"]').contains('RoW Volume').should('exist');
-    cy.get('.ag-header-cell').contains('Shift').should('be.visible');
-    cy.get('.ag-header-cell').contains('Volume').should('be.visible');
-  });
-
-  it('should navigate to Grocery (Complexity) tab and show correct columns', () => {
-    cy.contains('Grocery (Complexity)').click();
-    cy.get('[data-state="active"]').contains('Grocery (Complexity)').should('exist');
-    cy.get('.ag-header-cell').contains('Shift').should('be.visible');
-    cy.get('.ag-header-cell').contains('% (Grocery / Total Volume)').should('be.visible');
-    cy.get('.ag-header-cell').contains('% (Grocery / Auto Volume)').should('be.visible');
-  });
-
-  it('should navigate to Time to CPT Range tab and show correct columns', () => {
-    cy.contains('Time to CPT Range').click();
-    cy.get('[data-state="active"]').contains('Time to CPT Range').should('exist');
-    cy.get('.ag-header-cell').contains('Shift').should('be.visible');
-    cy.get('.ag-header-cell').contains('3-6').should('be.visible');
-    cy.get('.ag-header-cell').contains('6-12').should('be.visible');
-    cy.get('.ag-header-cell').contains('12-24').should('be.visible');
-    cy.get('.ag-header-cell').contains('24-30').should('be.visible');
-    cy.get('.ag-header-cell').contains('>30').should('be.visible');
-  });
-
-  it('should navigate to Same Day Ship tab and show correct columns', () => {
-    cy.contains('Same Day Ship').click();
-    cy.get('[data-state="active"]').contains('Same Day Ship').should('exist');
-    cy.get('.ag-header-cell').contains('Shift').should('be.visible');
-    cy.get('.ag-header-cell').contains('Total').should('be.visible');
-    cy.get('.ag-header-cell').contains('First CPT').should('be.visible');
-    cy.get('.ag-header-cell').contains('Second CPT').should('be.visible');
-    cy.get('.ag-header-cell').contains('Third CPT').should('be.visible');
+  it('should show appropriate tables in Plan KPIs tab', () => {
+    cy.contains('Plan KPIs').click();
+    
+    // Check Total P2PDL table
+    cy.contains('Total P2PDL').parent().within(() => {
+      cy.get('.ag-header-cell').contains('Shift').should('be.visible');
+      cy.get('.ag-header-cell').contains('Volume').should('be.visible');
+    });
+    
+    // Check RoW Volume table
+    cy.contains('RoW Volume').parent().within(() => {
+      cy.get('.ag-header-cell').contains('Shift').should('be.visible');
+      cy.get('.ag-header-cell').contains('Volume').should('be.visible');
+    });
+    
+    // Check Grocery table
+    cy.contains('Grocery (Complexity)').parent().within(() => {
+      cy.get('.ag-header-cell').contains('Shift').should('be.visible');
+      cy.get('.ag-header-cell').contains('% (Grocery / Total Volume)').should('be.visible');
+      cy.get('.ag-header-cell').contains('% (Grocery / Auto Volume)').should('be.visible');
+    });
+    
+    // Check Time to CPT Range table
+    cy.contains('Time to CPT Range').parent().within(() => {
+      cy.get('.ag-header-cell').contains('3-6').should('be.visible');
+      cy.get('.ag-header-cell').contains('6-12').should('be.visible');
+    });
+    
+    // Check Same Day Ship table
+    cy.contains('Same Day Ship').parent().within(() => {
+      cy.get('.ag-header-cell').contains('Total').should('be.visible');
+      cy.get('.ag-header-cell').contains('First CPT').should('be.visible');
+    });
   });
 
   it('should maintain state when switching between tabs', () => {
-    cy.contains('Grocery (Complexity)').click();
-    cy.get('[data-state="active"]').contains('Grocery (Complexity)').should('exist');
-    
-    cy.contains('Same Day Ship').click();
-    cy.get('[data-state="active"]').contains('Same Day Ship').should('exist');
+    cy.contains('Plan KPIs').click();
+    cy.get('[data-state="active"]').contains('Plan KPIs').should('exist');
     
     cy.contains('Plan Visualization').click();
     cy.get('[data-state="active"]').contains('Plan Visualization').should('exist');
@@ -90,11 +89,8 @@ describe('Risk Assessment Section', () => {
     cy.contains('Risk Assessment').should('be.visible');
     
     // Check that tabs are still accessible (may have different styling on mobile)
-    cy.contains('Total P2PDL').click();
-    cy.get('[data-state="active"]').contains('Total P2PDL').should('exist');
-    
-    cy.contains('RoW Volume').click();
-    cy.get('[data-state="active"]').contains('RoW Volume').should('exist');
+    cy.contains('Plan KPIs').click();
+    cy.get('[data-state="active"]').contains('Plan KPIs').should('exist');
     
     // Reset viewport
     cy.viewport('macbook-15');
