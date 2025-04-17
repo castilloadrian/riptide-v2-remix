@@ -58,10 +58,13 @@ describe('Plan Header', () => {
     cy.get('button[role="combobox"]').eq(2).should('contain', 'Version 2.0');
   });
 
-  it('should have plan name input and update button', () => {
+  it('should have plan name input and update button without edit icon', () => {
     // Check for plan name input
     cy.contains('Plan Name').should('be.visible');
     cy.get('input[type="text"]').should('have.value', 'Weekly Production Plan');
+    
+    // Check that edit icon is not present
+    cy.get('svg.w-4.h-4.text-blue-600').should('not.exist');
     
     // Check for update button
     cy.contains('button', 'Update').should('be.visible');
@@ -111,5 +114,27 @@ describe('Plan Header', () => {
     // Test save button toast
     cy.get('button svg').eq(3).parent().click();
     cy.contains('Save action triggered').should('be.visible');
+  });
+
+  it('should have a sticky header when scrolling', () => {
+    // Force the page to be taller so we can scroll
+    cy.window().then((win) => {
+      win.document.body.style.height = '200vh';
+    });
+    
+    // Initial check that sticky part contains the Plan Name
+    cy.contains('Plan Name').should('be.visible');
+    
+    // Scroll down
+    cy.scrollTo(0, 200);
+    
+    // Check that Plan Name is still visible (should be in sticky header)
+    cy.contains('Plan Name').should('be.visible');
+    
+    // Check that the action buttons are still visible
+    cy.get('button svg').eq(1).should('be.visible'); // Copy button
+    cy.get('button svg').eq(2).should('be.visible'); // File button
+    cy.get('button svg').eq(3).should('be.visible'); // Save button
+    cy.contains('button', 'Approve').should('be.visible');
   });
 });
