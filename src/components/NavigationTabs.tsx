@@ -1,6 +1,6 @@
 
 import { FC, useState } from 'react';
-import { Box, Package, Clock, Bug, Settings, History, Trash, Shield, Activity } from 'lucide-react';
+import { Box, Package, Clock, Bug, Settings, History, Trash, Shield, Activity, Wave } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BugReportModal from './BugReportModal';
 import {
@@ -53,7 +53,7 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
             className="flex items-center mr-6"
             onClick={() => setActiveTab('planning')}
           >
-            <Waves className="w-5 h-5 text-white mr-2" />
+            <Wave className="w-5 h-5 text-white mr-2" />
             <span className="font-medium text-white">Riptide</span>
           </Link>
           {tabs.map((tab) => (
