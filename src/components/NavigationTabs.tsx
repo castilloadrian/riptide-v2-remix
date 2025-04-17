@@ -1,6 +1,5 @@
-
 import { FC, useState } from 'react';
-import { Box, Package, Clock, Bug, Settings, History, Trash, Shield, Activity, Wave } from 'lucide-react';
+import { Box, Package, Clock, Bug, Settings, History, Trash, Shield, Activity, Waves } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BugReportModal from './BugReportModal';
 import {
@@ -53,7 +52,7 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
             className="flex items-center mr-6"
             onClick={() => setActiveTab('planning')}
           >
-            <Wave className="w-5 h-5 text-white mr-2" />
+            <Waves className="w-5 h-5 text-white mr-2" />
             <span className="font-medium text-white">Riptide</span>
           </Link>
           {tabs.map((tab) => (
@@ -69,7 +68,6 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
           ))}
         </div>
         <div className="flex items-center space-x-2">
-          {/* Bug Report Button */}
           <button 
             className="header-tab-icon text-white hover:bg-white/10 p-2 rounded-full"
             onClick={() => setBugModalOpen(true)}
@@ -77,7 +75,6 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
             <Bug className="w-5 h-5" />
           </button>
 
-          {/* Admin Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="header-tab-icon text-white hover:bg-white/10 p-2 rounded-full">
