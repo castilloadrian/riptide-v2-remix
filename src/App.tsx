@@ -10,7 +10,6 @@ import LivePlan from "./pages/LivePlan";
 import Kitting from "./pages/Kitting";
 import Simulation from "./pages/Simulation";
 import NotFound from "./pages/NotFound";
-import Admin from "./pages/Admin";
 
 const queryClient = new QueryClient();
 
@@ -26,7 +25,6 @@ const App = () => (
             <Route path="/live-plan" element={<LivePlan />} />
             <Route path="/kitting" element={<Kitting />} />
             <Route path="/simulation" element={<Simulation />} />
-            <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

@@ -1,8 +1,17 @@
 
 import { FC, useState } from 'react';
-import { Box, Package, Clock, Bug, Users, Waves, Activity } from 'lucide-react';
+import { Box, Package, Clock, Bug, Settings, History, Trash, Shield, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BugReportModal from './BugReportModal';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Switch } from "@/components/ui/switch";
+import { toast } from "@/hooks/use-toast";
 
 interface NavigationTabProps {
   activeTab: string;
@@ -11,6 +20,8 @@ interface NavigationTabProps {
 
 const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => {
   const [bugModalOpen, setBugModalOpen] = useState(false);
+  const [overrideMode, setOverrideMode] = useState(false);
+  const [debugMode, setDebugMode] = useState(false);
   
   const tabs = [
     { id: 'planning', label: 'Planning', icon: <Box className="w-5 h-5" />, path: '/' },
@@ -19,15 +30,19 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
     { id: 'simulation', label: 'Shift Simulation', icon: <Clock className="w-5 h-5" />, path: '/simulation' },
   ];
 
-  const rightTabs = [
-    { 
-      id: 'bug', 
-      icon: <Bug className="w-5 h-5" />, 
-      action: () => setBugModalOpen(true),
-      path: null
-    },
-    { id: 'admin', icon: <Users className="w-5 h-5" />, path: '/admin' },
-  ];
+  const handlePlanHistory = () => {
+    toast({
+      title: "Plan History",
+      description: "Viewing plan edit history",
+    });
+  };
+
+  const handleClearSession = () => {
+    toast({
+      title: "Session Cleared",
+      description: "Session state has been cleared",
+    });
+  };
 
   return (
     <>
@@ -54,26 +69,54 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
           ))}
         </div>
         <div className="flex items-center space-x-2">
-          {rightTabs.map((tab) => (
-            tab.path ? (
-              <Link 
-                to={tab.path}
-                key={tab.id}
-                className="header-tab-icon text-white hover:bg-white/10 p-2 rounded-full"
-                onClick={() => setActiveTab(tab.id)}
-              >
-                {tab.icon}
-              </Link>
-            ) : (
-              <button 
-                key={tab.id}
-                className="header-tab-icon text-white hover:bg-white/10 p-2 rounded-full"
-                onClick={tab.action}
-              >
-                {tab.icon}
+          {/* Bug Report Button */}
+          <button 
+            className="header-tab-icon text-white hover:bg-white/10 p-2 rounded-full"
+            onClick={() => setBugModalOpen(true)}
+          >
+            <Bug className="w-5 h-5" />
+          </button>
+
+          {/* Admin Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="header-tab-icon text-white hover:bg-white/10 p-2 rounded-full">
+                <Settings className="w-5 h-5" />
               </button>
-            )
-          ))}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuGroup>
+                <DropdownMenuItem className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Shield className="w-4 h-4" />
+                    <span>Override Mode</span>
+                  </div>
+                  <Switch 
+                    checked={overrideMode}
+                    onCheckedChange={setOverrideMode}
+                  />
+                </DropdownMenuItem>
+                <DropdownMenuItem className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Bug className="w-4 h-4" />
+                    <span>Debug Mode</span>
+                  </div>
+                  <Switch 
+                    checked={debugMode}
+                    onCheckedChange={setDebugMode}
+                  />
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handlePlanHistory}>
+                  <History className="w-4 h-4 mr-2" />
+                  <span>Plan Edit History</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleClearSession}>
+                  <Trash className="w-4 h-4 mr-2" />
+                  <span>Clear Session State</span>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
       
