@@ -136,5 +136,15 @@ describe('Plan Header', () => {
     cy.get('button svg').eq(2).should('be.visible'); // File button
     cy.get('button svg').eq(3).should('be.visible'); // Save button
     cy.contains('button', 'Approve').should('be.visible');
+    
+    // Verify that the fixed section is at the top of the viewport when scrolled
+    cy.get('.fixed').should('have.css', 'top', '0px');
+    
+    // Scroll back to top
+    cy.scrollTo(0, 0);
+    
+    // Check that both sections are visible when at the top
+    cy.contains('🔍 Plan').should('be.visible');
+    cy.contains('Plan Name').should('be.visible');
+    cy.get('.fixed').should('have.css', 'top', '16px');
   });
-});
