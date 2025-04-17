@@ -1,3 +1,4 @@
+
 import { FC, useState, useEffect } from 'react';
 import { ChevronDown, Copy, FileText, Save, Filter, CheckCircle } from 'lucide-react';
 import { 
@@ -9,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { Tooltip, TooltipProvider, TooltipTrigger, TooltipInfoContent } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, TooltipInfoContent } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
 import {
   Popover,
