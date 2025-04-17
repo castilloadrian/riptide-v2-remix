@@ -1,7 +1,7 @@
-import React, { FC, useState } from 'react'; // Add React import explicitly
-import { Waves } from 'lucide-react'; // Ensure clean import
+import React, { FC, useState } from 'react';
+import { Waves } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Box, Package, Clock, Bug, Settings, History, Trash, Shield, Activity } from 'lucide-react';
+import { Box, Package, Clock, Bug, Settings2, History, Trash, Shield, Activity } from 'lucide-react';
 import BugReportModal from './BugReportModal';
 import {
   DropdownMenu,
@@ -22,6 +22,7 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
   const [bugModalOpen, setBugModalOpen] = useState(false);
   const [overrideMode, setOverrideMode] = useState(false);
   const [debugMode, setDebugMode] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   
   const tabs = [
     { id: 'planning', label: 'Planning', icon: <Box className="w-5 h-5" />, path: '/' },
@@ -29,6 +30,16 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
     { id: 'kitting', label: 'Kitting', icon: <Package className="w-5 h-5" />, path: '/kitting' },
     { id: 'simulation', label: 'Shift Simulation', icon: <Clock className="w-5 h-5" />, path: '/simulation' },
   ];
+
+  const handleOverrideModeChange = (checked: boolean) => {
+    setOverrideMode(checked);
+    event?.stopPropagation();
+  };
+
+  const handleDebugModeChange = (checked: boolean) => {
+    setDebugMode(checked);
+    event?.stopPropagation();
+  };
 
   const handlePlanHistory = () => {
     toast({
@@ -53,7 +64,6 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
             className="flex items-center mr-6"
             onClick={() => setActiveTab('planning')}
           >
-            {/* Explicit React component usage */}
             <Waves size={20} color="white" className="mr-2" />
             <span className="font-medium text-white">Riptide</span>
           </Link>
@@ -77,32 +87,32 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
             <Bug className="w-5 h-5" />
           </button>
 
-          <DropdownMenu>
+          <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
             <DropdownMenuTrigger asChild>
               <button className="header-tab-icon text-white hover:bg-white/10 p-2 rounded-full">
-                <Settings className="w-5 h-5" />
+                <Settings2 className="w-5 h-5" />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
               <DropdownMenuGroup>
-                <DropdownMenuItem className="flex items-center justify-between">
+                <DropdownMenuItem className="flex items-center justify-between" onSelect={(e) => e.preventDefault()}>
                   <div className="flex items-center gap-2">
                     <Shield className="w-4 h-4" />
                     <span>Override Mode</span>
                   </div>
                   <Switch 
                     checked={overrideMode}
-                    onCheckedChange={setOverrideMode}
+                    onCheckedChange={handleOverrideModeChange}
                   />
                 </DropdownMenuItem>
-                <DropdownMenuItem className="flex items-center justify-between">
+                <DropdownMenuItem className="flex items-center justify-between" onSelect={(e) => e.preventDefault()}>
                   <div className="flex items-center gap-2">
                     <Bug className="w-4 h-4" />
                     <span>Debug Mode</span>
                   </div>
                   <Switch 
                     checked={debugMode}
-                    onCheckedChange={setDebugMode}
+                    onCheckedChange={handleDebugModeChange}
                   />
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={handlePlanHistory}>
