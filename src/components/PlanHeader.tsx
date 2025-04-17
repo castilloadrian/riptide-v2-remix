@@ -33,9 +33,7 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
   const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
-    // Initial check on mount
-    handleScroll();
-    
+    // Define handleScroll function first before using it
     const handleScroll = () => {
       // Get position of the top section
       const topSection = document.getElementById('plan-header-top');
@@ -45,7 +43,10 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
         setIsSticky(topSectionRect.bottom <= 0);
       }
     };
-
+    
+    // Initial check on mount
+    handleScroll();
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
