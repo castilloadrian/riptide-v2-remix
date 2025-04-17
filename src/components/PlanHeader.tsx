@@ -33,6 +33,9 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
   const [isSticky, setIsSticky] = useState(false);
 
   useEffect(() => {
+    // Initial check on mount
+    handleScroll();
+    
     const handleScroll = () => {
       // Get position of the top section
       const topSection = document.getElementById('plan-header-top');
@@ -273,7 +276,7 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
       </div>
       
       {/* Spacer to prevent content from being hidden under fixed header */}
-      <div className={`h-32 ${isSticky ? 'mt-16' : ''}`}></div>
+      <div className={`h-32 ${isSticky ? 'block' : 'hidden'}`}></div>
     </div>
   );
 };

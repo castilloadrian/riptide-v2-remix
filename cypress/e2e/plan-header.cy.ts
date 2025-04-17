@@ -148,3 +148,4 @@ describe('Plan Header', () => {
     cy.contains('Plan Name').should('be.visible');
     cy.get('.fixed').should('have.css', 'top', '16px');
   });
+});
