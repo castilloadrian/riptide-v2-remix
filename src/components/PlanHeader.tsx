@@ -1,5 +1,4 @@
-
-import { FC, useState, useEffect } from 'react';
+import { FC, useState } from 'react';
 import { ChevronDown, Copy, FileText, Save, Filter, CheckCircle } from 'lucide-react';
 import { 
   Select,
@@ -30,26 +29,6 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
   const [selectedDC, setSelectedDC] = useState('NYC');
   const [selectedWeek, setSelectedWeek] = useState('Week 23');
   const [selectedVersion, setSelectedVersion] = useState('Version 1.0');
-  const [isSticky, setIsSticky] = useState(false);
-
-  useEffect(() => {
-    // Define handleScroll function first before using it
-    const handleScroll = () => {
-      // Get position of the top section
-      const topSection = document.getElementById('plan-header-top');
-      if (topSection) {
-        // Check if the bottom of the top section is above the viewport
-        const topSectionRect = topSection.getBoundingClientRect();
-        setIsSticky(topSectionRect.bottom <= 0);
-      }
-    };
-    
-    // Initial check on mount
-    handleScroll();
-    
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const handleButtonClick = (action: string) => {
     toast({
@@ -66,7 +45,7 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
 
   return (
     <div className="bg-white dark:bg-gray-800 border-b dark:border-gray-700">
-      <div className="p-4" id="plan-header-top">
+      <div className="p-4">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <span className="text-primary font-medium">🔍 Plan</span>
@@ -157,11 +136,8 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
         </div>
       </div>
 
-      {/* Fixed bottom section */}
-      <div 
-        className={`fixed z-50 bg-white dark:bg-gray-800 p-4 border-t border-gray-100 dark:border-gray-700 shadow-md ${isSticky ? 'top-0' : 'top-16'} left-0 right-0`}
-      >
-        <div className="mt-2 flex justify-between items-end container mx-auto max-w-7xl px-2 md:px-4">
+      <div className="sticky top-0 z-30 bg-white dark:bg-gray-800 p-4 border-t border-gray-100 dark:border-gray-700 shadow-sm">
+        <div className="mt-2 flex justify-between items-end">
           <div className="relative w-1/2">
             <div className="flex items-center"> 
               <div className="w-full">
@@ -275,9 +251,6 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
           </div>
         </div>
       </div>
-      
-      {/* Spacer to prevent content from being hidden under fixed header */}
-      <div className={`h-32 ${isSticky ? 'block' : 'hidden'}`}></div>
     </div>
   );
 };
