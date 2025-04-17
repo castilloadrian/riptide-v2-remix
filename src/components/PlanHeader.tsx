@@ -1,4 +1,3 @@
-
 import { FC, useState } from 'react';
 import { ChevronDown, Copy, FileText, Save, Filter, CheckCircle } from 'lucide-react';
 import { 
@@ -19,6 +18,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/hooks/use-toast";
+import { sanitizeInput } from '@/lib/utils';
 
 interface PlanHeaderProps {
   planName: string;
@@ -36,6 +36,11 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
       description: `The ${action} action has been initiated.`,
       duration: 2000,
     });
+  };
+
+  const handlePlanNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const sanitizedValue = sanitizeInput(e.target.value, 100, true);
+    setPlanName(sanitizedValue);
   };
 
   return (
@@ -131,7 +136,6 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
         </div>
       </div>
 
-      {/* Sticky part of the header */}
       <div className="sticky top-0 z-30 bg-white dark:bg-gray-800 p-4 border-t border-gray-100 dark:border-gray-700 shadow-sm">
         <div className="mt-2 flex justify-between items-end">
           <div className="relative w-1/2">
@@ -142,7 +146,8 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
                   type="text"
                   className="border-b w-full py-1 focus:outline-none focus:border-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
                   value={planName}
-                  onChange={(e) => setPlanName(e.target.value)}
+                  onChange={handlePlanNameChange}
+                  maxLength={100}
                 />
               </div>
             </div>

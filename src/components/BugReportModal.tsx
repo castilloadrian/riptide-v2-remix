@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/hooks/use-toast';
 import { Paperclip } from 'lucide-react';
+import { sanitizeInput } from '@/lib/utils';
 
 interface BugReportModalProps {
   open: boolean;
@@ -24,6 +25,12 @@ const BugReportModal: FC<BugReportModalProps> = ({ open, onOpenChange }) => {
   const [expectedBehavior, setExpectedBehavior] = useState('');
   const [actualBehavior, setActualBehavior] = useState('');
   const [stepsToReproduce, setStepsToReproduce] = useState('');
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Sanitize the title input
+    const sanitizedValue = sanitizeInput(e.target.value, 255);
+    setTitle(sanitizedValue);
+  };
 
   const handleSubmit = () => {
     // In a real app, this would submit the bug report to a backend
@@ -91,7 +98,7 @@ const BugReportModal: FC<BugReportModalProps> = ({ open, onOpenChange }) => {
         <Input 
           placeholder="Title (255 char limit)" 
           value={title} 
-          onChange={(e) => setTitle(e.target.value)} 
+          onChange={handleTitleChange} 
           maxLength={255}
           className="w-full my-4"
         />
