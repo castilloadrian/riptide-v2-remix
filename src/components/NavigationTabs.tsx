@@ -1,6 +1,7 @@
-import { FC, useState } from 'react';
-import { Box, Package, Clock, Bug, Settings, History, Trash, Shield, Activity, Waves } from 'lucide-react';
+import React, { FC, useState } from 'react'; // Add React import explicitly
+import { Waves } from 'lucide-react'; // Ensure clean import
 import { Link } from 'react-router-dom';
+import { Box, Package, Clock, Bug, Settings, History, Trash, Shield, Activity } from 'lucide-react';
 import BugReportModal from './BugReportModal';
 import {
   DropdownMenu,
@@ -52,7 +53,8 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
             className="flex items-center mr-6"
             onClick={() => setActiveTab('planning')}
           >
-            <Waves className="w-5 h-5 text-white mr-2" />
+            {/* Explicit React component usage */}
+            <Waves size={20} color="white" className="mr-2" />
             <span className="font-medium text-white">Riptide</span>
           </Link>
           {tabs.map((tab) => (
