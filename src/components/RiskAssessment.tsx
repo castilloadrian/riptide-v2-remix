@@ -128,13 +128,9 @@ const RiskAssessment: FC = () => {
           onValueChange={setActiveTab} 
           className="w-full"
         >
-          <TabsList className={`${isMobile ? 'flex flex-wrap gap-1' : 'grid grid-cols-6'} w-full mb-6`}>
+          <TabsList className="grid grid-cols-2 w-full mb-6">
             <TabsTrigger value="plan-visualization">Plan Visualization</TabsTrigger>
-            <TabsTrigger value="p2pdl">Total P2PDL</TabsTrigger>
-            <TabsTrigger value="row-volume">RoW Volume</TabsTrigger>
-            <TabsTrigger value="grocery">Grocery (Complexity)</TabsTrigger>
-            <TabsTrigger value="cpt-range">Time to CPT Range</TabsTrigger>
-            <TabsTrigger value="same-day-ship">Same Day Ship</TabsTrigger>
+            <TabsTrigger value="plan-kpis">Plan KPIs</TabsTrigger>
           </TabsList>
           
           <TabsContent value="plan-visualization" className="w-full">
@@ -147,53 +143,71 @@ const RiskAssessment: FC = () => {
             </div>
           </TabsContent>
           
-          <TabsContent value="p2pdl" className="w-full">
-            <div className="h-[400px] w-full">
-              <DataTable
-                columnDefs={p2pdlColumns}
-                rowData={p2pdlData}
-                height="400px"
-              />
+          <TabsContent value="plan-kpis" className="w-full">
+            {/* Top row with 3 tables side by side */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+              {/* Total P2PDL Table */}
+              <div>
+                <h3 className="font-medium text-sm mb-2">Total P2PDL</h3>
+                <div className="h-[250px]">
+                  <DataTable
+                    columnDefs={p2pdlColumns}
+                    rowData={p2pdlData}
+                    height="250px"
+                  />
+                </div>
+              </div>
+              
+              {/* RoW Volume Table */}
+              <div>
+                <h3 className="font-medium text-sm mb-2">RoW Volume</h3>
+                <div className="h-[250px]">
+                  <DataTable
+                    columnDefs={rowVolumeColumns}
+                    rowData={rowVolumeData}
+                    height="250px"
+                  />
+                </div>
+              </div>
+              
+              {/* Grocery Table */}
+              <div>
+                <h3 className="font-medium text-sm mb-2">Grocery (Complexity)</h3>
+                <div className="h-[250px]">
+                  <DataTable
+                    columnDefs={groceryColumns}
+                    rowData={groceryData}
+                    height="250px"
+                  />
+                </div>
+              </div>
             </div>
-          </TabsContent>
-
-          <TabsContent value="row-volume" className="w-full">
-            <div className="h-[400px] w-full">
-              <DataTable
-                columnDefs={rowVolumeColumns}
-                rowData={rowVolumeData}
-                height="400px"
-              />
-            </div>
-          </TabsContent>
-
-          <TabsContent value="grocery" className="w-full">
-            <div className="h-[400px] w-full">
-              <DataTable
-                columnDefs={groceryColumns}
-                rowData={groceryData}
-                height="400px"
-              />
-            </div>
-          </TabsContent>
-
-          <TabsContent value="cpt-range" className="w-full">
-            <div className="h-[400px] w-full">
-              <DataTable
-                columnDefs={cptRangeColumns}
-                rowData={cptRangeData}
-                height="400px"
-              />
-            </div>
-          </TabsContent>
-
-          <TabsContent value="same-day-ship" className="w-full">
-            <div className="h-[400px] w-full">
-              <DataTable
-                columnDefs={sameDayShipColumns}
-                rowData={sameDayShipData}
-                height="400px"
-              />
+            
+            {/* Bottom row with 2 tables stacked */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+              {/* Time to CPT Range Table */}
+              <div>
+                <h3 className="font-medium text-sm mb-2">Time to CPT Range</h3>
+                <div className="h-[250px]">
+                  <DataTable
+                    columnDefs={cptRangeColumns}
+                    rowData={cptRangeData}
+                    height="250px"
+                  />
+                </div>
+              </div>
+              
+              {/* Same Day Ship Table */}
+              <div>
+                <h3 className="font-medium text-sm mb-2">Same Day Ship</h3>
+                <div className="h-[250px]">
+                  <DataTable
+                    columnDefs={sameDayShipColumns}
+                    rowData={sameDayShipData}
+                    height="250px"
+                  />
+                </div>
+              </div>
             </div>
           </TabsContent>
         </Tabs>
