@@ -1,5 +1,5 @@
 
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode } from 'react';
 import NavigationTabs from '@/components/NavigationTabs';
 import PlanHeader from '@/components/PlanHeader';
 import Footer from '@/components/Footer';
@@ -9,16 +9,18 @@ interface PageLayoutProps {
   activeTab: string;
   showPlanHeader?: boolean;
   title?: string;
+  planName: string;
+  setPlanName: (name: string) => void;
 }
 
 const PageLayout: FC<PageLayoutProps> = ({ 
   children, 
   activeTab,
   showPlanHeader = true,
-  title
+  title,
+  planName,
+  setPlanName
 }) => {
-  const [planName, setPlanName] = useState('Weekly Production Plan');
-
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
       {/* Navigation Tabs */}
