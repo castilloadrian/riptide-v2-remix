@@ -138,7 +138,7 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
             </div>
             
             <div className="space-y-2 w-full flex flex-col items-end">
-              <div className="flex items-center gap-4 mb-4 self-end w-full">
+              <div className="flex items-center gap-4 mb-4 self-end">
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>
@@ -200,9 +200,9 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
                         </PopoverContent>
                       </Popover>
                     </TooltipTrigger>
-                    <TooltipContent>
+                    <TooltipInfoContent>
                       <p>Planning Levers</p>
-                    </TooltipContent>
+                    </TooltipInfoContent>
                   </Tooltip>
                 </TooltipProvider>
                 
@@ -218,9 +218,9 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
                         <Copy className="h-4 w-4" />
                       </Button>
                     </TooltipTrigger>
-                    <TooltipContent>
+                    <TooltipInfoContent>
                       <p>Copy Plan</p>
-                    </TooltipContent>
+                    </TooltipInfoContent>
                   </Tooltip>
                 </TooltipProvider>
 
@@ -236,9 +236,9 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
                         <FileText className="h-4 w-4" />
                       </Button>
                     </TooltipTrigger>
-                    <TooltipContent>
+                    <TooltipInfoContent>
                       <p>Create New Plan</p>
-                    </TooltipContent>
+                    </TooltipInfoContent>
                   </Tooltip>
                 </TooltipProvider>
 
@@ -254,9 +254,9 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
                         <Save className="h-4 w-4" />
                       </Button>
                     </TooltipTrigger>
-                    <TooltipContent>
+                    <TooltipInfoContent>
                       <p>Save Plan</p>
-                    </TooltipContent>
+                    </TooltipInfoContent>
                   </Tooltip>
                 </TooltipProvider>
               </div>
