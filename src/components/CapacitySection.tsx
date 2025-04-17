@@ -1,4 +1,3 @@
-
 import { FC, useState } from 'react';
 import CollapsibleSection from './CollapsibleSection';
 import DataTable from './DataTable';
@@ -93,6 +92,7 @@ const CapacitySection: FC = () => {
         
         <div>
           <h3 className="font-medium mb-2">Kit Overview</h3>
+          <div className="w-full h-10 mb-2 invisible">Spacer</div>
           <div className="overflow-x-auto">
             <DataTable
               columnDefs={kitColumnDefs}
