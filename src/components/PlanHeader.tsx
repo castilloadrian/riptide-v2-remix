@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { ChevronDown, Copy, FileText, Save, Filter, CheckCircle } from 'lucide-react';
 import { 
   Select,
@@ -29,6 +29,17 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
   const [selectedDC, setSelectedDC] = useState('NYC');
   const [selectedWeek, setSelectedWeek] = useState('Week 23');
   const [selectedVersion, setSelectedVersion] = useState('Version 1.0');
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 200); // Adjust this value based on when you want the bottom section to stick
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleButtonClick = (action: string) => {
     toast({
@@ -136,121 +147,126 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
         </div>
       </div>
 
-      <div className="sticky top-0 z-30 bg-white dark:bg-gray-800 p-4 border-t border-gray-100 dark:border-gray-700 shadow-sm">
-        <div className="mt-2 flex justify-between items-end">
-          <div className="relative w-1/2">
-            <div className="flex items-center"> 
-              <div className="w-full">
-                <div className="text-sm font-medium mb-1">Plan Name</div>
-                <input
-                  type="text"
-                  className="border-b w-full py-1 focus:outline-none focus:border-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
-                  value={planName}
-                  onChange={handlePlanNameChange}
-                  maxLength={100}
-                />
+      <div className={`bg-white dark:bg-gray-800 p-4 border-t border-gray-100 dark:border-gray-700 shadow-sm
+        ${isScrolled ? 'fixed top-0 left-0 right-0 z-50' : ''}`}>
+        <div className="container mx-auto">
+          <div className="mt-2 flex justify-between items-end">
+            <div className="relative w-1/2">
+              <div className="flex items-center"> 
+                <div className="w-full">
+                  <div className="text-sm font-medium mb-1">Plan Name</div>
+                  <input
+                    type="text"
+                    className="border-b w-full py-1 focus:outline-none focus:border-primary dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600"
+                    value={planName}
+                    onChange={handlePlanNameChange}
+                    maxLength={100}
+                  />
+                </div>
               </div>
+              <button className="mt-2 px-4 py-1 border rounded bg-blue-50 text-blue-600 text-sm dark:bg-blue-900 dark:text-blue-300 dark:border-blue-800">
+                Update
+              </button>
             </div>
-            <button className="mt-2 px-4 py-1 border rounded bg-blue-50 text-blue-600 text-sm dark:bg-blue-900 dark:text-blue-300 dark:border-blue-800">
-              Update
-            </button>
-          </div>
-          
-          <div className="space-y-2">
-            <div className="flex gap-2 justify-end items-center">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button variant="outline" size="icon" className="h-10 w-10">
-                          <Filter className="h-4 w-4" />
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-56 p-3">
-                        <div className="space-y-2">
-                          <h4 className="font-medium mb-2">Planning Levers</h4>
-                          <div className="space-y-1">
-                            <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
-                              Enter Constraints
-                            </button>
-                            <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
-                              TI Autostore
-                            </button>
-                            <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
-                              Print to PDL
-                            </button>
+            
+            <div className="space-y-2">
+              <div className="flex gap-2 justify-end items-center">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button variant="outline" size="icon" className="h-10 w-10">
+                            <Filter className="h-4 w-4" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-56 p-3">
+                          <div className="space-y-2">
+                            <h4 className="font-medium mb-2">Planning Levers</h4>
+                            <div className="space-y-1">
+                              <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
+                                Enter Constraints
+                              </button>
+                              <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
+                                TI Autostore
+                              </button>
+                              <button className="w-full text-left px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-sm">
+                                Print to PDL
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                      </PopoverContent>
-                    </Popover>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Planning Levers</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-              
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      variant="outline" 
-                      size="icon" 
-                      className="h-10 w-10" 
-                      onClick={() => handleButtonClick('Copy')}
-                    >
-                      <Copy className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Copy Plan</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+                        </PopoverContent>
+                      </Popover>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Planning Levers</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+                
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button 
+                        variant="outline" 
+                        size="icon" 
+                        className="h-10 w-10" 
+                        onClick={() => handleButtonClick('Copy')}
+                      >
+                        <Copy className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Copy Plan</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
 
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      variant="outline" 
-                      size="icon" 
-                      className="h-10 w-10"
-                      onClick={() => handleButtonClick('File')}
-                    >
-                      <FileText className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Create New Plan</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button 
+                        variant="outline" 
+                        size="icon" 
+                        className="h-10 w-10"
+                        onClick={() => handleButtonClick('File')}
+                      >
+                        <FileText className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Create New Plan</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
 
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button 
-                      variant="outline" 
-                      size="icon" 
-                      className="h-10 w-10"
-                      onClick={() => handleButtonClick('Save')}
-                    >
-                      <Save className="h-4 w-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Save Plan</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button 
+                        variant="outline" 
+                        size="icon" 
+                        className="h-10 w-10"
+                        onClick={() => handleButtonClick('Save')}
+                      >
+                        <Save className="h-4 w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Save Plan</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+              <button className="px-4 py-1 rounded bg-primary text-white text-sm ml-auto block mt-4">
+                Approve
+              </button>
             </div>
-            <button className="px-4 py-1 rounded bg-primary text-white text-sm ml-auto block mt-4">
-              Approve
-            </button>
           </div>
         </div>
       </div>
+      
+      {isScrolled && <div className="h-[116px]"></div>}
     </div>
   );
 };
