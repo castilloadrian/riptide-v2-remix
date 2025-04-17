@@ -1,4 +1,3 @@
-
 import { FC, useState, useEffect } from 'react';
 import { ChevronDown, Copy, FileText, Save, Filter, CheckCircle } from 'lucide-react';
 import { 
@@ -10,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, TooltipInfoContent } from "@/components/ui/tooltip";
+import { Tooltip, TooltipProvider, TooltipTrigger, TooltipInfoContent } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
 import {
   Popover,
@@ -138,7 +137,7 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
             </div>
             
             <div className="space-y-2 w-full flex flex-col items-end">
-              <div className="flex items-center gap-4 mb-4 self-start w-full">
+              <div className="flex items-center gap-4 mb-4 self-end w-full">
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>
@@ -149,7 +148,7 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
                         </span>
                       </Badge>
                     </TooltipTrigger>
-                    <TooltipInfoContent side="bottom" align="start" className="bg-white dark:bg-gray-800 p-3 max-w-sm">
+                    <TooltipInfoContent side="bottom" align="end" className="bg-white dark:bg-gray-800 p-3 max-w-sm">
                       <div className="space-y-2">
                         <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100">Approved at 4/1/25 12:00 PM EST By Frodo Baggins</h4>
                         <div className="space-y-1 text-sm">
