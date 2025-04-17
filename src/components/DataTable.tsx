@@ -9,21 +9,23 @@ interface DataTableProps {
   rowData: any[];
   className?: string;
   height?: string;
+  components?: any;
 }
 
 const DataTable: FC<DataTableProps> = ({ 
   columnDefs, 
   rowData, 
   className = '',
-  height = '300px'
+  height = '300px',
+  components = {}
 }) => {
   // Default grid options
   const defaultColDef = {
     sortable: true,
     filter: true,
     resizable: true,
-    // Enable horizontal scrolling for all tables
-    suppressSizeToFit: true
+    flex: 1, // This makes all columns flex to take up available space
+    minWidth: 100 // Ensure columns don't get too small
   };
 
   useEffect(() => {
@@ -38,8 +40,7 @@ const DataTable: FC<DataTableProps> = ({
         rowData={rowData}
         defaultColDef={defaultColDef}
         animateRows={true}
-        // Removed pagination properties
-        // Using default scrolling behavior instead
+        components={components}
       />
     </div>
   );

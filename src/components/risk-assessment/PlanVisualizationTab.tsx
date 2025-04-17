@@ -1,6 +1,7 @@
 
 import { FC } from 'react';
 import DataTable from '../DataTable';
+import { Progress } from "@/components/ui/progress";
 
 // Define types for props
 interface PlanVisualizationTabProps {
@@ -9,12 +10,55 @@ interface PlanVisualizationTabProps {
 }
 
 const PlanVisualizationTab: FC<PlanVisualizationTabProps> = ({ data, columns }) => {
+  // Modify the columns to use a custom component for the progress bar
+  const enhancedColumns = columns.map(col => {
+    if (col.field === 'progress') {
+      return {
+        ...col,
+        cellRenderer: 'ProgressBarRenderer'
+      };
+    }
+    return col;
+  });
+
+  // Define the custom cell renderer component
+  const progressBarRenderer = {
+    ProgressBarRenderer: (params: any) => {
+      const percent = params.data.percent;
+      const risk = params.data.risk;
+      
+      // Get the appropriate color based on risk level
+      const getProgressColor = (risk: string) => {
+        switch (risk) {
+          case 'high': return 'bg-red-500';
+          case 'medium': return 'bg-yellow-500';
+          case 'low': return 'bg-green-500';
+          default: return 'bg-blue-500';
+        }
+      };
+      
+      return (
+        <div className="flex items-center gap-2 w-full">
+          <div className="w-full">
+            <Progress 
+              value={percent} 
+              className="h-2.5 bg-gray-200 dark:bg-gray-700" 
+              indicatorClassName={getProgressColor(risk)}
+            />
+          </div>
+          <span className="text-xs whitespace-nowrap">{percent}%</span>
+        </div>
+      );
+    }
+  };
+
   return (
     <div className="h-[400px] w-full">
       <DataTable
-        columnDefs={columns}
+        columnDefs={enhancedColumns}
         rowData={data}
         height="400px"
+        components={progressBarRenderer}
       />
     </div>
   );

@@ -1,26 +1,16 @@
 
 // Define column definitions for Plan Visualization table
 export const getPlanVisualizationColumns = () => [
-  { headerName: 'Shift', field: 'shift', width: 120 },
-  { headerName: 'Kits', field: 'kits', width: 100 },
-  { headerName: 'Core Boxes', field: 'coreBoxes', width: 120 },
-  { headerName: 'GL Boxes', field: 'glBoxes', width: 120 },
-  { headerName: 'Same Day', field: 'sameDay', width: 120 },
-  { headerName: 'First CPT', field: 'firstCpt', width: 120 },
+  { headerName: 'Shift', field: 'shift' },
+  { headerName: 'Kits', field: 'kits' },
+  { headerName: 'Core Boxes', field: 'coreBoxes' },
+  { headerName: 'GL Boxes', field: 'glBoxes' },
+  { headerName: 'Same Day', field: 'sameDay' },
+  { headerName: 'First CPT', field: 'firstCpt' },
   { 
     headerName: 'Progress', 
     field: 'progress',
-    width: 150,
-    cellRenderer: (params: any) => {
-      const risk = params.data.risk;
-      return `<div class="flex items-center gap-2">
-                <div class="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-                  <div class="risk-bar ${risk === 'high' ? 'risk-red' : risk === 'medium' ? 'risk-yellow' : 'risk-green'}" 
-                       style="width: ${params.data.percent}%; height: 0.625rem; border-radius: 0.25rem;"></div>
-                </div>
-                <span>${params.data.percent}%</span>
-              </div>`;
-    }
+    minWidth: 150, // Keep minWidth to ensure progress bar has enough space
   },
 ];
 
@@ -39,8 +29,8 @@ export const getPlanVisualizationData = () => Array.from({ length: 15 }, (_, i) 
 
 // Updated column definitions for Total P2PDL table
 export const getP2PDLColumns = () => [
-  { headerName: 'Shift', field: 'shift', width: 120 },
-  { headerName: 'Volume', field: 'volume', width: 120 },
+  { headerName: 'Shift', field: 'shift' },
+  { headerName: 'Volume', field: 'volume' },
 ];
 
 // Generate sample data for the P2PDL table
@@ -51,8 +41,8 @@ export const getP2PDLData = () => Array.from({ length: 10 }, (_, i) => ({
 
 // Updated column definitions for RoW Volume table
 export const getRowVolumeColumns = () => [
-  { headerName: 'Shift', field: 'shift', width: 140 },
-  { headerName: 'Volume', field: 'volume', width: 160 },
+  { headerName: 'Shift', field: 'shift' },
+  { headerName: 'Volume', field: 'volume' },
 ];
 
 // Generate sample data for the RoW Volume table
@@ -63,9 +53,9 @@ export const getRowVolumeData = () => Array.from({ length: 12 }, (_, i) => ({
 
 // Grocery (Complexity) table columns definition
 export const getGroceryColumns = () => [
-  { headerName: 'Shift', field: 'shift', width: 120 },
-  { headerName: '% (Grocery / Total Volume)', field: 'groceryTotalPercent', width: 200 },
-  { headerName: '% (Grocery / Auto Volume)', field: 'groceryAutoPercent', width: 200 },
+  { headerName: 'Shift', field: 'shift' },
+  { headerName: '% (Grocery / Total Volume)', field: 'groceryTotalPercent' },
+  { headerName: '% (Grocery / Auto Volume)', field: 'groceryAutoPercent' },
 ];
 
 // Generate sample data for the Grocery table
@@ -77,12 +67,12 @@ export const getGroceryData = () => Array.from({ length: 10 }, (_, i) => ({
 
 // Time to CPT Range table columns definition
 export const getCptRangeColumns = () => [
-  { headerName: 'Shift', field: 'shift', width: 120 },
-  { headerName: '3-6', field: 'range3to6', width: 100 },
-  { headerName: '6-12', field: 'range6to12', width: 100 },
-  { headerName: '12-24', field: 'range12to24', width: 100 },
-  { headerName: '24-30', field: 'range24to30', width: 100 },
-  { headerName: '>30', field: 'rangeOver30', width: 100 },
+  { headerName: 'Shift', field: 'shift' },
+  { headerName: '3-6', field: 'range3to6' },
+  { headerName: '6-12', field: 'range6to12' },
+  { headerName: '12-24', field: 'range12to24' },
+  { headerName: '24-30', field: 'range24to30' },
+  { headerName: '>30', field: 'rangeOver30' },
 ];
 
 // Generate sample data for the Time to CPT Range table
@@ -97,11 +87,11 @@ export const getCptRangeData = () => Array.from({ length: 8 }, (_, i) => ({
 
 // Same Day Ship table columns definition
 export const getSameDayShipColumns = () => [
-  { headerName: 'Shift', field: 'shift', width: 120 },
-  { headerName: 'Total', field: 'total', width: 100 },
-  { headerName: 'First CPT', field: 'firstCPT', width: 120 },
-  { headerName: 'Second CPT', field: 'secondCPT', width: 120 },
-  { headerName: 'Third CPT', field: 'thirdCPT', width: 120 },
+  { headerName: 'Shift', field: 'shift' },
+  { headerName: 'Total', field: 'total' },
+  { headerName: 'First CPT', field: 'firstCPT' },
+  { headerName: 'Second CPT', field: 'secondCPT' },
+  { headerName: 'Third CPT', field: 'thirdCPT' },
 ];
 
 // Generate sample data for the Same Day Ship table
