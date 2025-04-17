@@ -1,4 +1,3 @@
-
 import { FC, useState } from 'react';
 import { ChevronDown, Copy, FileText, Save, Filter, CheckCircle } from 'lucide-react';
 import { 
@@ -137,9 +136,8 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
         </div>
       </div>
 
-      {/* Modified to ensure sticky behavior on scroll */}
-      <div className="sticky top-0 z-40 bg-white dark:bg-gray-800 p-4 border-t border-gray-100 dark:border-gray-700 shadow-md">
-        <div className="mt-2 flex justify-between items-end">
+      <div className="fixed top-16 left-0 right-0 z-50 bg-white dark:bg-gray-800 p-4 border-t border-gray-100 dark:border-gray-700 shadow-md">
+        <div className="mt-2 flex justify-between items-end container mx-auto max-w-7xl px-2 md:px-4">
           <div className="relative w-1/2">
             <div className="flex items-center"> 
               <div className="w-full">
@@ -253,6 +251,8 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
           </div>
         </div>
       </div>
+      
+      <div className="h-32"></div>
     </div>
   );
 };

@@ -116,19 +116,19 @@ describe('Plan Header', () => {
     cy.contains('Save action triggered').should('be.visible');
   });
 
-  it('should have a sticky header when scrolling', () => {
+  it('should have a fixed bottom section that stays visible when scrolling', () => {
     // Force the page to be taller so we can scroll
     cy.window().then((win) => {
       win.document.body.style.height = '200vh';
     });
     
-    // Initial check that sticky part contains the Plan Name
+    // Initial check that fixed part contains the Plan Name
     cy.contains('Plan Name').should('be.visible');
     
     // Scroll down
-    cy.scrollTo(0, 200);
+    cy.scrollTo(0, 500);
     
-    // Check that Plan Name is still visible (should be in sticky header)
+    // Check that Plan Name is still visible (should be fixed to viewport)
     cy.contains('Plan Name').should('be.visible');
     
     // Check that the action buttons are still visible
