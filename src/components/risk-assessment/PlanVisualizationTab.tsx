@@ -43,11 +43,7 @@ const PlanVisualizationTab: FC<PlanVisualizationTabProps> = ({ data, columns }) 
         <div className="flex items-center w-full">
           <Progress 
             value={percent} 
-            className="h-2.5 bg-gray-200 dark:bg-gray-700" 
-            indicatorClassName={cn(
-              "h-full w-full flex-1 transition-all", 
-              getProgressColor(risk)
-            )}
+            className={cn("h-2.5 bg-gray-200 dark:bg-gray-700", getProgressColor(risk))}
           />
         </div>
       );
