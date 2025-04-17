@@ -1,4 +1,3 @@
-
 // Define column definitions for Plan Visualization table
 export const getPlanVisualizationColumns = () => [
   { headerName: 'Shift', field: 'shift' },
@@ -8,9 +7,9 @@ export const getPlanVisualizationColumns = () => [
   { headerName: 'Same Day', field: 'sameDay' },
   { headerName: 'First CPT', field: 'firstCpt' },
   { 
-    headerName: 'Progress', 
+    headerName: 'Status', 
     field: 'progress',
-    minWidth: 150, // Keep minWidth to ensure progress bar has enough space
+    minWidth: 150,
   },
 ];
 
