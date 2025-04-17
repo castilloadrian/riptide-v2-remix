@@ -78,7 +78,7 @@ const CapacitySection: FC = () => {
             </TabsList>
             
             {boxTabs.map((tab) => (
-              <TabsContent key={tab.value} value={tab.value} className="mt-0">
+              <TabsContent key={tab.value} value={tab.value} className="mt-0 p-0">
                 <div className="overflow-x-auto">
                   <DataTable
                     columnDefs={boxColumnDefs}
