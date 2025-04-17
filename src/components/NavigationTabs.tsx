@@ -1,6 +1,6 @@
 
 import { FC, useState } from 'react';
-import { Box, Package, Clock, Bug, Users, Waves } from 'lucide-react';
+import { Box, Package, Clock, Bug, Users, Waves, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BugReportModal from './BugReportModal';
 
@@ -14,6 +14,7 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
   
   const tabs = [
     { id: 'planning', label: 'Planning', icon: <Box className="w-5 h-5" />, path: '/' },
+    { id: 'live-plan', label: 'Live Plan', icon: <Activity className="w-5 h-5" />, path: '/live-plan' },
     { id: 'kitting', label: 'Kitting', icon: <Package className="w-5 h-5" />, path: '/kitting' },
     { id: 'simulation', label: 'Shift Simulation', icon: <Clock className="w-5 h-5" />, path: '/simulation' },
   ];
