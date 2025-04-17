@@ -1,6 +1,6 @@
 
 import { FC, useState } from 'react';
-import { BarChart3, Box, Package, Clock, Bug, Users, Waves } from 'lucide-react';
+import { Box, Package, Clock, Bug, Users, Waves } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BugReportModal from './BugReportModal';
 
@@ -14,7 +14,6 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
   
   const tabs = [
     { id: 'planning', label: 'Planning', icon: <Box className="w-5 h-5" />, path: '/' },
-    { id: 'dashboard', label: 'Dashboard', icon: <BarChart3 className="w-5 h-5" />, path: '/graphical' },
     { id: 'kitting', label: 'Kitting', icon: <Package className="w-5 h-5" />, path: '/kitting' },
     { id: 'simulation', label: 'Shift Simulation', icon: <Clock className="w-5 h-5" />, path: '/simulation' },
   ];

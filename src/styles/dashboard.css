@@ -1,13 +1,4 @@
 
-/* Dashboard styles */
-.dashboard-card {
-  @apply bg-white dark:bg-gray-800 p-4 rounded-md shadow border border-gray-200 dark:border-gray-700;
-}
-
-.dashboard-card-header {
-  @apply text-sm font-medium text-gray-700 dark:text-gray-300 mb-2;
-}
-
 /* CollapsibleSection styles */
 .section-content {
   @apply bg-white dark:bg-gray-800 overflow-hidden transition-all duration-200 ease-in-out;
