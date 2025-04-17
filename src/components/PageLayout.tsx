@@ -9,8 +9,8 @@ interface PageLayoutProps {
   activeTab: string;
   showPlanHeader?: boolean;
   title?: string;
-  planName: string;
-  setPlanName: (name: string) => void;
+  planName?: string;
+  setPlanName?: (name: string) => void;
 }
 
 const PageLayout: FC<PageLayoutProps> = ({ 
@@ -18,8 +18,8 @@ const PageLayout: FC<PageLayoutProps> = ({
   activeTab,
   showPlanHeader = true,
   title,
-  planName,
-  setPlanName
+  planName = '',
+  setPlanName = () => {}
 }) => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">

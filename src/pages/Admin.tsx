@@ -1,9 +1,12 @@
 
+import { useState } from 'react';
 import PageLayout from '@/components/PageLayout';
 
 const Admin = () => {
+  const [planName, setPlanName] = useState('Admin Dashboard');
+
   return (
-    <PageLayout activeTab="admin" title="Admin Dashboard" showPlanHeader={false}>
+    <PageLayout activeTab="admin" title="Admin Dashboard" showPlanHeader={false} planName={planName} setPlanName={setPlanName}>
       <p className="text-gray-600 dark:text-gray-400 mb-4">
         This page will contain admin functionality, including user management, permissions control,
         and system settings.

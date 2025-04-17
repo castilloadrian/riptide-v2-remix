@@ -1,9 +1,12 @@
 
+import { useState } from 'react';
 import PageLayout from '@/components/PageLayout';
 
 const Kitting = () => {
+  const [planName, setPlanName] = useState('Kitting Dashboard');
+
   return (
-    <PageLayout activeTab="kitting" title="Kitting Dashboard">
+    <PageLayout activeTab="kitting" title="Kitting Dashboard" planName={planName} setPlanName={setPlanName}>
       <p className="text-gray-600 dark:text-gray-400 mb-4">
         This page will contain kitting management functionality, including kit tracking, inventory management,
         and assembly instructions.
