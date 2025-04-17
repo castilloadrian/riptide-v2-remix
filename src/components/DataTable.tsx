@@ -38,8 +38,8 @@ const DataTable: FC<DataTableProps> = ({
         rowData={rowData}
         defaultColDef={defaultColDef}
         animateRows={true}
-        pagination={true}
-        paginationAutoPageSize={true}
+        // Removed pagination properties
+        // Using default scrolling behavior instead
       />
     </div>
   );
