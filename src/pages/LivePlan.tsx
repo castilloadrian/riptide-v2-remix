@@ -10,10 +10,14 @@ import PlanDeepDiveSection from '@/components/PlanDeepDiveSection';
 import Footer from '@/components/Footer';
 
 const LivePlan = () => {
+  const [activeTab, setActiveTab] = useState('live-plan');
   const [planName, setPlanName] = useState('Live Production Plan');
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col">
+      {/* Navigation Tabs */}
+      <NavigationTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+      
       {/* Content Container */}
       <div className="container mx-auto py-4 px-2 md:px-4 max-w-7xl flex-grow">
         {/* Plan Header Section */}

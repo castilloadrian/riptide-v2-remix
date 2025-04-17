@@ -137,8 +137,8 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
               </button>
             </div>
             
-            <div className="space-y-2">
-              <div className="flex items-center gap-4 mb-4">
+            <div className="space-y-2 w-full flex flex-col items-end">
+              <div className="flex items-center gap-4 mb-4 self-start w-full">
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger>
@@ -149,7 +149,7 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
                         </span>
                       </Badge>
                     </TooltipTrigger>
-                    <TooltipInfoContent side="bottom" align="end" className="bg-white dark:bg-gray-800 p-3 max-w-sm">
+                    <TooltipInfoContent side="bottom" align="start" className="bg-white dark:bg-gray-800 p-3 max-w-sm">
                       <div className="space-y-2">
                         <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100">Approved at 4/1/25 12:00 PM EST By Frodo Baggins</h4>
                         <div className="space-y-1 text-sm">
