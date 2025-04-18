@@ -41,6 +41,8 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
       });
     }
     event?.stopPropagation();
+    
+    document.dispatchEvent(new CustomEvent('overrideModeChange', { detail: { overrideMode: checked } }));
   };
 
   const handleDebugModeChange = (checked: boolean) => {
@@ -64,13 +66,8 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
 
   return (
     <>
-      <div className={`hellofresh-header flex justify-between py-1 px-4 relative ${overrideMode ? 'after:absolute after:inset-0 after:border-2 after:border-destructive/50 after:rounded-md after:pointer-events-none after:animate-pulse' : ''}`}>
-        <div className={`flex items-center ${overrideMode ? 'relative' : ''}`}>
-          {overrideMode && (
-            <div className="absolute -top-3 left-0 px-2 py-0.5 bg-destructive/10 text-destructive text-xs font-medium rounded-full">
-              Override Mode
-            </div>
-          )}
+      <div className="hellofresh-header flex justify-between py-1 px-4">
+        <div className="flex items-center">
           <Link 
             to="/"
             className="flex items-center mr-6"

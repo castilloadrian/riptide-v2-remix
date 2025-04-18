@@ -4,6 +4,7 @@ import PlanSelectors from './plan-header/PlanSelectors';
 import PlanNameInput from './plan-header/PlanNameInput';
 import StatusBadge from './plan-header/StatusBadge';
 import ActionButtons from './plan-header/ActionButtons';
+import { Shield } from 'lucide-react';
 
 interface PlanHeaderProps {
   planName: string;
@@ -15,6 +16,7 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
   const [selectedWeek, setSelectedWeek] = useState('Week 23');
   const [selectedVersion, setSelectedVersion] = useState('Version 1.0');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isOverrideMode, setIsOverrideMode] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,8 +24,17 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
       setIsScrolled(scrollPosition > 200);
     };
 
+    const handleOverrideModeChange = (event: CustomEvent) => {
+      setIsOverrideMode(event.detail.overrideMode);
+    };
+
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    document.addEventListener('overrideModeChange', handleOverrideModeChange as EventListener);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('overrideModeChange', handleOverrideModeChange as EventListener);
+    };
   }, []);
 
   return (
@@ -52,6 +63,12 @@ const PlanHeader: FC<PlanHeaderProps> = ({ planName, setPlanName }) => {
             <PlanNameInput planName={planName} setPlanName={setPlanName} />
             <div className="space-y-2 w-full flex flex-col items-end">
               <div className="flex items-center gap-4 mb-4 self-end">
+                {isOverrideMode && (
+                  <div className="flex items-center gap-2 px-3 py-1 bg-destructive/10 text-destructive rounded-md">
+                    <Shield className="w-4 h-4" />
+                    <span className="text-sm font-medium">Override Mode Active</span>
+                  </div>
+                )}
                 <StatusBadge />
               </div>
               <ActionButtons />
