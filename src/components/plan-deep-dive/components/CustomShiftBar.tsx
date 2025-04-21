@@ -8,10 +8,14 @@ interface CustomShiftBarProps {
   width?: number;
   height?: number;
   payload?: any;
+  index?: number;
+  fill?: string;
 }
 
-const CustomShiftBar: React.FC<CustomShiftBarProps> = ({ x, y, width, height, payload }) => {
-  if (!payload.originalData || !x || !y) return null;
+const CustomShiftBar: React.FC<CustomShiftBarProps> = (props) => {
+  const { x, y, width, height, payload } = props;
+  
+  if (!payload?.originalData || !x || !y) return null;
   
   const { shifts, type } = payload.originalData;
   const hourRange = { min: 7, max: 19 };
@@ -43,4 +47,3 @@ const CustomShiftBar: React.FC<CustomShiftBarProps> = ({ x, y, width, height, pa
 };
 
 export default CustomShiftBar;
-

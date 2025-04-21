@@ -5,6 +5,7 @@ import { getShiftColor } from '../utils/chartDataTransformers';
 interface ShiftTooltipProps {
   active?: boolean;
   payload?: any[];
+  label?: string;
 }
 
 const ShiftTooltip: React.FC<ShiftTooltipProps> = ({ active, payload }) => {
@@ -36,4 +37,3 @@ const ShiftTooltip: React.FC<ShiftTooltipProps> = ({ active, payload }) => {
 };
 
 export default ShiftTooltip;
-

@@ -1,8 +1,10 @@
+
 import React, { useState } from 'react';
 import CollapsibleSection from './CollapsibleSection';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import DataTable from './DataTable';
-import ShiftTimeSeriesChart, { ShiftData } from './plan-deep-dive/ShiftTimeSeriesChart';
+import ShiftTimeSeriesChart from './plan-deep-dive/ShiftTimeSeriesChart';
+import { ShiftData } from './plan-deep-dive/utils/chartDataTransformers';
 
 // Mock data for the shift time series visualization
 const shiftTimeSeriesData: ShiftData[] = [

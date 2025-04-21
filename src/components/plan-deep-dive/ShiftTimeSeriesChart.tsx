@@ -94,11 +94,11 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
             }}
           />
           
-          <Tooltip content={ShiftTooltip} />
+          <Tooltip content={<ShiftTooltip />} />
           
           <Bar 
             dataKey="value"
-            shape={CustomShiftBar}
+            shape={<CustomShiftBar />}
             isAnimationActive={false}
           >
             {chartData.map((entry, index) => (
@@ -112,4 +112,3 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
 };
 
 export default ShiftTimeSeriesChart;
-
