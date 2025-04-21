@@ -1,21 +1,63 @@
 
 import { FC, useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import CollapsibleSection from './CollapsibleSection';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import DataTable from './DataTable';
+import ShiftTimeSeriesChart from './plan-deep-dive/ShiftTimeSeriesChart';
 
-// Mock data for the recipe production volume chart
-const recipeData = [
-  { name: 'Recipe A', value: 120, fill: '#61B045' },
-  { name: 'Recipe B', value: 98, fill: '#61B045' },
-  { name: 'Recipe C', value: 86, fill: '#61B045' },
-  { name: 'Recipe D', value: 75, fill: '#82ca9d' },
-  { name: 'Recipe E', value: 65, fill: '#82ca9d' },
-  { name: 'Recipe F', value: 58, fill: '#82ca9d' },
-  { name: 'Recipe G', value: 48, fill: '#8884d8' },
-  { name: 'Recipe H', value: 38, fill: '#8884d8' },
-  { name: 'Recipe I', value: 25, fill: '#8884d8' },
+// Mock data for the shift time series visualization
+const shiftTimeSeriesData = [
+  {
+    type: 'EP',
+    shifts: [
+      { start: 7, end: 11, status: 'complete' },
+      { start: 11, end: 11.5, status: 'break' },
+      { start: 11.5, end: 15, status: 'active' },
+      { start: 15, end: 19, status: 'planned' },
+    ]
+  },
+  {
+    type: 'HF',
+    shifts: [
+      { start: 7, end: 10, status: 'complete' },
+      { start: 10, end: 10.5, status: 'break' },
+      { start: 10.5, end: 14, status: 'active' },
+      { start: 14, end: 14.5, status: 'break' },
+      { start: 14.5, end: 19, status: 'planned' },
+    ]
+  },
+  {
+    type: 'GL',
+    shifts: [
+      { start: 8, end: 12, status: 'complete' },
+      { start: 12, end: 12.5, status: 'break' },
+      { start: 12.5, end: 16.5, status: 'active' },
+    ]
+  },
+  {
+    type: 'AUTO',
+    shifts: [
+      { start: 7, end: 19, status: 'active' },
+    ]
+  },
+  {
+    type: 'BULK',
+    shifts: [
+      { start: 9, end: 13, status: 'complete' },
+      { start: 13, end: 13.5, status: 'break' },
+      { start: 13.5, end: 17, status: 'active' },
+    ]
+  },
+  {
+    type: 'PACK',
+    shifts: [
+      { start: 8, end: 12, status: 'complete' },
+      { start: 12, end: 12.5, status: 'break' },
+      { start: 12.5, end: 16, status: 'active' },
+      { start: 16, end: 16.5, status: 'break' },
+      { start: 16.5, end: 19, status: 'planned' },
+    ]
+  }
 ];
 
 // Mock data for CPT risk table
@@ -96,39 +138,7 @@ const PlanDeepDiveSection: FC = () => {
           </TabsList>
           
           <TabsContent value="shift" className="w-full">
-            <div className="h-[400px] w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart
-                  data={recipeData}
-                  layout="vertical"
-                  margin={{ top: 10, right: 30, left: 80, bottom: 10 }}
-                  className="bg-white dark:bg-gray-800 rounded-md p-2"
-                >
-                  <XAxis type="number" />
-                  <YAxis 
-                    dataKey="name" 
-                    type="category" 
-                    width={80}
-                    tick={{ fill: '#666', fontSize: 12 }}
-                  />
-                  <Tooltip
-                    contentStyle={{ 
-                      backgroundColor: 'rgba(255, 255, 255, 0.9)', 
-                      border: '1px solid #ccc',
-                      borderRadius: '4px',
-                      color: '#333'
-                    }}
-                    formatter={(value) => [`${value} units`, 'Volume']}
-                  />
-                  <Bar 
-                    dataKey="value" 
-                    radius={[0, 4, 4, 0]}
-                    barSize={20}
-                    background={{ fill: '#eee' }}
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+            <ShiftTimeSeriesChart data={shiftTimeSeriesData} />
           </TabsContent>
           
           <TabsContent value="risk" className="w-full">

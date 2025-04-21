@@ -1,0 +1,164 @@
+
+import { FC } from 'react';
+import { 
+  ChartContainer, 
+  ChartTooltip, 
+  ChartTooltipContent
+} from "@/components/ui/chart";
+import { 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  Tooltip, 
+  Cell,
+  ResponsiveContainer
+} from 'recharts';
+
+interface ShiftData {
+  type: string;
+  shifts: {
+    start: number;
+    end: number;
+    status: 'active' | 'break' | 'complete' | 'planned';
+  }[];
+}
+
+interface ShiftTimeSeriesChartProps {
+  data: ShiftData[];
+}
+
+// Helper function to transform shift data for rendering
+const transformDataForChart = (data: ShiftData[]) => {
+  // Create data with hours from 7AM to 7PM
+  const hours = Array.from({ length: 13 }, (_, i) => i + 7);
+  
+  return data.map(item => {
+    // Create a data point for each hour from 7AM to 7PM
+    const hourData = hours.map(hour => {
+      // Find any shifts that overlap with this hour
+      const matchingShifts = item.shifts.filter(shift => 
+        shift.start <= hour && shift.end >= hour
+      );
+      
+      return {
+        hour,
+        // If there's a matching shift, return its status
+        status: matchingShifts.length > 0 ? matchingShifts[0].status : null,
+        // Display label for hour value
+        label: `${hour % 12 === 0 ? 12 : hour % 12}${hour < 12 ? 'AM' : 'PM'}`
+      };
+    });
+    
+    return {
+      type: item.type,
+      hours: hourData
+    };
+  });
+};
+
+// Helper to get color based on shift status
+const getShiftColor = (status: string | null) => {
+  switch (status) {
+    case 'active':
+      return '#61B045'; // Green
+    case 'break':
+      return '#FFC107'; // Yellow
+    case 'complete':
+      return '#8884d8'; // Purple
+    case 'planned':
+      return '#82ca9d'; // Light green
+    default:
+      return '#f3f4f6'; // Light gray for empty slots
+  }
+};
+
+// Custom bar shape to create segmented time series
+const CustomBar = (props: any) => {
+  const { x, y, width, height, data } = props;
+  const hourWidth = width / data.length;
+  
+  return (
+    <g>
+      {data.map((hour: any, index: number) => (
+        <rect
+          key={`${hour.hour}-${index}`}
+          x={x + (index * hourWidth)}
+          y={y}
+          width={hourWidth}
+          height={height}
+          fill={getShiftColor(hour.status)}
+          stroke="#fff"
+          strokeWidth={1}
+          rx={2}
+        />
+      ))}
+    </g>
+  );
+};
+
+const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
+  const transformedData = transformDataForChart(data);
+  
+  // Create hour labels for the X-axis
+  const hourLabels = Array.from({ length: 13 }, (_, i) => {
+    const hour = i + 7;
+    return `${hour % 12 === 0 ? 12 : hour % 12}${hour < 12 ? 'AM' : 'PM'}`;
+  });
+  
+  const config = {
+    active: { label: 'Active', color: '#61B045' },
+    break: { label: 'Break', color: '#FFC107' },
+    complete: { label: 'Complete', color: '#8884d8' },
+    planned: { label: 'Planned', color: '#82ca9d' },
+  };
+  
+  return (
+    <ChartContainer 
+      config={config}
+      className="w-full bg-white dark:bg-gray-800 rounded-md p-2"
+    >
+      <ResponsiveContainer width="100%" height={400}>
+        <BarChart
+          layout="vertical"
+          margin={{ top: 20, right: 30, left: 60, bottom: 20 }}
+        >
+          <XAxis 
+            type="category" 
+            dataKey="label"
+            ticks={hourLabels}
+            tickLine={false}
+            axisLine={{ stroke: '#e5e7eb' }}
+            tick={{ fill: '#666', fontSize: 12 }}
+          />
+          <YAxis 
+            type="category" 
+            dataKey="type"
+            width={60}
+            tick={{ fill: '#666', fontSize: 12 }}
+            axisLine={{ stroke: '#e5e7eb' }}
+          />
+          <Tooltip
+            content={<ChartTooltipContent />}
+          />
+          {transformedData.map((entry, index) => (
+            <Bar 
+              key={`bar-${index}`}
+              dataKey="status"
+              name={entry.type}
+              data={entry.hours}
+              shape={<CustomBar data={entry.hours} />}
+              isAnimationActive={false}
+            >
+              {entry.hours.map((hour, i) => (
+                <Cell key={`cell-${i}`} />
+              ))}
+            </Bar>
+          ))}
+        </BarChart>
+      </ResponsiveContainer>
+    </ChartContainer>
+  );
+};
+
+export default ShiftTimeSeriesChart;
