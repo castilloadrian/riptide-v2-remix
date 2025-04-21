@@ -1,3 +1,4 @@
+
 import { FC } from 'react';
 import { 
   ChartContainer, 
@@ -12,7 +13,8 @@ import {
   Tooltip, 
   Cell,
   ResponsiveContainer,
-  CartesianGrid
+  CartesianGrid,
+  Rectangle
 } from 'recharts';
 
 export interface ShiftData {
@@ -108,15 +110,9 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
     );
   }
   
-  const gridData = Array.from({ length: data.length * hourTicks.length }, (_, i) => {
-    const dataIndex = Math.floor(i / hourTicks.length);
-    const hourIndex = i % hourTicks.length;
-    return {
-      name: data[dataIndex]?.type || "",
-      hour: hourTicks[hourIndex],
-      value: 1
-    };
-  });
+  // Define the chart boundaries
+  const hourRange = { min: 7, max: 19 };
+  const chartMargins = { top: 20, right: 30, left: 60, bottom: 50 };
   
   return (
     <ChartContainer 
@@ -127,29 +123,39 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
         <BarChart
           layout="vertical"
           data={chartData}
-          margin={{ top: 20, right: 30, left: 60, bottom: 40 }}
+          margin={chartMargins}
         >
+          <defs>
+            <clipPath id="chartAreaClip">
+              <rect x={chartMargins.left} y={chartMargins.top} width="100%" height={400 - chartMargins.top - chartMargins.bottom} />
+            </clipPath>
+          </defs>
+          
           <CartesianGrid 
             horizontal={false}
             vertical={true}
             stroke="#e5e7eb"
             strokeDasharray="3 3"
             verticalCoordinatesGenerator={(props) => {
+              // Generate coordinates only for the visible chart area
               const { width } = props;
-              const hourRange = { min: 7, max: 19 };
               const totalHours = hourRange.max - hourRange.min;
               
               return hourTicks.map(hour => {
-                const hourPosition = ((hour - hourRange.min) / totalHours) * width;
+                // Calculate position of each hour tick as percentage of available width
+                const hourPosition = ((hour - hourRange.min) / totalHours) * (width - chartMargins.left - chartMargins.right) + chartMargins.left;
                 return hourPosition;
               });
             }}
+            className="recharts-cartesian-grid-bg"
           />
+          
           <XAxis 
             type="number"
             domain={[0, 1]}
             hide={true}
           />
+          
           <YAxis 
             type="category" 
             dataKey="name"
@@ -157,6 +163,8 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
             tick={{ fill: '#666', fontSize: 12 }}
             axisLine={{ stroke: '#e5e7eb' }}
           />
+          
+          {/* Main visible X-axis with time labels */}
           <XAxis 
             xAxisId="time"
             type="category"
@@ -169,7 +177,10 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
             height={50}
             tickMargin={10}
             tickFormatter={(_, index) => hourLabels[index % hourLabels.length]}
+            // Positioning the axis at the bottom of the chart
+            orientation="bottom"
           />
+          
           <Tooltip
             content={({ active, payload }) => {
               if (!active || !payload || !payload.length) return null;
@@ -198,6 +209,7 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
               );
             }}
           />
+          
           <Bar 
             dataKey="value"
             shape={CustomBar}
