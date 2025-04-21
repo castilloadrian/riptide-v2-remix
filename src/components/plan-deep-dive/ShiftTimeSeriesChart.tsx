@@ -1,3 +1,4 @@
+
 import { FC } from 'react';
 import { 
   ChartContainer, 
@@ -85,10 +86,13 @@ const CustomBar = (props: any) => {
 };
 
 const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
-  const hourLabels = Array.from({ length: 13 }, (_, i) => {
-    const hour = i + 7;
-    return `${hour % 12 === 0 ? 12 : hour % 12}${hour < 12 ? 'AM' : 'PM'}`;
-  });
+  // Generate hourly ticks for the x-axis
+  const hourTicks = Array.from({ length: 13 }, (_, i) => i + 7);
+  
+  // Generate formatted hour labels for display
+  const hourLabels = hourTicks.map(hour => 
+    `${hour % 12 === 0 ? 12 : hour % 12}${hour < 12 ? 'AM' : 'PM'}`
+  );
 
   const chartData = transformDataForChart(data);
   
@@ -107,6 +111,17 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
     );
   }
   
+  // Create x-axis grid data for proper time alignment
+  const gridData = Array.from({ length: data.length * hourTicks.length }, (_, i) => {
+    const dataIndex = Math.floor(i / hourTicks.length);
+    const hourIndex = i % hourTicks.length;
+    return {
+      name: data[dataIndex]?.type || "",
+      hour: hourTicks[hourIndex],
+      value: 1
+    };
+  });
+  
   return (
     <ChartContainer 
       config={config}
@@ -116,12 +131,24 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
         <BarChart
           layout="vertical"
           data={chartData}
-          margin={{ top: 20, right: 30, left: 60, bottom: 20 }}
+          margin={{ top: 20, right: 30, left: 60, bottom: 40 }}
         >
           <CartesianGrid 
             horizontal={false}
+            vertical={true}
             stroke="#e5e7eb"
             strokeDasharray="3 3"
+            // Place grid lines at each hour
+            verticalCoordinatesGenerator={(props) => {
+              const { width } = props;
+              const hourRange = { min: 7, max: 19 };
+              const totalHours = hourRange.max - hourRange.min;
+              
+              return hourTicks.map(hour => {
+                const hourPosition = ((hour - hourRange.min) / totalHours) * width;
+                return hourPosition;
+              });
+            }}
           />
           <XAxis 
             type="number"
@@ -139,11 +166,16 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
             xAxisId="time"
             type="category"
             dataKey="name"
-            ticks={hourLabels}
-            tickLine={false}
+            tickFormatter={(_, index) => hourLabels[index % hourLabels.length] || ""}
+            ticks={hourTicks}
+            tickLine={true}
             axisLine={{ stroke: '#e5e7eb' }}
             tick={{ fill: '#666', fontSize: 12 }}
             interval={0}
+            height={50}
+            tickMargin={10}
+            // Position the labels correctly
+            tickFormatter={(_, index) => hourLabels[index % hourLabels.length]}
           />
           <Tooltip
             content={({ active, payload }) => {
