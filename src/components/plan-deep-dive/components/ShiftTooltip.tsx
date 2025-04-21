@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { getShiftColor } from '../utils/chartDataTransformers';
 
@@ -15,7 +14,7 @@ const ShiftTooltip: React.FC<ShiftTooltipProps> = ({ active, payload }) => {
   if (!data || !data.originalData) return null;
   
   return (
-    <div className="bg-white p-2 border border-gray-200 rounded shadow-md text-xs">
+    <div className="bg-white dark:bg-gray-800 p-2 border border-gray-200 dark:border-gray-700 rounded shadow-md text-xs text-gray-800 dark:text-gray-200">
       <p className="font-medium text-sm">{data.originalData.type}</p>
       {data.originalData.shifts.map((shift: any, i: number) => (
         <div key={i} className="flex items-center gap-2 mt-1">
