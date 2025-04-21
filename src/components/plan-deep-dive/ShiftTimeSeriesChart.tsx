@@ -1,4 +1,3 @@
-
 import { FC } from 'react';
 import { 
   ChartContainer, 
@@ -12,9 +11,7 @@ import {
   YAxis, 
   Tooltip, 
   Cell,
-  ResponsiveContainer,
-  CartesianGrid,
-  Rectangle
+  ResponsiveContainer
 } from 'recharts';
 
 export interface ShiftData {
@@ -110,10 +107,6 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
     );
   }
   
-  // Define the chart boundaries
-  const hourRange = { min: 7, max: 19 };
-  const chartMargins = { top: 20, right: 30, left: 60, bottom: 50 };
-  
   return (
     <ChartContainer 
       config={config}
@@ -123,33 +116,8 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
         <BarChart
           layout="vertical"
           data={chartData}
-          margin={chartMargins}
+          margin={{ top: 20, right: 30, left: 60, bottom: 50 }}
         >
-          <defs>
-            <clipPath id="chartAreaClip">
-              <rect x={chartMargins.left} y={chartMargins.top} width="100%" height={400 - chartMargins.top - chartMargins.bottom} />
-            </clipPath>
-          </defs>
-          
-          <CartesianGrid 
-            horizontal={false}
-            vertical={true}
-            stroke="#e5e7eb"
-            strokeDasharray="3 3"
-            verticalCoordinatesGenerator={(props) => {
-              // Generate coordinates only for the visible chart area
-              const { width } = props;
-              const totalHours = hourRange.max - hourRange.min;
-              
-              return hourTicks.map(hour => {
-                // Calculate position of each hour tick as percentage of available width
-                const hourPosition = ((hour - hourRange.min) / totalHours) * (width - chartMargins.left - chartMargins.right) + chartMargins.left;
-                return hourPosition;
-              });
-            }}
-            className="recharts-cartesian-grid-bg"
-          />
-          
           <XAxis 
             type="number"
             domain={[0, 1]}
@@ -164,7 +132,6 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
             axisLine={{ stroke: '#e5e7eb' }}
           />
           
-          {/* Main visible X-axis with time labels */}
           <XAxis 
             xAxisId="time"
             type="category"
@@ -177,7 +144,6 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
             height={50}
             tickMargin={10}
             tickFormatter={(_, index) => hourLabels[index % hourLabels.length]}
-            // Positioning the axis at the bottom of the chart
             orientation="bottom"
           />
           
