@@ -1,4 +1,3 @@
-
 import { FC } from 'react';
 import { 
   ChartContainer, 
@@ -46,7 +45,9 @@ const transformDataForChart = (data: ShiftData[]) => {
         // If there's a matching shift, return its status
         status: matchingShifts.length > 0 ? matchingShifts[0].status : null,
         // Display label for hour value
-        label: `${hour % 12 === 0 ? 12 : hour % 12}${hour < 12 ? 'AM' : 'PM'}`
+        label: `${hour % 12 === 0 ? 12 : hour % 12}${hour < 12 ? 'AM' : 'PM'}`,
+        // Add a value property for Recharts to use
+        value: 1 // Constant value to render bars with equal height
       };
     });
     
@@ -129,6 +130,15 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
     );
   }
   
+  // Prepare chart data in a format Recharts can understand
+  const chartData = transformedData.map(item => ({
+    name: item.type,
+    // We map directly to a numeric value for each entry to satisfy Recharts typing
+    value: 1,
+    // Keep the original data for our custom renderer
+    originalData: item
+  }));
+  
   return (
     <ChartContainer 
       config={config}
@@ -137,7 +147,7 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
       <ResponsiveContainer width="100%" height={400}>
         <BarChart
           layout="vertical"
-          data={transformedData}
+          data={chartData}
           margin={{ top: 20, right: 30, left: 60, bottom: 20 }}
         >
           <XAxis 
@@ -150,7 +160,7 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
           />
           <YAxis 
             type="category" 
-            dataKey="type"
+            dataKey="name"
             width={60}
             tick={{ fill: '#666', fontSize: 12 }}
             axisLine={{ stroke: '#e5e7eb' }}
@@ -162,9 +172,11 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
             <Bar 
               key={`bar-${index}`}
               dataKey="value"
-              data={entry.hours}
               name={entry.type}
-              shape={<CustomBar data={entry.hours} type={entry.type} />}
+              // Use a custom shape renderer instead of trying to pass hour data directly
+              shape={(props) => (
+                <CustomBar {...props} data={entry.hours} type={entry.type} />
+              )}
               isAnimationActive={false}
             >
               <Cell />
