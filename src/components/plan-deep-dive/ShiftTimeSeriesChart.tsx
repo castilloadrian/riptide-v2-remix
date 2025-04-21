@@ -1,4 +1,3 @@
-
 import { FC } from 'react';
 import { 
   ChartContainer, 
@@ -57,25 +56,28 @@ const transformDataForChart = (data: ShiftData[]) => {
   });
 };
 
-// Helper to get color based on shift status
-const getShiftColor = (status: string | null) => {
-  switch (status) {
-    case 'active':
-      return '#61B045'; // Green
-    case 'break':
-      return '#FFC107'; // Yellow
-    case 'complete':
-      return '#8884d8'; // Purple
-    case 'planned':
-      return '#82ca9d'; // Light green
-    default:
-      return '#f3f4f6'; // Light gray for empty slots
-  }
+// Helper to get color based on shift status and type
+const getShiftColor = (status: string | null, type: string) => {
+  if (!status) return '#f3f4f6'; // Light gray for empty slots
+  
+  // Color mapping based on the type
+  const typeColors: { [key: string]: string } = {
+    'EP': '#FFE082', // Yellow for EP
+    'HF': '#A5D6A7', // Light green for HF
+    'GL': '#E1BEE7', // Light purple for GL
+    'AUTO': '#81D4FA', // Light blue for AUTO
+  };
+  
+  // Get the base color by checking which type prefix matches
+  const baseColor = Object.entries(typeColors).find(([prefix]) => 
+    type.startsWith(prefix))?.[1] || '#f3f4f6';
+    
+  return status === 'break' ? '#9E9E9E' : baseColor; // Gray for breaks
 };
 
 // Custom bar shape to create segmented time series
 const CustomBar = (props: any) => {
-  const { x, y, width, height, data } = props;
+  const { x, y, width, height, data, type } = props;
   const hourWidth = width / data.length;
   
   return (
@@ -87,7 +89,7 @@ const CustomBar = (props: any) => {
           y={y}
           width={hourWidth}
           height={height}
-          fill={getShiftColor(hour.status)}
+          fill={getShiftColor(hour.status, type)}
           stroke="#fff"
           strokeWidth={1}
           rx={2}
@@ -146,7 +148,7 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
               key={`bar-${index}`}
               dataKey="value"
               name={entry.type}
-              shape={<CustomBar data={entry.hours} />}
+              shape={<CustomBar data={entry.hours} type={entry.type} />}
               isAnimationActive={false}
             >
               {/* Add a dummy cell to avoid Recharts errors */}

@@ -1,5 +1,4 @@
-
-import { FC, useState } from 'react';
+import React, { useState } from 'react';
 import CollapsibleSection from './CollapsibleSection';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import DataTable from './DataTable';
@@ -8,54 +7,50 @@ import ShiftTimeSeriesChart, { ShiftData } from './plan-deep-dive/ShiftTimeSerie
 // Mock data for the shift time series visualization
 const shiftTimeSeriesData: ShiftData[] = [
   {
-    type: 'EP',
+    type: 'EP-ALL',
     shifts: [
-      { start: 7, end: 11, status: 'complete' },
+      { start: 7, end: 11, status: 'active' },
       { start: 11, end: 11.5, status: 'break' },
-      { start: 11.5, end: 15, status: 'active' },
-      { start: 15, end: 19, status: 'planned' },
+      { start: 11.5, end: 19, status: 'active' }
     ]
   },
   {
-    type: 'HF',
+    type: 'HF-2P',
     shifts: [
-      { start: 7, end: 10, status: 'complete' },
-      { start: 10, end: 10.5, status: 'break' },
-      { start: 10.5, end: 14, status: 'active' },
-      { start: 14, end: 14.5, status: 'break' },
-      { start: 14.5, end: 19, status: 'planned' },
+      { start: 7, end: 11, status: 'active' },
+      { start: 11, end: 11.5, status: 'break' },
+      { start: 11.5, end: 19, status: 'active' }
     ]
   },
   {
-    type: 'GL',
+    type: 'HF-4P',
     shifts: [
-      { start: 8, end: 12, status: 'complete' },
+      { start: 7, end: 11, status: 'active' },
+      { start: 11, end: 11.5, status: 'break' },
+      { start: 11.5, end: 15, status: 'active' }
+    ]
+  },
+  {
+    type: 'GL-ALL',
+    shifts: [
+      { start: 15, end: 15.5, status: 'break' },
+      { start: 15.5, end: 19, status: 'active' }
+    ]
+  },
+  {
+    type: 'AUTO-1',
+    shifts: [
+      { start: 7, end: 11, status: 'active' },
+      { start: 11, end: 11.5, status: 'break' },
+      { start: 11.5, end: 19, status: 'active' }
+    ]
+  },
+  {
+    type: 'AUTO-2',
+    shifts: [
+      { start: 8, end: 12, status: 'active' },
       { start: 12, end: 12.5, status: 'break' },
-      { start: 12.5, end: 16.5, status: 'active' },
-    ]
-  },
-  {
-    type: 'AUTO',
-    shifts: [
-      { start: 7, end: 19, status: 'active' },
-    ]
-  },
-  {
-    type: 'BULK',
-    shifts: [
-      { start: 9, end: 13, status: 'complete' },
-      { start: 13, end: 13.5, status: 'break' },
-      { start: 13.5, end: 17, status: 'active' },
-    ]
-  },
-  {
-    type: 'PACK',
-    shifts: [
-      { start: 8, end: 12, status: 'complete' },
-      { start: 12, end: 12.5, status: 'break' },
-      { start: 12.5, end: 16, status: 'active' },
-      { start: 16, end: 16.5, status: 'break' },
-      { start: 16.5, end: 19, status: 'planned' },
+      { start: 12.5, end: 16, status: 'active' }
     ]
   }
 ];
@@ -120,7 +115,7 @@ const planDetailsColumns = [
   { headerName: 'Scan Count', field: 'scanCount', flex: 1 },
 ];
 
-const PlanDeepDiveSection: FC = () => {
+const PlanDeepDiveSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState('shift');
   
   return (
