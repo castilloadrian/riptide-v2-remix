@@ -1,3 +1,4 @@
+
 import { FC } from 'react';
 import { 
   ChartContainer, 
@@ -116,7 +117,7 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
         <BarChart
           layout="vertical"
           data={chartData}
-          margin={{ top: 20, right: 30, left: 60, bottom: 50 }}
+          margin={{ top: 20, right: 30, left: 60, bottom: 80 }} // Increased bottom margin
         >
           <XAxis 
             type="number"
@@ -138,13 +139,20 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
             dataKey="name"
             ticks={hourTicks}
             tickLine={true}
-            axisLine={{ stroke: '#e5e7eb' }}
-            tick={{ fill: '#666', fontSize: 12 }}
+            axisLine={{ stroke: '#444', strokeWidth: 1 }}  // Darker axis line
+            tick={{ fill: '#444', fontSize: 12 }}
             interval={0}
-            height={50}
-            tickMargin={10}
+            height={60}
+            tickMargin={15}  // Increased tick margin
             tickFormatter={(_, index) => hourLabels[index % hourLabels.length]}
             orientation="bottom"
+            label={{ 
+              value: 'Time of Day', 
+              position: 'insideBottom', 
+              offset: -15,
+              fill: '#333',
+              fontSize: 14
+            }}
           />
           
           <Tooltip
