@@ -39,10 +39,9 @@ const transformDataForChart = (data: ShiftData[]) => {
 };
 
 // Helper to get color based on shift status and type
-const getShiftColor = (status: string | null, type: string) => {
-  if (!status) return '#f3f4f6'; // Light gray for empty slots
+const getShiftColor = (status: string, type: string) => {
+  if (status === 'break') return '#9E9E9E';
   
-  // Color mapping based on the type
   const typeColors: { [key: string]: string } = {
     'EP': '#FFE082', // Yellow for EP
     'HF': '#A5D6A7', // Light green for HF
@@ -51,28 +50,23 @@ const getShiftColor = (status: string | null, type: string) => {
   };
   
   // Get the base color by checking which type prefix matches
-  const baseColor = Object.entries(typeColors).find(([prefix]) => 
+  return Object.entries(typeColors).find(([prefix]) => 
     type.startsWith(prefix))?.[1] || '#f3f4f6';
-    
-  return status === 'break' ? '#9E9E9E' : baseColor; // Gray for breaks
 };
 
 // Custom bar shape to create segmented time series
 const CustomBar = (props: any) => {
   const { x, y, width, height, payload } = props;
   
-  if (!payload || !payload.originalData || !x || !y) {
-    return null;
-  }
+  if (!payload.originalData || !x || !y) return null;
   
-  const { shifts } = payload.originalData;
+  const { shifts, type } = payload.originalData;
   const hourRange = { min: 7, max: 19 }; // 7am to 7pm
   const totalHours = hourRange.max - hourRange.min;
   
-  // Create rectangles for each shift segment
   return (
     <g>
-      {shifts.map((shift, index) => {
+      {shifts.map((shift: any, index: number) => {
         // Calculate position and width based on start/end times
         const startPos = ((shift.start - hourRange.min) / totalHours) * width;
         const endPos = ((shift.end - hourRange.min) / totalHours) * width;
@@ -80,12 +74,12 @@ const CustomBar = (props: any) => {
         
         return (
           <rect
-            key={`${index}-${shift.status}`}
+            key={index}
             x={x + startPos}
             y={y}
             width={segmentWidth}
             height={height}
-            fill={getShiftColor(shift.status, payload.originalData.type)}
+            fill={getShiftColor(shift.status, type)}
             stroke="#fff"
             strokeWidth={1}
             rx={2}
@@ -102,7 +96,7 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
     const hour = i + 7;
     return `${hour % 12 === 0 ? 12 : hour % 12}${hour < 12 ? 'AM' : 'PM'}`;
   });
-  
+
   const chartData = transformDataForChart(data);
   
   const config = {
@@ -120,32 +114,6 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
     );
   }
   
-  // Custom tooltip formatter to show shift details
-  const tooltipFormatter = (value: any, name: string, props: any) => {
-    if (!props || !props.payload || !props.payload.originalData) {
-      return ['No data', ''];
-    }
-    
-    const shifts = props.payload.originalData.shifts;
-    
-    return (
-      <div>
-        <p className="font-medium">{props.payload.originalData.type}</p>
-        {shifts.map((shift: any, index: number) => (
-          <div key={index} className="flex justify-between gap-2">
-            <span>{shift.status === 'break' ? 'Break' : 'Active'}: </span>
-            <span>
-              {shift.start % 12 === 0 ? 12 : shift.start % 12}
-              {shift.start < 12 ? 'AM' : 'PM'} - 
-              {shift.end % 12 === 0 ? 12 : shift.end % 12}
-              {shift.end < 12 ? 'AM' : 'PM'}
-            </span>
-          </div>
-        ))}
-      </div>
-    );
-  };
-  
   return (
     <ChartContainer 
       config={config}
@@ -158,12 +126,9 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
           margin={{ top: 20, right: 30, left: 60, bottom: 20 }}
         >
           <XAxis 
-            type="category" 
-            dataKey="label"
-            ticks={hourLabels}
-            tickLine={false}
-            axisLine={{ stroke: '#e5e7eb' }}
-            tick={{ fill: '#666', fontSize: 12 }}
+            type="number"
+            domain={[0, 1]}
+            hide={true}
           />
           <YAxis 
             type="category" 
@@ -172,25 +137,30 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
             tick={{ fill: '#666', fontSize: 12 }}
             axisLine={{ stroke: '#e5e7eb' }}
           />
+          <XAxis 
+            xAxisId="time"
+            type="category"
+            dataKey="name"
+            ticks={hourLabels}
+            tickLine={false}
+            axisLine={{ stroke: '#e5e7eb' }}
+            tick={{ fill: '#666', fontSize: 12 }}
+            interval={0}
+          />
           <Tooltip
             content={({ active, payload }) => {
               if (!active || !payload || !payload.length) return null;
-              
-              // The first payload item contains our data
               const data = payload[0].payload;
-              
               if (!data || !data.originalData) return null;
-              
-              const { originalData } = data;
               
               return (
                 <div className="bg-white p-2 border border-gray-200 rounded shadow-md text-xs">
-                  <p className="font-medium text-sm">{originalData.type}</p>
-                  {originalData.shifts.map((shift: any, i: number) => (
+                  <p className="font-medium text-sm">{data.originalData.type}</p>
+                  {data.originalData.shifts.map((shift: any, i: number) => (
                     <div key={i} className="flex items-center gap-2 mt-1">
                       <div 
                         className="w-3 h-3 rounded-full" 
-                        style={{ backgroundColor: getShiftColor(shift.status, originalData.type) }}
+                        style={{ backgroundColor: getShiftColor(shift.status, data.originalData.type) }}
                       />
                       <span>{shift.status === 'break' ? 'Break' : 'Active'}: </span>
                       <span className="font-medium">
@@ -209,7 +179,11 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
             dataKey="value"
             shape={CustomBar}
             isAnimationActive={false}
-          />
+          >
+            {chartData.map((entry, index) => (
+              <Cell key={index} />
+            ))}
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
     </ChartContainer>
