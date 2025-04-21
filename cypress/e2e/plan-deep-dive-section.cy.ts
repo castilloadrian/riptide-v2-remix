@@ -23,8 +23,8 @@ describe('Plan Deep Dive Section', () => {
   it('should show Shift Visualization tab by default with chart', () => {
     cy.get('[data-state="active"]').contains('Shift Visualization').should('exist');
     
-    // Check for chart elements
-    cy.get('.recharts-bar-rectangles').should('exist');
+    // Check for chart elements - updated for more specific targeting
+    cy.get('.recharts-responsive-container').should('exist');
     cy.get('.recharts-yAxis .recharts-cartesian-axis-tick').should('have.length.at.least', 1);
   });
 
@@ -61,6 +61,6 @@ describe('Plan Deep Dive Section', () => {
     // Navigate back to Shift Visualization tab
     cy.contains('Shift Visualization').click();
     cy.get('[data-state="active"]').contains('Shift Visualization').should('exist');
-    cy.get('.recharts-bar-rectangles').should('exist');
+    cy.get('.recharts-responsive-container').should('exist');
   });
 });

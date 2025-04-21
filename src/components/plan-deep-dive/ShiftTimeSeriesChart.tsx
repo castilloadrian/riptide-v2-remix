@@ -1,3 +1,4 @@
+
 import { FC } from 'react';
 import { 
   ChartContainer, 
@@ -37,7 +38,7 @@ const transformDataForChart = (data: ShiftData[]) => {
     const hourData = hours.map(hour => {
       // Find any shifts that overlap with this hour
       const matchingShifts = item.shifts.filter(shift => 
-        shift.start <= hour && shift.end >= hour
+        shift.start <= hour && shift.end > hour
       );
       
       return {
@@ -78,6 +79,11 @@ const getShiftColor = (status: string | null, type: string) => {
 // Custom bar shape to create segmented time series
 const CustomBar = (props: any) => {
   const { x, y, width, height, data, type } = props;
+  
+  if (!data || data.length === 0 || !x || !y) {
+    return null;
+  }
+  
   const hourWidth = width / data.length;
   
   return (
@@ -110,10 +116,18 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
   
   const config = {
     active: { label: 'Active', color: '#61B045' },
-    break: { label: 'Break', color: '#FFC107' },
+    break: { label: 'Break', color: '#9E9E9E' },
     complete: { label: 'Complete', color: '#8884d8' },
     planned: { label: 'Planned', color: '#82ca9d' },
   };
+  
+  if (!data || data.length === 0) {
+    return (
+      <div className="w-full h-[400px] flex items-center justify-center bg-white dark:bg-gray-800 rounded-md p-2">
+        <p className="text-gray-500">No shift data available</p>
+      </div>
+    );
+  }
   
   return (
     <ChartContainer 
@@ -123,6 +137,7 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
       <ResponsiveContainer width="100%" height={400}>
         <BarChart
           layout="vertical"
+          data={transformedData}
           margin={{ top: 20, right: 30, left: 60, bottom: 20 }}
         >
           <XAxis 
@@ -147,11 +162,11 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
             <Bar 
               key={`bar-${index}`}
               dataKey="value"
+              data={entry.hours}
               name={entry.type}
               shape={<CustomBar data={entry.hours} type={entry.type} />}
               isAnimationActive={false}
             >
-              {/* Add a dummy cell to avoid Recharts errors */}
               <Cell />
             </Bar>
           ))}
