@@ -29,33 +29,13 @@ interface ShiftTimeSeriesChartProps {
 
 // Helper function to transform shift data for rendering
 const transformDataForChart = (data: ShiftData[]) => {
-  // Create data with hours from 7AM to 7PM
-  const hours = Array.from({ length: 13 }, (_, i) => i + 7);
-  
-  return data.map(item => {
-    // Create a data point for each hour from 7AM to 7PM
-    const hourData = hours.map(hour => {
-      // Find any shifts that overlap with this hour
-      const matchingShifts = item.shifts.filter(shift => 
-        shift.start <= hour && shift.end > hour
-      );
-      
-      return {
-        hour,
-        // If there's a matching shift, return its status
-        status: matchingShifts.length > 0 ? matchingShifts[0].status : null,
-        // Display label for hour value
-        label: `${hour % 12 === 0 ? 12 : hour % 12}${hour < 12 ? 'AM' : 'PM'}`,
-        // Add a value property for Recharts to use
-        value: 1 // Constant value to render bars with equal height
-      };
-    });
-    
-    return {
-      type: item.type,
-      hours: hourData
-    };
-  });
+  return data.map(item => ({
+    name: item.type,
+    // We map directly to a numeric value for each entry to satisfy Recharts typing
+    value: 1,
+    // Keep the original data for our custom renderer
+    originalData: item
+  }));
 };
 
 // Helper to get color based on shift status and type
@@ -79,41 +59,51 @@ const getShiftColor = (status: string | null, type: string) => {
 
 // Custom bar shape to create segmented time series
 const CustomBar = (props: any) => {
-  const { x, y, width, height, data, type } = props;
+  const { x, y, width, height, payload } = props;
   
-  if (!data || data.length === 0 || !x || !y) {
+  if (!payload || !payload.originalData || !x || !y) {
     return null;
   }
   
-  const hourWidth = width / data.length;
+  const { shifts } = payload.originalData;
+  const hourRange = { min: 7, max: 19 }; // 7am to 7pm
+  const totalHours = hourRange.max - hourRange.min;
   
+  // Create rectangles for each shift segment
   return (
     <g>
-      {data.map((hour: any, index: number) => (
-        <rect
-          key={`${hour.hour}-${index}`}
-          x={x + (index * hourWidth)}
-          y={y}
-          width={hourWidth}
-          height={height}
-          fill={getShiftColor(hour.status, type)}
-          stroke="#fff"
-          strokeWidth={1}
-          rx={2}
-        />
-      ))}
+      {shifts.map((shift, index) => {
+        // Calculate position and width based on start/end times
+        const startPos = ((shift.start - hourRange.min) / totalHours) * width;
+        const endPos = ((shift.end - hourRange.min) / totalHours) * width;
+        const segmentWidth = endPos - startPos;
+        
+        return (
+          <rect
+            key={`${index}-${shift.status}`}
+            x={x + startPos}
+            y={y}
+            width={segmentWidth}
+            height={height}
+            fill={getShiftColor(shift.status, payload.originalData.type)}
+            stroke="#fff"
+            strokeWidth={1}
+            rx={2}
+          />
+        );
+      })}
     </g>
   );
 };
 
 const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
-  const transformedData = transformDataForChart(data);
-  
-  // Create hour labels for the X-axis
+  // Create hour labels for the X-axis (7am to 7pm)
   const hourLabels = Array.from({ length: 13 }, (_, i) => {
     const hour = i + 7;
     return `${hour % 12 === 0 ? 12 : hour % 12}${hour < 12 ? 'AM' : 'PM'}`;
   });
+  
+  const chartData = transformDataForChart(data);
   
   const config = {
     active: { label: 'Active', color: '#61B045' },
@@ -130,14 +120,31 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
     );
   }
   
-  // Prepare chart data in a format Recharts can understand
-  const chartData = transformedData.map(item => ({
-    name: item.type,
-    // We map directly to a numeric value for each entry to satisfy Recharts typing
-    value: 1,
-    // Keep the original data for our custom renderer
-    originalData: item
-  }));
+  // Custom tooltip formatter to show shift details
+  const tooltipFormatter = (value: any, name: string, props: any) => {
+    if (!props || !props.payload || !props.payload.originalData) {
+      return ['No data', ''];
+    }
+    
+    const shifts = props.payload.originalData.shifts;
+    
+    return (
+      <div>
+        <p className="font-medium">{props.payload.originalData.type}</p>
+        {shifts.map((shift: any, index: number) => (
+          <div key={index} className="flex justify-between gap-2">
+            <span>{shift.status === 'break' ? 'Break' : 'Active'}: </span>
+            <span>
+              {shift.start % 12 === 0 ? 12 : shift.start % 12}
+              {shift.start < 12 ? 'AM' : 'PM'} - 
+              {shift.end % 12 === 0 ? 12 : shift.end % 12}
+              {shift.end < 12 ? 'AM' : 'PM'}
+            </span>
+          </div>
+        ))}
+      </div>
+    );
+  };
   
   return (
     <ChartContainer 
@@ -166,22 +173,43 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
             axisLine={{ stroke: '#e5e7eb' }}
           />
           <Tooltip
-            content={<ChartTooltipContent />}
+            content={({ active, payload }) => {
+              if (!active || !payload || !payload.length) return null;
+              
+              // The first payload item contains our data
+              const data = payload[0].payload;
+              
+              if (!data || !data.originalData) return null;
+              
+              const { originalData } = data;
+              
+              return (
+                <div className="bg-white p-2 border border-gray-200 rounded shadow-md text-xs">
+                  <p className="font-medium text-sm">{originalData.type}</p>
+                  {originalData.shifts.map((shift: any, i: number) => (
+                    <div key={i} className="flex items-center gap-2 mt-1">
+                      <div 
+                        className="w-3 h-3 rounded-full" 
+                        style={{ backgroundColor: getShiftColor(shift.status, originalData.type) }}
+                      />
+                      <span>{shift.status === 'break' ? 'Break' : 'Active'}: </span>
+                      <span className="font-medium">
+                        {shift.start % 12 === 0 ? 12 : shift.start % 12}
+                        {shift.start < 12 ? 'AM' : 'PM'} - 
+                        {shift.end % 12 === 0 ? 12 : shift.end % 12}
+                        {shift.end < 12 ? 'AM' : 'PM'}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              );
+            }}
           />
-          {transformedData.map((entry, index) => (
-            <Bar 
-              key={`bar-${index}`}
-              dataKey="value"
-              name={entry.type}
-              // Use a custom shape renderer instead of trying to pass hour data directly
-              shape={(props) => (
-                <CustomBar {...props} data={entry.hours} type={entry.type} />
-              )}
-              isAnimationActive={false}
-            >
-              <Cell />
-            </Bar>
-          ))}
+          <Bar 
+            dataKey="value"
+            shape={CustomBar}
+            isAnimationActive={false}
+          />
         </BarChart>
       </ResponsiveContainer>
     </ChartContainer>

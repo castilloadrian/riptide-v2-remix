@@ -26,6 +26,9 @@ describe('Plan Deep Dive Section', () => {
     // Check for chart elements - updated for more specific targeting
     cy.get('.recharts-responsive-container').should('exist');
     cy.get('.recharts-yAxis .recharts-cartesian-axis-tick').should('have.length.at.least', 1);
+    
+    // Check that our shift bars exist (at least one rect should be present)
+    cy.get('.recharts-layer rect').should('have.length.at.least', 1);
   });
 
   it('should navigate to CPT Risk Profile tab and show AG Grid', () => {
