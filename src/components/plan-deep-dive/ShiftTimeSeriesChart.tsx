@@ -14,83 +14,22 @@ import {
   Cell,
   ResponsiveContainer
 } from 'recharts';
-
-export interface ShiftData {
-  type: string;
-  shifts: {
-    start: number;
-    end: number;
-    status: 'active' | 'break' | 'complete' | 'planned';
-  }[];
-}
+import CustomShiftBar from './components/CustomShiftBar';
+import ShiftTooltip from './components/ShiftTooltip';
+import { 
+  ShiftData,
+  transformDataForChart,
+  generateHourTicks,
+  formatHourLabels
+} from './utils/chartDataTransformers';
 
 interface ShiftTimeSeriesChartProps {
   data: ShiftData[];
 }
 
-const transformDataForChart = (data: ShiftData[]) => {
-  return data.map(item => ({
-    name: item.type,
-    value: 1,
-    originalData: item
-  }));
-};
-
-const getShiftColor = (status: string, type: string) => {
-  if (status === 'break') return '#9E9E9E';
-  
-  const typeColors: { [key: string]: string } = {
-    'EP': '#FFE082',
-    'HF': '#A5D6A7',
-    'GL': '#E1BEE7',
-    'AUTO': '#81D4FA',
-  };
-  
-  return Object.entries(typeColors).find(([prefix]) => 
-    type.startsWith(prefix))?.[1] || '#f3f4f6';
-};
-
-const CustomBar = (props: any) => {
-  const { x, y, width, height, payload } = props;
-  
-  if (!payload.originalData || !x || !y) return null;
-  
-  const { shifts, type } = payload.originalData;
-  const hourRange = { min: 7, max: 19 };
-  const totalHours = hourRange.max - hourRange.min;
-  
-  return (
-    <g>
-      {shifts.map((shift: any, index: number) => {
-        const startPos = ((shift.start - hourRange.min) / totalHours) * width;
-        const endPos = ((shift.end - hourRange.min) / totalHours) * width;
-        const segmentWidth = endPos - startPos;
-        
-        return (
-          <rect
-            key={index}
-            x={x + startPos}
-            y={y}
-            width={segmentWidth}
-            height={height}
-            fill={getShiftColor(shift.status, type)}
-            stroke="#fff"
-            strokeWidth={1}
-            rx={2}
-          />
-        );
-      })}
-    </g>
-  );
-};
-
 const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
-  const hourTicks = Array.from({ length: 13 }, (_, i) => i + 7);
-  
-  const hourLabels = hourTicks.map(hour => 
-    `${hour % 12 === 0 ? 12 : hour % 12}${hour < 12 ? 'AM' : 'PM'}`
-  );
-
+  const hourTicks = generateHourTicks();
+  const hourLabels = formatHourLabels(hourTicks);
   const chartData = transformDataForChart(data);
   
   const config = {
@@ -117,7 +56,7 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
         <BarChart
           layout="vertical"
           data={chartData}
-          margin={{ top: 20, right: 30, left: 60, bottom: 80 }} // Increased bottom margin
+          margin={{ top: 20, right: 30, left: 60, bottom: 80 }}
         >
           <XAxis 
             type="number"
@@ -139,11 +78,11 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
             dataKey="name"
             ticks={hourTicks}
             tickLine={true}
-            axisLine={{ stroke: '#444', strokeWidth: 1 }}  // Darker axis line
+            axisLine={{ stroke: '#444', strokeWidth: 1 }}
             tick={{ fill: '#444', fontSize: 12 }}
             interval={0}
             height={60}
-            tickMargin={15}  // Increased tick margin
+            tickMargin={15}
             tickFormatter={(_, index) => hourLabels[index % hourLabels.length]}
             orientation="bottom"
             label={{ 
@@ -155,38 +94,11 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
             }}
           />
           
-          <Tooltip
-            content={({ active, payload }) => {
-              if (!active || !payload || !payload.length) return null;
-              const data = payload[0].payload;
-              if (!data || !data.originalData) return null;
-              
-              return (
-                <div className="bg-white p-2 border border-gray-200 rounded shadow-md text-xs">
-                  <p className="font-medium text-sm">{data.originalData.type}</p>
-                  {data.originalData.shifts.map((shift: any, i: number) => (
-                    <div key={i} className="flex items-center gap-2 mt-1">
-                      <div 
-                        className="w-3 h-3 rounded-full" 
-                        style={{ backgroundColor: getShiftColor(shift.status, data.originalData.type) }}
-                      />
-                      <span>{shift.status === 'break' ? 'Break' : 'Active'}: </span>
-                      <span className="font-medium">
-                        {shift.start % 12 === 0 ? 12 : shift.start % 12}
-                        {shift.start < 12 ? 'AM' : 'PM'} - 
-                        {shift.end % 12 === 0 ? 12 : shift.end % 12}
-                        {shift.end < 12 ? 'AM' : 'PM'}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              );
-            }}
-          />
+          <Tooltip content={ShiftTooltip} />
           
           <Bar 
             dataKey="value"
-            shape={CustomBar}
+            shape={CustomShiftBar}
             isAnimationActive={false}
           >
             {chartData.map((entry, index) => (
@@ -200,3 +112,4 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
 };
 
 export default ShiftTimeSeriesChart;
+
