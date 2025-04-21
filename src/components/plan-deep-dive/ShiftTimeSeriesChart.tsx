@@ -11,7 +11,8 @@ import {
   YAxis, 
   Tooltip, 
   Cell,
-  ResponsiveContainer
+  ResponsiveContainer,
+  CartesianGrid
 } from 'recharts';
 
 export interface ShiftData {
@@ -27,47 +28,40 @@ interface ShiftTimeSeriesChartProps {
   data: ShiftData[];
 }
 
-// Helper function to transform shift data for rendering
 const transformDataForChart = (data: ShiftData[]) => {
   return data.map(item => ({
     name: item.type,
-    // We map directly to a numeric value for each entry to satisfy Recharts typing
     value: 1,
-    // Keep the original data for our custom renderer
     originalData: item
   }));
 };
 
-// Helper to get color based on shift status and type
 const getShiftColor = (status: string, type: string) => {
   if (status === 'break') return '#9E9E9E';
   
   const typeColors: { [key: string]: string } = {
-    'EP': '#FFE082', // Yellow for EP
-    'HF': '#A5D6A7', // Light green for HF
-    'GL': '#E1BEE7', // Light purple for GL
-    'AUTO': '#81D4FA', // Light blue for AUTO
+    'EP': '#FFE082',
+    'HF': '#A5D6A7',
+    'GL': '#E1BEE7',
+    'AUTO': '#81D4FA',
   };
   
-  // Get the base color by checking which type prefix matches
   return Object.entries(typeColors).find(([prefix]) => 
     type.startsWith(prefix))?.[1] || '#f3f4f6';
 };
 
-// Custom bar shape to create segmented time series
 const CustomBar = (props: any) => {
   const { x, y, width, height, payload } = props;
   
   if (!payload.originalData || !x || !y) return null;
   
   const { shifts, type } = payload.originalData;
-  const hourRange = { min: 7, max: 19 }; // 7am to 7pm
+  const hourRange = { min: 7, max: 19 };
   const totalHours = hourRange.max - hourRange.min;
   
   return (
     <g>
       {shifts.map((shift: any, index: number) => {
-        // Calculate position and width based on start/end times
         const startPos = ((shift.start - hourRange.min) / totalHours) * width;
         const endPos = ((shift.end - hourRange.min) / totalHours) * width;
         const segmentWidth = endPos - startPos;
@@ -91,7 +85,6 @@ const CustomBar = (props: any) => {
 };
 
 const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
-  // Create hour labels for the X-axis (7am to 7pm)
   const hourLabels = Array.from({ length: 13 }, (_, i) => {
     const hour = i + 7;
     return `${hour % 12 === 0 ? 12 : hour % 12}${hour < 12 ? 'AM' : 'PM'}`;
@@ -125,6 +118,11 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
           data={chartData}
           margin={{ top: 20, right: 30, left: 60, bottom: 20 }}
         >
+          <CartesianGrid 
+            horizontal={false}
+            stroke="#e5e7eb"
+            strokeDasharray="3 3"
+          />
           <XAxis 
             type="number"
             domain={[0, 1]}
