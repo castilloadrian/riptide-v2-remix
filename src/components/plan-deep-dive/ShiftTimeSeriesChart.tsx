@@ -15,7 +15,7 @@ import {
   ResponsiveContainer
 } from 'recharts';
 
-interface ShiftData {
+export interface ShiftData {
   type: string;
   shifts: {
     start: number;
@@ -144,15 +144,13 @@ const ShiftTimeSeriesChart: FC<ShiftTimeSeriesChartProps> = ({ data }) => {
           {transformedData.map((entry, index) => (
             <Bar 
               key={`bar-${index}`}
-              dataKey="status"
+              dataKey="value"
               name={entry.type}
-              data={entry.hours}
               shape={<CustomBar data={entry.hours} />}
               isAnimationActive={false}
             >
-              {entry.hours.map((hour, i) => (
-                <Cell key={`cell-${i}`} />
-              ))}
+              {/* Add a dummy cell to avoid Recharts errors */}
+              <Cell />
             </Bar>
           ))}
         </BarChart>
