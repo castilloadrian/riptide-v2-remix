@@ -10,47 +10,47 @@ const shiftTimeSeriesData: ShiftData[] = [
     type: 'EP-ALL',
     shifts: [
       { start: 7, end: 11, status: 'active' },
-      { start: 11, end: 11.5, status: 'break' },
-      { start: 11.5, end: 19, status: 'active' }
+      { start: 11, end: 12, status: 'break' },
+      { start: 12, end: 19, status: 'active' }
     ]
   },
   {
     type: 'HF-2P',
     shifts: [
       { start: 7, end: 11, status: 'active' },
-      { start: 11, end: 11.5, status: 'break' },
-      { start: 11.5, end: 19, status: 'active' }
+      { start: 11, end: 12, status: 'break' },
+      { start: 12, end: 19, status: 'active' }
     ]
   },
   {
     type: 'HF-4P',
     shifts: [
       { start: 7, end: 11, status: 'active' },
-      { start: 11, end: 11.5, status: 'break' },
-      { start: 11.5, end: 15, status: 'active' }
+      { start: 11, end: 12, status: 'break' },
+      { start: 12, end: 15, status: 'active' }
     ]
   },
   {
     type: 'GL-ALL',
     shifts: [
-      { start: 15, end: 15.5, status: 'break' },
-      { start: 15.5, end: 19, status: 'active' }
+      { start: 15, end: 16, status: 'break' },
+      { start: 16, end: 19, status: 'active' }
     ]
   },
   {
     type: 'AUTO-1',
     shifts: [
       { start: 7, end: 11, status: 'active' },
-      { start: 11, end: 11.5, status: 'break' },
-      { start: 11.5, end: 19, status: 'active' }
+      { start: 11, end: 12, status: 'break' },
+      { start: 12, end: 19, status: 'active' }
     ]
   },
   {
     type: 'AUTO-2',
     shifts: [
       { start: 8, end: 12, status: 'active' },
-      { start: 12, end: 12.5, status: 'break' },
-      { start: 12.5, end: 16, status: 'active' }
+      { start: 12, end: 13, status: 'break' },
+      { start: 13, end: 16, status: 'active' }
     ]
   }
 ];
