@@ -5,7 +5,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./components/ThemeProvider";
-import Index from "./pages/Index";
+import Home from "./pages/Home";
+import Planning from "./pages/Planning";
 import LivePlan from "./pages/LivePlan";
 import Kitting from "./pages/Kitting";
 import Simulation from "./pages/Simulation";
@@ -21,7 +22,8 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/planning" element={<Planning />} />
             <Route path="/live-plan" element={<LivePlan />} />
             <Route path="/kitting" element={<Kitting />} />
             <Route path="/simulation" element={<Simulation />} />

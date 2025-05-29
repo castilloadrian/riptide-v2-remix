@@ -1,26 +1,14 @@
-
-import { useState } from 'react';
-import PageLayout from '@/components/PageLayout';
-import RiskAssessment from '@/components/RiskAssessment';
-import CapacitySection from '@/components/CapacitySection';
-import HeadcountSection from '@/components/HeadcountSection';
-import ConfigurationSection from '@/components/ConfigurationSection';
-import PlanDeepDiveSection from '@/components/PlanDeepDiveSection';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
-  const [planName, setPlanName] = useState('Weekly Production Plan');
+  const navigate = useNavigate();
 
-  return (
-    <PageLayout activeTab="planning" planName={planName} setPlanName={setPlanName}>
-      <div className="space-y-4">
-        <RiskAssessment />
-        <CapacitySection />
-        <HeadcountSection />
-        <ConfigurationSection />
-        <PlanDeepDiveSection />
-      </div>
-    </PageLayout>
-  );
+  useEffect(() => {
+    navigate('/', { replace: true });
+  }, [navigate]);
+
+  return null;
 };
 
 export default Index;

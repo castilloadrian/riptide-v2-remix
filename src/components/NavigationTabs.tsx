@@ -25,7 +25,7 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   
   const tabs = [
-    { id: 'planning', label: 'Planning', icon: <Box className="w-5 h-5" />, path: '/' },
+    { id: 'planning', label: 'Planning', icon: <Box className="w-5 h-5" />, path: '/planning' },
     { id: 'live-plan', label: 'Live Plan', icon: <Activity className="w-5 h-5" />, path: '/live-plan' },
     { id: 'kitting', label: 'Kitting', icon: <Package className="w-5 h-5" />, path: '/kitting' },
     { id: 'simulation', label: 'Shift Simulation', icon: <Clock className="w-5 h-5" />, path: '/simulation' },
@@ -71,7 +71,7 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
           <Link 
             to="/"
             className="flex items-center mr-6"
-            onClick={() => setActiveTab('planning')}
+            onClick={() => setActiveTab('')}
           >
             <Waves size={20} color="white" className="mr-2" />
             <span className="font-medium text-white">Riptide</span>
