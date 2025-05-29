@@ -1,3 +1,4 @@
+
 import React, { FC, useState } from 'react';
 import { Waves } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -70,17 +71,17 @@ const NavigationTabs: FC<NavigationTabProps> = ({ activeTab, setActiveTab }) => 
         <div className="flex items-center">
           <Link 
             to="/"
-            className="flex items-center mr-6"
+            className="flex items-center mr-6 text-white hover:bg-white/10 px-2 py-1 rounded transition-colors"
             onClick={() => setActiveTab('')}
           >
             <Waves size={20} color="white" className="mr-2" />
-            <span className="font-medium text-white">Riptide</span>
+            <span className="font-medium">Riptide</span>
           </Link>
           {tabs.map((tab) => (
             <Link 
               to={tab.path}
               key={tab.id}
-              className={`header-tab ${activeTab === tab.id ? 'active' : ''}`}
+              className={`header-tab text-white ${activeTab === tab.id ? 'active' : ''}`}
               onClick={() => setActiveTab(tab.id)}
             >
               {tab.icon}
