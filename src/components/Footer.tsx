@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Moon, Sun, Monitor } from 'lucide-react';
 import { useTheme } from '@/components/ThemeProvider';
@@ -25,9 +24,14 @@ const Footer: React.FC<FooterProps> = () => {
           {/* Empty div for spacing */}
         </div>
         <div className="w-1/3 flex justify-center">
-          <Link to="https://drive.google.com/drive/u/0/folders/1uAfus4Q5WESY0ywpB-hhePmEvM7-41H3" className="text-primary hover:underline text-sm">
+          <a 
+            href="https://drive.google.com/drive/u/0/folders/1uAfus4Q5WESY0ywpB-hhePmEvM7-41H3" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-primary hover:underline text-sm"
+          >
             Learn More
-          </Link>
+          </a>
         </div>
         <div className="w-1/3 flex justify-end">
           <DropdownMenu>
